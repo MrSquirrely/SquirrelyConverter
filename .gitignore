@@ -3,6 +3,11 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# User Added Files
+cwebp.exe
+dwebp.exe
+gif2webp.exe
+
 # User-specific files
 *.suo
 *.user
