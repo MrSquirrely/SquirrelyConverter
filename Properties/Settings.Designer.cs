@@ -25,7 +25,7 @@ namespace SquirrelyConverter.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("/Stemp/")]
         public string TempDir {
             get {
                 return ((string)(this["TempDir"]));
@@ -44,18 +44,6 @@ namespace SquirrelyConverter.Properties {
             }
             set {
                 this["OutDir"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ChangeOutDir {
-            get {
-                return ((bool)(this["ChangeOutDir"]));
-            }
-            set {
-                this["ChangeOutDir"] = value;
             }
         }
         

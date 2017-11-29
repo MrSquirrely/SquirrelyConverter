@@ -25,23 +25,26 @@ using System.IO;
 using BespokeFusion;
 using System.Collections.Generic;
 using System.Threading;
+using System.Text;
+using Notifications.Wpf;
 
 namespace SquirrelyConverter
 {
     class Utils
     {
         public static string Dir;
+        public static string WorkingDir;
         public static bool isFolder;
         public static bool hasFolder = false;
         public static List<string> Dirs = new List<string>();
+        public static List<string> files = new List<string>();
+        public static string[] droppedFiles;
         public static int dirNum;
         public static double fileNum;
         public static double currentImage;
-        private static string tempDir = "/temp/";
-        private static string tempDir2 = "/temp2/";
+        public static string tempDir = "/Stemp/";
+        private static int tempDirNum;
         private static string tempDirFull;
-        public static string[] droppedFiles;
-        public static List<string> files = new List<string>();
         public static bool isRunning = false;
 
         public static string OutDir;
@@ -53,30 +56,20 @@ namespace SquirrelyConverter
         public static string FileType;
         public static string FileLocation;
 
-        //[Obsolete("Instead of using Utils.StartEncode use Convert.CONVERTTYPE instead")]
-        //public static void StartEncode() {
-        //    try {
-        //        CheckFolder();
-        //        BackupFiles();
-        //        Thread thread = new Thread(StartConversion);
-        //        thread.SetApartmentState(ApartmentState.STA);
-        //        thread.Start();
-        //        //StartConversion();
+        private static string ErrorFile = "/Logs/Error.txt";
 
-        //    }
-        //    catch (Exception e) {
-        //        Console.WriteLine(value: e.Message);
-        //    }
-        //}
 
-        #region Finished Message
-        private static void Finished() {
-            var msg = new CustomMaterialMessageBox {
-                TxtMessage = { Text = "We are finished with the conversion." },
-                TxtTitle = { Text = "Conversion Finished" },
-                BtnOk = { Content = "okay" }
-            };
-            msg.Show();
+        #region Create Error File
+        public void CreateError(string message) {
+            string error = WorkingDir + ErrorFile;
+
+            if (File.Exists(error)) {
+                File.Delete(error);
+            }
+
+            FileStream fs = File.Create(error);
+            Byte[] bs = new UTF8Encoding(true).GetBytes(message);
+            fs.Write(bs, 0, bs.Length);
         }
         #endregion
 
@@ -84,6 +77,7 @@ namespace SquirrelyConverter
         public static void CheckFolder() {
             Console.WriteLine(Dir + tempDir);
             if (Directory.Exists(Dir + tempDir)) {
+                
                 var msg = new CustomMaterialMessageBox {
                     TxtMessage = { Text = "The temp folder already exists, do you want to delete it?" },
                     TxtTitle = { Text = "Temp Folder Exists" },
@@ -93,13 +87,15 @@ namespace SquirrelyConverter
                 msg.Show();
                 var result = msg.Result;
 
+
                 switch (result) {
                     case MessageBoxResult.Cancel:
-                        Directory.CreateDirectory(Dir + tempDir2);
-                        tempDirFull = Dir + tempDir2;
+                        tempDirNum = new Random().Next(0,100);
+                        Directory.CreateDirectory(Dir + "/" + tempDirNum.ToString() + "Stemp/");
+                        tempDirFull = Dir + "/" + tempDirNum.ToString() + tempDir;
                         break;
                     case MessageBoxResult.OK:
-                        Directory.Delete(Dir + tempDir);
+                        DeleteFolder(Dir + tempDir);
                         Directory.CreateDirectory(Dir + tempDir);
                         tempDirFull = Dir + tempDir;
                         break;
@@ -115,38 +111,51 @@ namespace SquirrelyConverter
             }
 
         }
+
+        private static void DeleteFolder(string folder) {
+            if (Directory.GetFiles(folder).Length > 0) {
+                foreach (string file in Directory.GetFiles(folder)) {
+                    File.Delete(file);
+                }
+            }
+            Directory.Delete(folder);
+        }
         #endregion
 
         #region Backup Files
         public static void BackupFiles() {
 
             foreach (string file in droppedFiles) {
-
+                string NType = Path.GetExtension(file);
+                if (NType == ".jpg" || NType == ".png" || NType == ".jpeg" || NType == ".gif") {
+                    string filename = Path.GetFileName(file);
+                    File.Copy(file, tempDirFull + filename);
+                }
             }
 
             try {
                 foreach (string folder in Dirs) {
+                    if (folder != Dir) {
+                        foreach (string file in Directory.GetFiles(folder, "*.jpg")) {
+                            string filename = Path.GetFileName(file);
+                            File.Copy(file, tempDirFull + filename);
+                        }
 
-                    foreach (string file in Directory.GetFiles(folder, "*.jpg")) {
-                        string filename = Path.GetFileName(file);
-                        File.Copy(file, tempDirFull + filename);
+                        foreach (string file in Directory.GetFiles(folder, "*.png")) {
+                            string filename = Path.GetFileName(file);
+                            File.Copy(file, tempDirFull + filename);
+                        }
+
+                        foreach (string file in Directory.GetFiles(folder, "*.jpeg")) {
+                            string filename = Path.GetFileName(file);
+                            File.Copy(file, tempDirFull + filename);
+                        }
+
+                        foreach (string file in Directory.GetFiles(folder, "*.gif")) {
+                            string filename = Path.GetFileName(file);
+                            File.Copy(file, tempDirFull + filename);
+                        }
                     }
-
-                    foreach (string file in Directory.GetFiles(folder, "*.png")) {
-                        string filename = Path.GetFileName(file);
-                        File.Copy(file, tempDirFull + filename);
-                    }
-
-                    foreach (string file in Directory.GetFiles(folder, "*.jpeg")) {
-                        string filename = Path.GetFileName(file);
-                        File.Copy(file, tempDirFull + filename);
-                    }
-
-                    foreach (string file in Directory.GetFiles(folder, "*.gif")) {
-                        string filename = Path.GetFileName(file);
-                        File.Copy(file, tempDirFull + filename);
-                    }
-
                 }
             }
             catch (Exception e) {
@@ -156,101 +165,6 @@ namespace SquirrelyConverter
         }
         #endregion
 
-        #region Conversion
-        private static void StartConversion() {
-
-            try {
-                foreach (string file in files) {
-                    FileName = Path.GetFileNameWithoutExtension(file);
-                    FileType = Path.GetExtension(file);
-                    FileLocation = Path.GetDirectoryName(file);
-
-                    WebP image = new WebP();
-                    image.Image = file;
-                    image.Output = FileLocation + "/" + FileName + ".webp";
-                    image.Quality = 80;
-                    //image.CopyMeta = false;
-                    //image.NoAlpha = false;
-                    image.Encode();
-
-                    //SimpleEncoder encoder = new SimpleEncoder();
-                    //encoder.Encode();
-                    //MagickImage image = new MagickImage(file);
-                    //image.Format = MagickFormat.WebP;
-                    //image.Quality = 80;
-                    //image.Write(FileLocation + "/" + FileName + ".webp");
-                    //File.Delete(file);
-                }
-                //foreach (string folder in Dirs) {
-
-                //    foreach (string file in Directory.GetFiles(folder, "*.jpg")) {
-                //        FileName = Path.GetFileNameWithoutExtension(file);
-                //        FileType = Path.GetExtension(file);
-                //        FileLocation = Path.GetDirectoryName(file);
-
-                //        MagickImage image = new MagickImage(file);
-                //        image.Format = MagickFormat.WebP;
-                //        image.Quality = 80;
-                //        image.Write(FileLocation + "/" + FileName + ".webp");
-                //        File.Delete(file);
-                //        currentImage++;
-                //    }
-
-                //    foreach (string file in Directory.GetFiles(folder, "*.png")) {
-                //        FileName = Path.GetFileNameWithoutExtension(file);
-                //        FileType = Path.GetExtension(file);
-                //        FileLocation = Path.GetDirectoryName(file);
-
-                //        MagickImage image = new MagickImage(file);
-                //        image.Format = MagickFormat.WebP;
-                //        image.Quality = 80;
-                //        image.Write(FileLocation + "/" + FileName + ".webp");
-                //        File.Delete(file);
-                //        currentImage++;
-                //    }
-
-                //    foreach (string file in Directory.GetFiles(folder, "*.jpeg")) {
-                //        FileName = Path.GetFileNameWithoutExtension(file);
-                //        FileType = Path.GetExtension(file);
-                //        FileLocation = Path.GetDirectoryName(file);
-
-                //        MagickImage image = new MagickImage(file);
-                //        image.Format = MagickFormat.WebP;
-                //        image.Quality = 80;
-                //        image.Write(FileLocation + "/" + FileName + ".webp");
-                //        File.Delete(file);
-                //        currentImage++;
-                //    }
-
-                //}
-            }
-            catch (Exception e) {
-                Console.WriteLine(e.Message);
-            }
-
-        }
-
-        #endregion
-
-        #region Settings First Run
-        public static void SettingsFirstRun() {
-            OutDir = Properties.Settings.Default.OutDir;
-            ChangeOutDir = Properties.Settings.Default.ChangeOutDir;
-            DeleteTempDir = Properties.Settings.Default.DeleteTempDir;
-            Quality = Properties.Settings.Default.WebPQuality;
-        }
-        #endregion
-
-        #region Set Settings
-        public static void SetSetting(string outDir, bool changeOutDir, bool deleteTempDir, double quality) {
-            Properties.Settings.Default.OutDir = outDir;
-            Properties.Settings.Default.ChangeOutDir = changeOutDir;
-            Properties.Settings.Default.DeleteTempDir = deleteTempDir;
-            Properties.Settings.Default.WebPQuality = quality;
-
-            Properties.Settings.Default.Save();
-        }
-        #endregion
-
+       
     }
 }

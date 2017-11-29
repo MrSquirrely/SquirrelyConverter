@@ -5,36 +5,46 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using Notifications.Wpf;
+
 
 namespace SquirrelyConverter
 {
     class Convert
     {
-
+        #region WebP
         public static void WebP(string coding) {
+            
             if (Utils.isRunning != true) {
-                Utils.CheckFolder();
-                Utils.BackupFiles();
                 switch (coding) {
                     case "encode":
-                        Thread encode = new Thread(WebPEncode);
-                        encode.SetApartmentState(ApartmentState.STA);
-                        encode.Start();
+                        try {
+                            Console.WriteLine("Encoding");
+                            WebPEncode();
+                        }
+                        catch (Exception e) {
+                            Console.WriteLine(e.Message);
+                        }
+                        
                         break;
                     case "decode":
-                        Thread decode = new Thread(WebPDecode);
-                        decode.SetApartmentState(ApartmentState.STA);
-                        decode.Start();
+                        try {
+                            Console.WriteLine("Decoding");
+                            WebPDecode();
+                        }
+                        catch (Exception e) {
+                            Console.WriteLine(e.Message);
+                        }
                         break;
                 }
                 Utils.isRunning = true;
             }
         }
 
-        #region WebP
+        
         #region Encode
         private static void WebPEncode() {
-
             try {
                 foreach (string file in Utils.files) {
                     Utils.FileName = Path.GetFileNameWithoutExtension(file);
@@ -44,8 +54,9 @@ namespace SquirrelyConverter
                     if (Utils.FileType == ".gif") {
                         WebP image = new WebP();
                         image.Image = file;
-                        image.Output = Utils.FileLocation + "/" + Utils.FileName + ".webp";
+                        image.Output = Utils.FileLocation + "/" +  Utils.FileName + ".webp";
                         image.EnocdeGIF();
+                        Utils.fileNum++;
                         File.Delete(file);
                     }
                     else {
@@ -56,12 +67,10 @@ namespace SquirrelyConverter
                         image.NoAlpha = false;
                         image.Output = Utils.FileLocation + "/" + Utils.FileName + ".webp";
                         image.Encode();
+                        Utils.fileNum++;
                         File.Delete(file);
-                    }
-
-                    
+                    }                
                 }
-                Utils.isRunning = false;
             }
             catch (Exception e) {
                 Console.WriteLine(e.Message);

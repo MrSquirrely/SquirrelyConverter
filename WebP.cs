@@ -28,7 +28,7 @@ namespace SquirrelyConverter
 
             if (Ready) {
                 try {
-                    CMDText = "cwebp" + S + Quality + S + NoAlpha + S + CopyMeta + S + Image + S + "-o" + S + Output;
+                    CMDText = "cwebp" + S + Quality + S + NoAlpha + S + CopyMeta + S + "\"" + Image + "\"" + S + "-o" + S + "\"" + Output + "\"";
                     Process process = new Process();
                     process.StartInfo.FileName = "cmd.exe";
                     process.StartInfo.RedirectStandardInput = true;

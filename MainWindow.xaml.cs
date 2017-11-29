@@ -22,8 +22,9 @@
 using BespokeFusion;
 using System;
 using System.IO;
-using System.Linq;
 using System.Windows;
+using System.Threading;
+using Notifications.Wpf;
 
 namespace SquirrelyConverter
 {
@@ -37,41 +38,41 @@ namespace SquirrelyConverter
         protected string ENCODE = "encode";
         protected string DECODE = "decode";
 
+        Thread ThreadEncode;
+        NotificationManager toast = new NotificationManager();
+
         public MainWindow() {
             InitializeComponent();
-            //This will be added later
-            //Options.FirstRun();
-            //AutoDelete.IsChecked = Options.DeleteTempDir;
-            //OP_DeleteTempDir = Options.DeleteTempDir;
-            //Quality.Value = Options.Quality;
-            //OP_Quality = Options.Quality;
+            Utils.WorkingDir = Directory.GetCurrentDirectory();
+            Options.FirstRun();
         }
 
         #region Encode Items Dropped
         private void EncodeItems_Drop(object sender, DragEventArgs e) {
+            //This checks if there are already files in the list and if there are removes them.
             if (Utils.isRunning != true) {
                 if (EncodeItems.HasItems) {
 
                     var msg = new CustomMaterialMessageBox {
-                        TxtMessage = { Text = "There are already images loaded. Would you like to keep them? *This will be a setting in a later update" },
-                        TxtTitle = { Text = "Confirmation" },
+                        TxtMessage = { Text = "There are already files loaded, Do you wish to delete them?" },
+                        TxtTitle = { Text = "Already Files In Loaded" },
                         BtnOk = { Content = "Yes" },
                         BtnCancel = { Content = "No" }
                     };
-
                     msg.Show();
                     var result = msg.Result;
+
                     switch (result) {
-                        case MessageBoxResult.Cancel:
+                        case MessageBoxResult.OK:
                             EncodeItems.Items.Clear();
                             break;
-                        case MessageBoxResult.OK:
+                        case MessageBoxResult.Cancel:
                             break;
                     }
                 }
 
                 Utils.droppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop);
-                GetDirectory(Utils.droppedFiles); // Needs to be looked at!! I'm not sure what I'm doing with it? It looks like nothing...
+                GetDirectory(Utils.droppedFiles);
                 DecodeItems.Items.Clear();
                 GetFiles(Utils.Dir, ENCODE);
             }else if (Utils.isRunning == true) {
@@ -86,7 +87,7 @@ namespace SquirrelyConverter
         }
         #endregion
 
-        #region Encode Items Dropped
+        #region Decode Items Dropped
         private void DecodeItems_Drop(object sender, DragEventArgs e) {
 
             if (!Utils.isRunning) {
@@ -161,13 +162,41 @@ namespace SquirrelyConverter
         #region Encode Button Click
         //Starts the encoding process.
         //private void EncodeButton_Click(object sender, RoutedEventArgs e) => Utils.StartEncode();
-        private void EncodeButton_Click(object sender, RoutedEventArgs e) => Convert.WebP(ENCODE);
+        private void EncodeButton_Click(object sender, RoutedEventArgs e) {
+            if (Utils.droppedFiles != null) {
+                Utils.CheckFolder();
+                Utils.BackupFiles();
+
+                ThreadStart Starter = EncodeStarter;
+
+                Starter += () => {
+                    toast.Show(new NotificationContent {
+                        Title = "Finished",
+                        Message = "Finished encoding the images.",
+                        Type = NotificationType.Success
+                    }, expirationTime: TimeSpan.FromSeconds(6));
+
+                    Utils.isRunning = false;
+                };
+                ThreadEncode = new Thread(Starter);
+                ThreadEncode.SetApartmentState(ApartmentState.STA);
+                ThreadEncode.IsBackground = true;
+                ThreadEncode.Start();
+            }
+        }
+
+        
+        private void EncodeStarter() {
+            Convert.WebP(ENCODE);
+        }
         #endregion
 
-        #region Encode Button Click
+        #region Decode Button Click
         //Starts the encoding process.
         //private void EncodeButton_Click(object sender, RoutedEventArgs e) => Utils.StartEncode();
-        private void DecodeButton_Click(object sender, RoutedEventArgs e) => Convert.WebP(DECODE);
+        private void DecodeButton_Click(object sender, RoutedEventArgs e) {
+
+        }
         #endregion
 
         #region Get Files
@@ -189,7 +218,6 @@ namespace SquirrelyConverter
                                 DecodeItems.Items.Add(new Tools { Name = NName, Type = NType, Saved = "Queued", Location = NLocation });
                                 break;
                         }
-                        
                         Utils.files.Add(file);
                     }
                 }
@@ -268,13 +296,14 @@ namespace SquirrelyConverter
         }
         #endregion
 
-        public void UpdateSlider() {
+        private void MetroWindow_Closed(object sender, EventArgs e) {
+            Console.WriteLine("Closing");
+            toast.Dispose();
+        }
 
-            //NumImagesLabel
-            //NumImagesSlide
-
-            //NumImagesSlide.Value = new Tools { NumImages = Utils.fileNum };
-
+        private void SettingsButton_Click(object sender, RoutedEventArgs e) {
+            SettingsWindow sets = new SettingsWindow();
+            sets.ShowDialog();
         }
     }
 
