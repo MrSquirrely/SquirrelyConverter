@@ -14,7 +14,7 @@
                    xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
                    BorderThickness="1"
                    Title="Squirrely converter"
-         Height="720" Width="1280" Closed="MetroWindow_Closed">
+         Height="720" Width="1280" Closed="MetroWindow_Closed" KeyDown="MetroWindow_KeyDown">
     <metro:MetroWindow.RightWindowCommands>
         <metro:WindowCommands>
             <Button x:Name="SettingsButton" Click="SettingsButton_Click">

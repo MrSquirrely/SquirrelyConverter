@@ -12,8 +12,13 @@ namespace SquirrelyConverter
         public double Quality { get; set; } = 80;
         public bool NoAlpha { get; set; } = false;
         public bool CopyMeta { get; set; } = false;
+        public bool Lossless { get; set; } = false;
         public string Image { get; set; }
         public string Output { get; set; }
+
+        private string _NoAlpha = " -noalpha";
+        private string _CopyMeta = " -metadata all";
+        private string _Lossless = " -lossless";
 
         private bool Ready = false;
         private string CMDText;
@@ -28,7 +33,14 @@ namespace SquirrelyConverter
 
             if (Ready) {
                 try {
-                    CMDText = "cwebp" + S + Quality + S + NoAlpha + S + CopyMeta + S + "\"" + Image + "\"" + S + "-o" + S + "\"" + Output + "\"";
+                    CMDText = $"cwebp {Quality}";
+                    if (NoAlpha) CMDText = CMDText.Insert(CMDText.Length, _NoAlpha);
+                    if (CopyMeta) CMDText = CMDText.Insert(CMDText.Length, _CopyMeta);
+                    if (Lossless) CMDText = CMDText.Insert(CMDText.Length, _Lossless);
+                    CMDText = CMDText.Insert(CMDText.Length, " "+ $"\"{Image}\"" + " -o " + $"\"{Output}\" ");
+
+                    Console.WriteLine(CMDText);
+
                     Process process = new Process();
                     process.StartInfo.FileName = "cmd.exe";
                     process.StartInfo.RedirectStandardInput = true;
@@ -44,12 +56,7 @@ namespace SquirrelyConverter
 
                     Ready = false;
 
-                    //ProcessStartInfo startInfo = new ProcessStartInfo();
-                    ////startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                    //startInfo.FileName = "cmd.exe";
-                    //startInfo.Arguments = CMDText;
-                    //process.StartInfo = startInfo;
-                    //process.Start();
+                    process.Kill();
                 }
                 catch (Exception e) {
                     Console.WriteLine(e.Message);
@@ -67,7 +74,7 @@ namespace SquirrelyConverter
 
             if (Ready) {
                 try {
-                    CMDText = "gif2webp" + S + Image + S + "-o" + S + Output;
+                    CMDText = $"gif2webp {Image} -o {Output}";
                     Process process = new Process();
                     process.StartInfo.FileName = "cmd.exe";
                     process.StartInfo.RedirectStandardInput = true;
@@ -82,6 +89,8 @@ namespace SquirrelyConverter
                     process.WaitForExit();
 
                     Ready = false;
+
+                    process.Kill();
                 }
                 catch (Exception e) {
                     Console.WriteLine(e.Message);
@@ -98,7 +107,7 @@ namespace SquirrelyConverter
 
             if (Ready) {
                 try {
-                    CMDText = "dwebp" + S + Image + S + "-o" + S + Output;
+                    CMDText = $"dwebp {Image} -o {Output}";
                     Process process = new Process();
                     process.StartInfo.FileName = "cmd.exe";
                     process.StartInfo.RedirectStandardInput = true;

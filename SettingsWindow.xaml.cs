@@ -1,4 +1,5 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using Notifications.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,12 +21,20 @@ namespace SquirrelyConverter
     /// </summary>
     public partial class SettingsWindow
     {
+        NotificationManager toast = new NotificationManager();
+
         public SettingsWindow() {
             InitializeComponent();
+            TempFolderBox.Text = $"{Utils.WorkingDir}/{Utils.tempDir}";
+            DeleteTemp.IsChecked = Options.DeleteTemp;
+            Quality.Value = Options.WebPQuality;
+            Lossless.IsChecked = Options.WebPLossless;
+            NoAlpha.IsChecked = Options.WebPNoAlpha;
+            SaveEXIF.IsChecked = Options.WebPCopyMeta;
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e) {
-            Options.TempDir = TempFolderBox.Text;
+            //Options.TempDir = TempFolderBox.Text;
             //Options.OutDir = OutputFolderBox.Text; //This doesn't work at the moment so it does nothing!
             Options.DeleteTemp = DeleteTemp.IsChecked.GetValueOrDefault();
             Options.WebPQuality = Quality.Value;
@@ -33,6 +42,13 @@ namespace SquirrelyConverter
             Options.WebPNoAlpha = NoAlpha.IsChecked.GetValueOrDefault();
             Options.WebPCopyMeta = SaveEXIF.IsChecked.GetValueOrDefault();
             Options.Save();
+
+            toast.Show(new NotificationContent {
+                Title = "Settings Saved",
+                Message = "The settings were saved.",
+                Type = NotificationType.Success
+            }, expirationTime: TimeSpan.FromSeconds(6));
+            Close();
         }
 
         private void ResetButton_Click(object sender, RoutedEventArgs e) {
@@ -46,7 +62,7 @@ namespace SquirrelyConverter
             SaveEXIF.IsChecked = false;
             Lossless.IsChecked = false;
             Quality.Value = 80;
-
+            
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e) {

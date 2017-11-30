@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Weavers>
+<Costura CreateTemporaryAssemblies='true' />
+  <Costura>
+    <IncludeAssemblies>
+	Notifications.Wpf
+	BespokeFusion
+	MahApps.Metro.IconPacks
+	MaterialDesignThemes.Wpf
+	Dragablz
+	MaterialDesignThemes.MahApps
+	System.Windows.Interactivity
+	MahApps.Metro
+	MaterialDesignColors
+	Microsoft.WindowsAPICodePack
+	Microsoft.WindowsAPICodePack.Shell
+	Microsoft.WindowsAPICodePack.ShellExtensions
+    </IncludeAssemblies>
+</Costura>
+</Weavers>

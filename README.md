@@ -2,14 +2,24 @@
 
 ###### A simple converter for WebP and WebM
 
-### The current version is 0.5 because half of what I want is pressent.
+### The current version is 0.5 because half of what I want is present.
+
+## Libraries Used
+
+ - Costura Fod
+ - Dragablz
+ - MahApps Metro
+ - MahApps Metro IconPacks
+ - Material Design in XAML
+ - Material Design in XAML MahApps
+ - Material Message Box
+ - Microsoft WindowsAPICodePack Shell
 
 There are some things I know I am changing.
-	- Changing the tabs from "WebP & WebM" with "Encode and Decode" sub tabs to "Enocde and Decode" with "WebP and WebM" sub tabs.
-	- Alowing you to drop both images and vides into the program.
-	- Alowing you to change the colors of the program.
+	- Changing the tabs from "WebP & WebM" with "Encode and Decode" sub tabs to "Encode and Decode" with "WebP and WebM" sub tabs.
+	- Allowing you to drop both images and videos into the program.
+	- Allowing you to change the colors of the program.
 	
-
 
 The icon was created by Honza Dousek(https://www.iconfinder.com/Lexter)
 

@@ -11,6 +11,7 @@ namespace SquirrelyConverter
         public static string TempDir { get; set; }
         public static string OutDir { get; set; }
         public static bool DeleteTemp { get; set; }
+        //WeBP
         public static double WebPQuality { get; set; }
         public static bool WebPLossless { get; set; }
         public static bool WebPNoAlpha { get; set; }
@@ -34,6 +35,7 @@ namespace SquirrelyConverter
             Properties.Settings.Default.WebPLossless = WebPLossless;
             Properties.Settings.Default.WebPNoAlpha = WebPNoAlpha;
             Properties.Settings.Default.WebPCopyMeta = WebPCopyMeta;
+            Properties.Settings.Default.Save();
         }
     }
 }

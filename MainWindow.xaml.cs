@@ -25,6 +25,8 @@ using System.IO;
 using System.Windows;
 using System.Threading;
 using Notifications.Wpf;
+using System.Net;
+using System.Collections.Generic;
 
 namespace SquirrelyConverter
 {
@@ -35,8 +37,9 @@ namespace SquirrelyConverter
     {
         //private double OP_Quality;
         //private bool OP_DeleteTempDir;
-        protected string ENCODE = "encode";
-        protected string DECODE = "decode";
+        readonly string ENCODE = "encode";
+        readonly string DECODE = "decode";
+       
 
         Thread ThreadEncode;
         NotificationManager toast = new NotificationManager();
@@ -70,8 +73,10 @@ namespace SquirrelyConverter
                             break;
                     }
                 }
-
-                Utils.droppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop);
+                Utils.droppedFiles.Clear();
+                foreach (string file in (string[])e.Data.GetData(DataFormats.FileDrop)) {
+                    Utils.droppedFiles.Add(file);
+                }
                 GetDirectory(Utils.droppedFiles);
                 DecodeItems.Items.Clear();
                 GetFiles(Utils.Dir, ENCODE);
@@ -111,7 +116,10 @@ namespace SquirrelyConverter
                     }
                 }
 
-                Utils.droppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop);
+                Utils.droppedFiles.Clear();
+                foreach (string file in (string[])e.Data.GetData(DataFormats.FileDrop)) {
+                    Utils.droppedFiles.Add(file);
+                }
                 GetDirectory(Utils.droppedFiles); // Needs to be looked at!! I'm not sure what I'm doing with it? It looks like nothing...
                 EncodeItems.Items.Clear();
                 GetFiles(Utils.Dir, DECODE);
@@ -132,10 +140,10 @@ namespace SquirrelyConverter
 
         #region Get Directory
         //Sets the directory to be used later.
-        private void GetDirectory(string[] value) {
+        private void GetDirectory(List<string> value) {
             Console.WriteLine("Start Get Directory");
-            Utils.Dir = Path.GetDirectoryName(value[value.Length - 1]);
-            Utils.Dirs.Add(Utils.Dir);
+            Utils.Dir = Path.GetDirectoryName(value[value.Count - 1]);
+            //Utils.Dirs.Add(Utils.Dir);
 
             foreach (string item in Utils.droppedFiles) {
                 Console.WriteLine(item);
@@ -202,9 +210,9 @@ namespace SquirrelyConverter
         #region Get Files
         //Get all files in directory and sets them to an array;
         private void GetFiles(string value, string coding) {
+            Utils.Files.Clear();
 
             try {
-
                 foreach (string file in Utils.droppedFiles) {
                     string NName = Path.GetFileName(file);
                     string NType = Path.GetExtension(file.ToLower());
@@ -218,30 +226,9 @@ namespace SquirrelyConverter
                                 DecodeItems.Items.Add(new Tools { Name = NName, Type = NType, Saved = "Queued", Location = NLocation });
                                 break;
                         }
-                        Utils.files.Add(file);
+                        Utils.Files.Add(file);
                     }
                 }
-
-                //foreach (string file in Directory.GetFiles(value, "*.jpg")) {
-                //    string NName = Path.GetFileName(file);
-                //    string NType = Path.GetExtension(file.ToLower());
-                //    string NLocation = Path.GetDirectoryName(file);
-                //    EncodeItems.Items.Add(new Tools { Name = NName, Type = NType, Saved = "Queued", Location = NLocation });
-                //}
-
-                //foreach (string file in Directory.GetFiles(value, "*.jpeg")) {
-                //    string NName = Path.GetFileName(file);
-                //    string NType = Path.GetExtension(file.ToLower());
-                //    string NLocation = Path.GetDirectoryName(file);
-                //    EncodeItems.Items.Add(new Tools { Name = NName, Type = NType, Saved = "Queued", Location = NLocation });
-                //}
-
-                //foreach (string file in Directory.GetFiles(value, "*.png")) {
-                //    string NName = Path.GetFileName(file);
-                //    string NType = Path.GetExtension(file.ToLower());
-                //    string NLocation = Path.GetDirectoryName(file);
-                //    EncodeItems.Items.Add(new Tools { Name = NName, Type = NType, Saved = "Queued", Location = NLocation });
-                //}
 
                 Console.WriteLine(Utils.isFolder);
 
@@ -254,24 +241,9 @@ namespace SquirrelyConverter
                             string NLocation = Path.GetDirectoryName(file);
                             if (NType == ".jpg" || NType == ".png" || NType == ".jpeg" || NType == ".gif") {
                                 EncodeItems.Items.Add(new Tools { Name = NName, Type = NType, Saved = "Queued", Location = NLocation });
-                                Utils.files.Add(file);
+                                Utils.Files.Add(file);
                             }
-                            //EncodeItems.Items.Add(new Tools { Name = NName, Type = NType, Saved = "Queued", Location = NLocation });
                         }
-
-                        //foreach (string file in Directory.GetFiles(Utils.Dirs[i + 1], "*.jpeg")) {
-                        //    string NName = Path.GetFileName(file);
-                        //    string NType = Path.GetExtension(file.ToLower());
-                        //    string NLocation = Path.GetDirectoryName(file);
-                        //    EncodeItems.Items.Add(new Tools { Name = NName, Type = NType, Saved = "Queued", Location = NLocation });
-                        //}
-
-                        //foreach (string file in Directory.GetFiles(Utils.Dirs[i + 1], "*.png")) {
-                        //    string NName = Path.GetFileName(file);
-                        //    string NType = Path.GetExtension(file.ToLower());
-                        //    string NLocation = Path.GetDirectoryName(file);
-                        //    EncodeItems.Items.Add(new Tools { Name = NName, Type = NType, Saved = "Queued", Location = NLocation });
-                        //}
                     }
                 }
             }
@@ -304,6 +276,14 @@ namespace SquirrelyConverter
         private void SettingsButton_Click(object sender, RoutedEventArgs e) {
             SettingsWindow sets = new SettingsWindow();
             sets.ShowDialog();
+        }
+
+        private void MetroWindow_KeyDown(object sender, System.Windows.Input.KeyEventArgs e) { ClearItems(true, true); }
+
+        private void ClearItems(bool ItemsEncode, bool ItemsDecode) {
+            if (ItemsEncode) EncodeItems.Items.Clear();
+            if (ItemsDecode) DecodeItems.Items.Clear();
+            Utils.Files.Clear();
         }
     }
 

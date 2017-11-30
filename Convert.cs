@@ -26,7 +26,6 @@ namespace SquirrelyConverter
                         catch (Exception e) {
                             Console.WriteLine(e.Message);
                         }
-                        
                         break;
                     case "decode":
                         try {
@@ -46,7 +45,7 @@ namespace SquirrelyConverter
         #region Encode
         private static void WebPEncode() {
             try {
-                foreach (string file in Utils.files) {
+                foreach (string file in Utils.Files) {
                     Utils.FileName = Path.GetFileNameWithoutExtension(file);
                     Utils.FileType = Path.GetExtension(file).ToLower();
                     Utils.FileLocation = Path.GetDirectoryName(file);
@@ -54,7 +53,7 @@ namespace SquirrelyConverter
                     if (Utils.FileType == ".gif") {
                         WebP image = new WebP();
                         image.Image = file;
-                        image.Output = Utils.FileLocation + "/" +  Utils.FileName + ".webp";
+                        image.Output = $"{Utils.FileLocation}/{Utils.FileName}.webp";
                         image.EnocdeGIF();
                         Utils.fileNum++;
                         File.Delete(file);
@@ -62,10 +61,11 @@ namespace SquirrelyConverter
                     else {
                         WebP image = new WebP();
                         image.Image = file;
-                        image.Quality = 80;
-                        image.CopyMeta = false;
-                        image.NoAlpha = false;
-                        image.Output = Utils.FileLocation + "/" + Utils.FileName + ".webp";
+                        image.Quality = Options.WebPQuality;
+                        image.CopyMeta = Options.WebPCopyMeta;
+                        image.NoAlpha = Options.WebPNoAlpha;
+                        image.Lossless = Options.WebPLossless;
+                        image.Output = $"{Utils.FileLocation}/{Utils.FileName}.webp";
                         image.Encode();
                         Utils.fileNum++;
                         File.Delete(file);
@@ -82,7 +82,7 @@ namespace SquirrelyConverter
         private static void WebPDecode() {
 
             try {
-                foreach (string file in Utils.files) {
+                foreach (string file in Utils.Files) {
                     Utils.FileName = Path.GetFileNameWithoutExtension(file);
                     Utils.FileLocation = Path.GetDirectoryName(file);
 

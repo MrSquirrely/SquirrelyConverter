@@ -4,8 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SquirrelyConverter"
-        xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
-                   xmlns:Controls="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions" x:Class="SquirrelyConverter.SettingsWindow"
+        xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls" x:Class="SquirrelyConverter.SettingsWindow"
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
                    Background="{DynamicResource MaterialDesignPaper}"					  
@@ -23,9 +22,9 @@
                     <Label Content="Output Folder:" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Top" IsEnabled="False"/>
                     <TextBox x:Name="OutputFolderBox" HorizontalAlignment="Left" Height="23" Margin="92,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="308" IsEnabled="False"/>
                     <Button x:Name="OutputButton" Content="Open" HorizontalAlignment="Left" Margin="405,0,0,0" VerticalAlignment="Top" Width="75" Style="{DynamicResource MaterialDesignToolButton}" IsEnabled="False"/>
-                    <Label Content="Temp Folder:" HorizontalAlignment="Left" Margin="0,42,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="TempFolderBox" HorizontalAlignment="Left" Height="23" Margin="92,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="308"/>
-                    <Button x:Name="TempButton" Content="Open" HorizontalAlignment="Left" Margin="405,37,0,0" VerticalAlignment="Top" Width="75" Style="{DynamicResource MaterialDesignToolButton}" Click="TempButton_Click"/>
+                    <Label Content="Temp Folder:" HorizontalAlignment="Left" Margin="0,42,0,0" VerticalAlignment="Top" IsEnabled="False"/>
+                    <TextBox x:Name="TempFolderBox" HorizontalAlignment="Left" Height="23" Margin="92,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="308" IsEnabled="False"/>
+                    <Button x:Name="TempButton" Content="Open" HorizontalAlignment="Left" Margin="405,37,0,0" VerticalAlignment="Top" Width="75" Style="{DynamicResource MaterialDesignToolButton}" Click="TempButton_Click" IsEnabled="False"/>
                     <CheckBox x:Name="DeleteTemp" Content="Delete temp folder when finished?" HorizontalAlignment="Left" Margin="0,90,0,0" VerticalAlignment="Top"/>
                     <Label Content="Output isn't working at the moment. Sorry." HorizontalAlignment="Left" Margin="10,113,0,0" VerticalAlignment="Top"/>
                 </Grid>

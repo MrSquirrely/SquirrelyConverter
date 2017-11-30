@@ -37,8 +37,8 @@ namespace SquirrelyConverter
         public static bool isFolder;
         public static bool hasFolder = false;
         public static List<string> Dirs = new List<string>();
-        public static List<string> files = new List<string>();
-        public static string[] droppedFiles;
+        public static List<string> Files = new List<string>();
+        public static List<string> droppedFiles = new List<string>();
         public static int dirNum;
         public static double fileNum;
         public static double currentImage;
@@ -46,11 +46,6 @@ namespace SquirrelyConverter
         private static int tempDirNum;
         private static string tempDirFull;
         public static bool isRunning = false;
-
-        public static string OutDir;
-        public static bool ChangeOutDir;
-        public static bool DeleteTempDir;
-        public static double Quality;
 
         public static string FileName;
         public static string FileType;
