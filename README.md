@@ -15,7 +15,8 @@
  - Material Message Box
  - Microsoft WindowsAPICodePack Shell
 
-There are some things I know I am changing.
+##Things I know I am changing.
+
 	- Changing the tabs from "WebP & WebM" with "Encode and Decode" sub tabs to "Encode and Decode" with "WebP and WebM" sub tabs.
 	- Allowing you to drop both images and videos into the program.
 	- Allowing you to change the colors of the program.
