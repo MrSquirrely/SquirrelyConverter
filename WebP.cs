@@ -1,134 +1,138 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SquirrelyConverter
 {
     public class WebP
     {
-        public double Quality { get; set; } = 80;
-        public bool NoAlpha { get; set; } = false;
-        public bool CopyMeta { get; set; } = false;
-        public bool Lossless { get; set; } = false;
-        public string Image { get; set; }
-        public string Output { get; set; }
+        public double WebPQuality { get; set; } = 80;
+        public bool WebPNoAlpha { get; set; } = false;
+        public bool WebPCopyMeta { get; set; } = false;
+        public bool WebPLossless { get; set; } = false;
+        public string WebPImage { get; set; }
+        public string WebPOutput { get; set; }
 
-        private string _NoAlpha = " -noalpha";
-        private string _CopyMeta = " -metadata all";
-        private string _Lossless = " -lossless";
+        private const string NoAlpha = " -noalpha";
+        private const string CopyMeta = " -metadata all";
+        private const string Lossless = " -lossless";
 
-        private bool Ready = false;
-        private string CMDText;
-        private string S = " ";
+        private bool _ready;
+        private string _cmdText;
 
         #region Encode
         public void Encode() {
             //These are remnants from when this was going to be a library. I still want to make it one, but for now it'll stay.
-            if (Image == null) throw new ArgumentException("Input must not be empty!");  //Checks if the input is null and if so throws exception
-            if (Output == null) throw new ArgumentException("Output must not be empty!"); //Checks if the output is null and if so throws exception
-            if (Image != null && Output != null) Ready = true; else throw new ArgumentException("There has to be an input and an output!"); //Just a final test to be safe.
+            if (WebPImage == null) throw new ArgumentException("Input must not be empty!");  //Checks if the input is null and if so throws exception
+            if (WebPOutput == null) throw new ArgumentException("WebPOutput must not be empty!"); //Checks if the output is null and if so throws exception
+            if (WebPImage != null && WebPOutput != null) _ready = true; else throw new ArgumentException("There has to be an input and an output!"); //Just a final test to be safe.
 
-            if (Ready) {
-                try {
-                    CMDText = $"cwebp {Quality}";
-                    if (NoAlpha) CMDText = CMDText.Insert(CMDText.Length, _NoAlpha);
-                    if (CopyMeta) CMDText = CMDText.Insert(CMDText.Length, _CopyMeta);
-                    if (Lossless) CMDText = CMDText.Insert(CMDText.Length, _Lossless);
-                    CMDText = CMDText.Insert(CMDText.Length, " "+ $"\"{Image}\"" + " -o " + $"\"{Output}\" ");
+            if (!_ready) return;
+            try {
+                _cmdText = $"cwebp {WebPQuality}";
+                if (WebPNoAlpha) _cmdText = _cmdText.Insert(_cmdText.Length, NoAlpha);
+                if (WebPCopyMeta) _cmdText = _cmdText.Insert(_cmdText.Length, CopyMeta);
+                if (WebPLossless) _cmdText = _cmdText.Insert(_cmdText.Length, Lossless);
+                _cmdText = _cmdText.Insert(_cmdText.Length, " "+ $"\"{WebPImage}\"" + " -o " + $"\"{WebPOutput}\" ");
 
-                    Console.WriteLine(CMDText);
+                Console.WriteLine(_cmdText);
 
-                    Process process = new Process();
-                    process.StartInfo.FileName = "cmd.exe";
-                    process.StartInfo.RedirectStandardInput = true;
-                    process.StartInfo.RedirectStandardOutput = true;
-                    process.StartInfo.CreateNoWindow = true;
-                    process.StartInfo.UseShellExecute = false;
-                    process.Start();
+                var process = new Process
+                {
+                    StartInfo =
+                    {
+                        FileName = "cmd.exe",
+                        RedirectStandardInput = true,
+                        RedirectStandardOutput = true,
+                        CreateNoWindow = true,
+                        UseShellExecute = false
+                    }
+                };
+                process.Start();
 
-                    process.StandardInput.WriteLine(CMDText);
-                    process.StandardInput.Flush();
-                    process.StandardInput.Close();
-                    process.WaitForExit();
+                process.StandardInput.WriteLine(_cmdText);
+                process.StandardInput.Flush();
+                process.StandardInput.Close();
+                process.WaitForExit();
 
-                    Ready = false;
+                _ready = false;
 
-                    process.Kill();
-                }
-                catch (Exception e) {
-                    Console.WriteLine(e.Message);
-                }
-
+                process.Kill();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
             }
         }
         #endregion
 
         #region Encode GIF
-        public void EnocdeGIF() {
-            if (Image == null) throw new ArgumentException("Input must not be empty!");  //Checks if the input is null and if so throws exception
-            if (Output == null) throw new ArgumentException("Output must not be empty!"); //Checks if the output is null and if so throws exception
-            if (Image != null && Output != null) Ready = true; else throw new ArgumentException("There has to be an input and an output!"); //Just a final test to be safe.
+        public void EnocdeGif() {
+            if (WebPImage == null) throw new ArgumentException("Input must not be empty!");  //Checks if the input is null and if so throws exception
+            if (WebPOutput == null) throw new ArgumentException("WebPOutput must not be empty!"); //Checks if the output is null and if so throws exception
+            if (WebPImage != null && WebPOutput != null) _ready = true; else throw new ArgumentException("There has to be an input and an output!"); //Just a final test to be safe.
 
-            if (Ready) {
-                try {
-                    CMDText = $"gif2webp {Image} -o {Output}";
-                    Process process = new Process();
-                    process.StartInfo.FileName = "cmd.exe";
-                    process.StartInfo.RedirectStandardInput = true;
-                    process.StartInfo.RedirectStandardOutput = true;
-                    process.StartInfo.CreateNoWindow = true;
-                    process.StartInfo.UseShellExecute = false;
-                    process.Start();
+            if (!_ready) return;
+            try {
+                _cmdText = $"gif2webp {WebPImage} -o {WebPOutput}";
+                var process = new Process
+                {
+                    StartInfo =
+                    {
+                        FileName = "cmd.exe",
+                        RedirectStandardInput = true,
+                        RedirectStandardOutput = true,
+                        CreateNoWindow = true,
+                        UseShellExecute = false
+                    }
+                };
+                process.Start();
 
-                    process.StandardInput.WriteLine(CMDText);
-                    process.StandardInput.Flush();
-                    process.StandardInput.Close();
-                    process.WaitForExit();
+                process.StandardInput.WriteLine(_cmdText);
+                process.StandardInput.Flush();
+                process.StandardInput.Close();
+                process.WaitForExit();
 
-                    Ready = false;
+                _ready = false;
 
-                    process.Kill();
-                }
-                catch (Exception e) {
-                    Console.WriteLine(e.Message);
-                }
+                process.Kill();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
             }
         }
         #endregion
 
         #region Decode
         public void Decode() {
-            if (Image == null) throw new ArgumentException("Input must not be empty!"); //Checks if the input is null
-            if (Output == null) throw new ArgumentException("Output must not be empty!"); //Checks if the output is null
-            if (Image != null && Output != null) Ready = true; else throw new ArgumentException("There has to be an input and an output!"); //Just a final test to be safe.
+            if (WebPImage == null) throw new ArgumentException("Input must not be empty!"); //Checks if the input is null
+            if (WebPOutput == null) throw new ArgumentException("WebPOutput must not be empty!"); //Checks if the output is null
+            if (WebPImage != null && WebPOutput != null) _ready = true; else throw new ArgumentException("There has to be an input and an output!"); //Just a final test to be safe.
 
-            if (Ready) {
-                try {
-                    CMDText = $"dwebp {Image} -o {Output}";
-                    Process process = new Process();
-                    process.StartInfo.FileName = "cmd.exe";
-                    process.StartInfo.RedirectStandardInput = true;
-                    process.StartInfo.RedirectStandardOutput = true;
-                    process.StartInfo.CreateNoWindow = true;
-                    process.StartInfo.UseShellExecute = false;
-                    process.Start();
+            if (!_ready) return;
+            try {
+                _cmdText = $"dwebp {WebPImage} -o {WebPOutput}";
+                var process = new Process
+                {
+                    StartInfo =
+                    {
+                        FileName = "cmd.exe",
+                        RedirectStandardInput = true,
+                        RedirectStandardOutput = true,
+                        CreateNoWindow = true,
+                        UseShellExecute = false
+                    }
+                };
+                process.Start();
 
-                    process.StandardInput.WriteLine(CMDText);
-                    process.StandardInput.Flush();
-                    process.StandardInput.Close();
-                    process.WaitForExit();
+                process.StandardInput.WriteLine(_cmdText);
+                process.StandardInput.Flush();
+                process.StandardInput.Close();
+                process.WaitForExit();
 
-                    Ready = false;
-                }
-                catch (Exception e) {
-                    Console.WriteLine(e.Message);
-                }
-
+                _ready = false;
             }
-
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+            }
         }
         #endregion
 

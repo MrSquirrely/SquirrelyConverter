@@ -19,14 +19,15 @@
         <TabControl HorizontalAlignment="Left" Height="369" VerticalAlignment="Top" Width="492">
             <TabItem Header="Default">
                 <Grid Background="#FFE5E5E5">
-                    <Label Content="Output Folder:" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Top" IsEnabled="False"/>
-                    <TextBox x:Name="OutputFolderBox" HorizontalAlignment="Left" Height="23" Margin="92,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="308" IsEnabled="False"/>
-                    <Button x:Name="OutputButton" Content="Open" HorizontalAlignment="Left" Margin="405,0,0,0" VerticalAlignment="Top" Width="75" Style="{DynamicResource MaterialDesignToolButton}" IsEnabled="False"/>
-                    <Label Content="Temp Folder:" HorizontalAlignment="Left" Margin="0,42,0,0" VerticalAlignment="Top" IsEnabled="False"/>
-                    <TextBox x:Name="TempFolderBox" HorizontalAlignment="Left" Height="23" Margin="92,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="308" IsEnabled="False"/>
-                    <Button x:Name="TempButton" Content="Open" HorizontalAlignment="Left" Margin="405,37,0,0" VerticalAlignment="Top" Width="75" Style="{DynamicResource MaterialDesignToolButton}" Click="TempButton_Click" IsEnabled="False"/>
-                    <CheckBox x:Name="DeleteTemp" Content="Delete temp folder when finished?" HorizontalAlignment="Left" Margin="0,90,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Output isn't working at the moment. Sorry." HorizontalAlignment="Left" Margin="10,113,0,0" VerticalAlignment="Top"/>
+                    <Label Content="WebPOutput Folder:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="OutputFolderBox" HorizontalAlignment="Left" Height="23" Margin="102,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="308" IsEnabled="False"/>
+                    <Button x:Name="OutputButton" Content="Open" HorizontalAlignment="Left" Margin="415,2,-4,0" VerticalAlignment="Top" Width="75" Style="{DynamicResource MaterialDesignToolButton}" Click="OpenFolder" IsEnabled="False"/>
+                    <Label Content="Temp Folder:" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="TempFolderBox" HorizontalAlignment="Left" Height="23" Margin="102,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="308" IsEnabled="False"/>
+                    <Button x:Name="TempButton" Content="Open" HorizontalAlignment="Left" Margin="415,54,-4,0" VerticalAlignment="Top" Width="75" Style="{DynamicResource MaterialDesignToolButton}" Click="OpenFolder" IsEnabled="False"/>
+                    <CheckBox x:Name="DeleteTemp" Content="Delete temp folder when finished?" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="ChangeOutput" Content="Change output directory" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top" Click="ChangeOutput_Click"/>
+                    <CheckBox x:Name="ChangeTemp" Content="Change temp directory" HorizontalAlignment="Left" Margin="10,91,0,0" VerticalAlignment="Top" Click="ChangeTemp_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="WebP">
@@ -35,8 +36,8 @@
                     <CheckBox x:Name="SaveEXIF" Content="Save Metadata" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top"/>
                     <Label Content="More to come!" HorizontalAlignment="Left" Margin="10,179,0,0" VerticalAlignment="Top"/>
                     <Slider x:Name="Quality" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top" Width="466" Maximum="100" SmallChange="1" Value="80"/>
-                    <Label Content="Quality (Default 80)" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top"/>
-                    <CheckBox x:Name="Lossless" Content="Lossless" HorizontalAlignment="Left" Margin="87,10,0,0" VerticalAlignment="Top"/>
+                    <Label Content="WebPQuality (Default 80)" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="Lossless" Content="WebPLossless" HorizontalAlignment="Left" Margin="87,10,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
             <TabItem Header="WebM">

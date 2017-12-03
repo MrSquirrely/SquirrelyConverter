@@ -106,5 +106,29 @@ namespace SquirrelyConverter.Properties {
                 this["WebPCopyMeta"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SetCustomOutput {
+            get {
+                return ((bool)(this["SetCustomOutput"]));
+            }
+            set {
+                this["SetCustomOutput"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ChangeTemp {
+            get {
+                return ((bool)(this["ChangeTemp"]));
+            }
+            set {
+                this["ChangeTemp"] = value;
+            }
+        }
     }
 }

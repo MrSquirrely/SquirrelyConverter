@@ -11,16 +11,22 @@
     <Setting Name="DeleteTempDir" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="WebPQuality" Type="System.Double" Scope="User">
+    <Setting Name="WebPWebPQuality" Type="System.Double" Scope="User">
       <Value Profile="(Default)">80</Value>
     </Setting>
-    <Setting Name="WebPLossless" Type="System.Boolean" Scope="User">
+    <Setting Name="WebPWebPLossless" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="WebPNoAlpha" Type="System.Boolean" Scope="User">
+    <Setting Name="WebPWebPNoAlpha" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="WebPCopyMeta" Type="System.Boolean" Scope="User">
+    <Setting Name="WebPWebPCopyMeta" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SetCustomWebPOutput" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ChangeTemp" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>

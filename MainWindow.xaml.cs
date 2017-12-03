@@ -27,6 +27,8 @@ using System.Threading;
 using Notifications.Wpf;
 using System.Net;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Windows.Input;
 
 namespace SquirrelyConverter
 {
@@ -35,25 +37,26 @@ namespace SquirrelyConverter
     /// </summary>
     public partial class MainWindow
     {
-        //private double OP_Quality;
-        //private bool OP_DeleteTempDir;
-        readonly string ENCODE = "encode";
-        readonly string DECODE = "decode";
-       
 
-        Thread ThreadEncode;
-        NotificationManager toast = new NotificationManager();
+        private const string Encode = "encode";
+        private const string Decode = "decode";
+
+
+        Thread _threadEncode;
+        readonly NotificationManager _toast = new NotificationManager();
 
         public MainWindow() {
             InitializeComponent();
             Utils.WorkingDir = Directory.GetCurrentDirectory();
             Options.FirstRun();
+
+
         }
 
         #region Encode Items Dropped
         private void EncodeItems_Drop(object sender, DragEventArgs e) {
             //This checks if there are already files in the list and if there are removes them.
-            if (Utils.isRunning != true) {
+            if (Utils.IsRunning != true) {
                 if (EncodeItems.HasItems) {
 
                     var msg = new CustomMaterialMessageBox {
@@ -73,14 +76,14 @@ namespace SquirrelyConverter
                             break;
                     }
                 }
-                Utils.droppedFiles.Clear();
-                foreach (string file in (string[])e.Data.GetData(DataFormats.FileDrop)) {
-                    Utils.droppedFiles.Add(file);
+                Utils.DroppedFiles.Clear();
+                foreach (var file in (string[])e.Data.GetData(DataFormats.FileDrop)) {
+                    Utils.DroppedFiles.Add(file);
                 }
-                GetDirectory(Utils.droppedFiles);
+                GetDirectory(Utils.DroppedFiles);
                 DecodeItems.Items.Clear();
-                GetFiles(Utils.Dir, ENCODE);
-            }else if (Utils.isRunning == true) {
+                GetFiles(Utils.Dir, Encode);
+            }else if (Utils.IsRunning == true) {
                 var msg = new CustomMaterialMessageBox {
                     TxtMessage = { Text = "We are already running! Cannot add items while we are running!" },
                     TxtTitle = { Text = "WE ARE RUNNING!" },
@@ -95,7 +98,7 @@ namespace SquirrelyConverter
         #region Decode Items Dropped
         private void DecodeItems_Drop(object sender, DragEventArgs e) {
 
-            if (!Utils.isRunning) {
+            if (!Utils.IsRunning) {
                 if (DecodeItems.HasItems) {
 
                     var msg = new CustomMaterialMessageBox {
@@ -116,15 +119,15 @@ namespace SquirrelyConverter
                     }
                 }
 
-                Utils.droppedFiles.Clear();
-                foreach (string file in (string[])e.Data.GetData(DataFormats.FileDrop)) {
-                    Utils.droppedFiles.Add(file);
+                Utils.DroppedFiles.Clear();
+                foreach (var file in (string[])e.Data.GetData(DataFormats.FileDrop)) {
+                    Utils.DroppedFiles.Add(file);
                 }
-                GetDirectory(Utils.droppedFiles); // Needs to be looked at!! I'm not sure what I'm doing with it? It looks like nothing...
+                GetDirectory(Utils.DroppedFiles); // Needs to be looked at!! I'm not sure what I'm doing with it? It looks like nothing...
                 EncodeItems.Items.Clear();
-                GetFiles(Utils.Dir, DECODE);
+                GetFiles(Utils.Dir, Decode);
             }
-            else if (Utils.isRunning) {
+            else if (Utils.IsRunning) {
                 var msg = new CustomMaterialMessageBox {
                     TxtMessage = { Text = "We are already running! Cannot add items while we are running!" },
                     TxtTitle = { Text = "WE ARE RUNNING!" },
@@ -140,23 +143,21 @@ namespace SquirrelyConverter
 
         #region Get Directory
         //Sets the directory to be used later.
-        private void GetDirectory(List<string> value) {
-            Console.WriteLine("Start Get Directory");
+        private static void GetDirectory(List<string> value) {
             Utils.Dir = Path.GetDirectoryName(value[value.Count - 1]);
-            //Utils.Dirs.Add(Utils.Dir);
 
-            foreach (string item in Utils.droppedFiles) {
+            foreach (var item in Utils.DroppedFiles) {
                 Console.WriteLine(item);
-                FileAttributes attr = File.GetAttributes(item);
-                Utils.isFolder = (attr & FileAttributes.Directory) == FileAttributes.Directory;
-                Console.WriteLine(Utils.isFolder);
-                if (Utils.isFolder == true) {
-                    Utils.hasFolder = true;
+                var attr = File.GetAttributes(item);
+                Utils.IsFolder = (attr & FileAttributes.Directory) == FileAttributes.Directory;
+                Console.WriteLine(Utils.IsFolder);
+                if (Utils.IsFolder) {
+                    Utils.HasFolder = true;
                     Utils.Dirs.Add(item + "/");
-                    Utils.dirNum++;
-                    Console.WriteLine(Utils.dirNum);
+                    Utils.DirNum++;
+                    Console.WriteLine(Utils.DirNum);
                     try {
-                        Console.WriteLine(Utils.Dirs[Utils.dirNum -1]);
+                        Console.WriteLine(Utils.Dirs[Utils.DirNum -1]);
                     }
                     catch (Exception e) {
                         Console.WriteLine(e.Message);
@@ -171,31 +172,33 @@ namespace SquirrelyConverter
         //Starts the encoding process.
         //private void EncodeButton_Click(object sender, RoutedEventArgs e) => Utils.StartEncode();
         private void EncodeButton_Click(object sender, RoutedEventArgs e) {
-            if (Utils.droppedFiles != null) {
-                Utils.CheckFolder();
-                Utils.BackupFiles();
+            if (Utils.DroppedFiles == null) return;
+            Utils.CheckFolder();
+            Utils.BackupFiles();
 
-                ThreadStart Starter = EncodeStarter;
+            ThreadStart starter = EncodeStarter;
 
-                Starter += () => {
-                    toast.Show(new NotificationContent {
-                        Title = "Finished",
-                        Message = "Finished encoding the images.",
-                        Type = NotificationType.Success
-                    }, expirationTime: TimeSpan.FromSeconds(6));
+            starter += () => {
+                _toast.Show(new NotificationContent {
+                    Title = "Finished",
+                    Message = "Finished encoding the images.",
+                    Type = NotificationType.Success
+                }, expirationTime: TimeSpan.FromSeconds(6));
 
-                    Utils.isRunning = false;
-                };
-                ThreadEncode = new Thread(Starter);
-                ThreadEncode.SetApartmentState(ApartmentState.STA);
-                ThreadEncode.IsBackground = true;
-                ThreadEncode.Start();
-            }
+                Utils.IsRunning = false;
+
+                if (!Options.DeleteTemp) return;
+                if (!Options.ChangeTemp) Utils.DeleteFolder($"{Utils.Dir}/{Utils.TempDir}");
+            };
+            _threadEncode = new Thread(starter);
+            _threadEncode.SetApartmentState(ApartmentState.STA);
+            _threadEncode.IsBackground = true;
+            _threadEncode.Start();
         }
 
         
         private void EncodeStarter() {
-            Convert.WebP(ENCODE);
+            Convert.WebP(Encode);
         }
         #endregion
 
@@ -213,34 +216,37 @@ namespace SquirrelyConverter
             Utils.Files.Clear();
 
             try {
-                foreach (string file in Utils.droppedFiles) {
-                    string NName = Path.GetFileName(file);
-                    string NType = Path.GetExtension(file.ToLower());
-                    string NLocation = Path.GetDirectoryName(file);
-                    if (NType == ".jpg" || NType == ".png" || NType == ".jpeg" || NType == ".gif") {
+                foreach (var file in Utils.DroppedFiles) {
+                    var nName = Path.GetFileName(file);
+                    var nType = Path.GetExtension(file.ToLower());
+                    var nLocation = Path.GetDirectoryName(file);
+                    if (nType == ".jpg" || nType == ".png" || nType == ".jpeg" || nType == ".gif") {
                         switch (coding) {
                             case "encode":
-                                EncodeItems.Items.Add(new Tools { Name = NName, Type = NType, Saved = "Queued", Location = NLocation });
+                                EncodeItems.Items.Add(new Tools { Name = nName, Type = nType, Saved = "Queued", Location = nLocation });
                                 break;
                             case "decode":
-                                DecodeItems.Items.Add(new Tools { Name = NName, Type = NType, Saved = "Queued", Location = NLocation });
+                                DecodeItems.Items.Add(new Tools { Name = nName, Type = nType, Saved = "Queued", Location = nLocation });
                                 break;
+                            default:
+                                break;;
                         }
                         Utils.Files.Add(file);
                     }
                 }
 
-                Console.WriteLine(Utils.isFolder);
+                Console.WriteLine(Utils.IsFolder);
 
-                if (Utils.hasFolder) {
+                if (!Utils.HasFolder) return;
+                {
                     Console.WriteLine("Scanning Folders!");
-                    for (int i = 0; i < Utils.Dirs.Count; i++) {
+                    for (var i = 0; i < Utils.Dirs.Count; i++) {
                         foreach (string file in Directory.GetFiles(Utils.Dirs[i +1])) {
-                            string NName = Path.GetFileName(file);
-                            string NType = Path.GetExtension(file.ToLower());
-                            string NLocation = Path.GetDirectoryName(file);
-                            if (NType == ".jpg" || NType == ".png" || NType == ".jpeg" || NType == ".gif") {
-                                EncodeItems.Items.Add(new Tools { Name = NName, Type = NType, Saved = "Queued", Location = NLocation });
+                            var nName = Path.GetFileName(file);
+                            var nType = Path.GetExtension(file.ToLower());
+                            var nLocation = Path.GetDirectoryName(file);
+                            if (nType == ".jpg" || nType == ".png" || nType == ".jpeg" || nType == ".gif") {
+                                EncodeItems.Items.Add(new Tools { Name = nName, Type = nType, Saved = "Queued", Location = nLocation });
                                 Utils.Files.Add(file);
                             }
                         }
@@ -254,36 +260,33 @@ namespace SquirrelyConverter
         }
         #endregion
 
-        #region Open Folder Click
-        private void OpenFolderButton_Click(object sender, RoutedEventArgs e) {
-
-        }
-        #endregion
-
-        #region Save Button Click
-        private void SaveButton_Click(object sender, RoutedEventArgs e) {
-            //Console.WriteLine("Saved Settings!");
-            //Console.WriteLine(AutoDelete.IsChecked.ToString());
-            //Console.WriteLine(Quality.Value.ToString());
-        }
-        #endregion
-
-        private void MetroWindow_Closed(object sender, EventArgs e) {
-            Console.WriteLine("Closing");
-            toast.Dispose();
-        }
+        private void MetroWindow_Closed(object sender, EventArgs e) { _toast.Dispose(); }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e) {
-            SettingsWindow sets = new SettingsWindow();
+            var sets = new SettingsWindow();
             sets.ShowDialog();
         }
 
-        private void MetroWindow_KeyDown(object sender, System.Windows.Input.KeyEventArgs e) { ClearItems(true, true); }
+        private void MetroWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Delete) return;
+            if (EncodeItems.SelectedIndex <= -1) return;
+            Utils.Files.RemoveAt(EncodeItems.SelectedIndex);
+            EncodeItems.Items.RemoveAt(EncodeItems.SelectedIndex);
+            EncodeItems.Items.Refresh();
+        }
 
-        private void ClearItems(bool ItemsEncode, bool ItemsDecode) {
-            if (ItemsEncode) EncodeItems.Items.Clear();
-            if (ItemsDecode) DecodeItems.Items.Clear();
+        private void ClearButton_Click(object sender, RoutedEventArgs e) { ClearItems(true, true); }
+
+        private void ClearItems(bool itemsEncode, bool itemsDecode) {
+            if (itemsEncode) EncodeItems.Items.Clear();
+            if (itemsDecode) DecodeItems.Items.Clear();
             Utils.Files.Clear();
+        }
+
+        private void ReportBug_OnClick(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://github.com/MrSquirrely/SquirrelyConverter/issues/new");
         }
     }
 

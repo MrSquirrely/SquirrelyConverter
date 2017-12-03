@@ -24,9 +24,7 @@ using System.Windows;
 using System.IO;
 using BespokeFusion;
 using System.Collections.Generic;
-using System.Threading;
 using System.Text;
-using Notifications.Wpf;
 
 namespace SquirrelyConverter
 {
@@ -34,18 +32,18 @@ namespace SquirrelyConverter
     {
         public static string Dir;
         public static string WorkingDir;
-        public static bool isFolder;
-        public static bool hasFolder = false;
+        public static bool IsFolder;
+        public static bool HasFolder = false;
         public static List<string> Dirs = new List<string>();
         public static List<string> Files = new List<string>();
-        public static List<string> droppedFiles = new List<string>();
-        public static int dirNum;
-        public static double fileNum;
-        public static double currentImage;
-        public static string tempDir = "/Stemp/";
-        private static int tempDirNum;
-        private static string tempDirFull;
-        public static bool isRunning = false;
+        public static List<string> DroppedFiles = new List<string>();
+        public static int DirNum;
+        public static double FileNum;
+        public static double CurrentImage;
+        public static string TempDir = "/Stemp/";
+        private static int _tempDirNum;
+        private static string _tempDirFull;
+        public static bool IsRunning = false;
 
         public static string FileName;
         public static string FileType;
@@ -70,46 +68,43 @@ namespace SquirrelyConverter
 
         #region Check Folder
         public static void CheckFolder() {
-            Console.WriteLine(Dir + tempDir);
-            if (Directory.Exists(Dir + tempDir)) {
-                
-                var msg = new CustomMaterialMessageBox {
-                    TxtMessage = { Text = "The temp folder already exists, do you want to delete it?" },
-                    TxtTitle = { Text = "Temp Folder Exists" },
-                    BtnOk = { Content = "Yes" },
-                    BtnCancel = { Content = "No" }
-                };
-                msg.Show();
-                var result = msg.Result;
+            if (!Options.ChangeTemp) {
+                Console.WriteLine(Dir + TempDir);
+                if (Directory.Exists(Dir + TempDir)) {
+
+                    var msg = new CustomMaterialMessageBox {
+                        TxtMessage = { Text = "The temp folder already exists, do you want to delete it?" },
+                        TxtTitle = { Text = "Temp Folder Exists" },
+                        BtnOk = { Content = "Yes" },
+                        BtnCancel = { Content = "No" }
+                    };
+                    msg.Show();
+                    var result = msg.Result;
 
 
-                switch (result) {
-                    case MessageBoxResult.Cancel:
-                        tempDirNum = new Random().Next(0,100);
-                        Directory.CreateDirectory(Dir + "/" + tempDirNum.ToString() + "Stemp/");
-                        tempDirFull = Dir + "/" + tempDirNum.ToString() + tempDir;
-                        break;
-                    case MessageBoxResult.OK:
-                        DeleteFolder(Dir + tempDir);
-                        Directory.CreateDirectory(Dir + tempDir);
-                        tempDirFull = Dir + tempDir;
-                        break;
-                    default:
-                        Console.WriteLine("Something Broke!");
-                        break;
+                    switch (result) {
+                        case MessageBoxResult.Cancel:
+                            _tempDirNum = new Random().Next(0, 100);
+                            Directory.CreateDirectory(Dir + "/" + _tempDirNum + "Stemp/");
+                            _tempDirFull = Dir + "/" + _tempDirNum + TempDir;
+                            break;
+                        case MessageBoxResult.OK:
+                            DeleteFolder(Dir + TempDir);
+                            Directory.CreateDirectory(Dir + TempDir);
+                            _tempDirFull = Dir + TempDir;
+                            break;
+                    }
+                }
+                else {
+                    Directory.CreateDirectory(Dir + TempDir);
+                    _tempDirFull = Dir + TempDir;
                 }
             }
-            else {
-                Console.WriteLine("Creating" + Dir + tempDir);
-                Directory.CreateDirectory(Dir + tempDir);
-                tempDirFull = Dir + tempDir;
-            }
-
         }
 
-        private static void DeleteFolder(string folder) {
+        public static void DeleteFolder(string folder) {
             if (Directory.GetFiles(folder).Length > 0) {
-                foreach (string file in Directory.GetFiles(folder)) {
+                foreach (var file in Directory.GetFiles(folder)) {
                     File.Delete(file);
                 }
             }
@@ -119,42 +114,79 @@ namespace SquirrelyConverter
 
         #region Backup Files
         public static void BackupFiles() {
-
-            foreach (string file in droppedFiles) {
-                string NType = Path.GetExtension(file);
-                if (NType == ".jpg" || NType == ".png" || NType == ".jpeg" || NType == ".gif") {
-                    string filename = Path.GetFileName(file);
-                    File.Copy(file, tempDirFull + filename);
-                }
-            }
-
-            try {
-                foreach (string folder in Dirs) {
-                    if (folder != Dir) {
-                        foreach (string file in Directory.GetFiles(folder, "*.jpg")) {
-                            string filename = Path.GetFileName(file);
-                            File.Copy(file, tempDirFull + filename);
+            if (Options.ChangeTemp) {
+                try {
+                    foreach (string file in DroppedFiles) {
+                        var nType = Path.GetExtension(file)?.ToLower();
+                        if (nType == ".jpg" || nType == ".png" || nType == ".jpeg" || nType == ".gif") {
+                            var filename = Path.GetFileName(file);
+                            File.Copy(file, $"{Options.TempDir}/{filename}");
                         }
+                    }
+                    foreach (var folder in Dirs) {
+                        if (folder != Dir) {
+                            foreach (var file in Directory.GetFiles(folder, "*.jpg")) {
+                                var filename = Path.GetFileName(file);
+                                File.Copy(file, $"{Options.TempDir}/{filename}");
+                            }
 
-                        foreach (string file in Directory.GetFiles(folder, "*.png")) {
-                            string filename = Path.GetFileName(file);
-                            File.Copy(file, tempDirFull + filename);
-                        }
+                            foreach (var file in Directory.GetFiles(folder, "*.png")) {
+                                var filename = Path.GetFileName(file);
+                                File.Copy(file, $"{Options.TempDir}/{filename}");
+                            }
 
-                        foreach (string file in Directory.GetFiles(folder, "*.jpeg")) {
-                            string filename = Path.GetFileName(file);
-                            File.Copy(file, tempDirFull + filename);
-                        }
+                            foreach (var file in Directory.GetFiles(folder, "*.jpeg")) {
+                                var filename = Path.GetFileName(file);
+                                File.Copy(file, $"{Options.TempDir}/{filename}");
+                            }
 
-                        foreach (string file in Directory.GetFiles(folder, "*.gif")) {
-                            string filename = Path.GetFileName(file);
-                            File.Copy(file, tempDirFull + filename);
+                            foreach (var file in Directory.GetFiles(folder, "*.gif")) {
+                                var filename = Path.GetFileName(file);
+                                File.Copy(file, $"{Options.TempDir}/{filename}");
+                            }
                         }
                     }
                 }
+                catch (Exception e) {
+                    Console.WriteLine(e.Message);
+                }
             }
-            catch (Exception e) {
-                Console.WriteLine(e.Message);
+            else {
+                try {
+                    foreach (var file in DroppedFiles) {
+                        var nType = Path.GetExtension(file)?.ToLower();
+                        if (nType == ".jpg" || nType == ".png" || nType == ".jpeg" || nType == ".gif") {
+                            var filename = Path.GetFileName(file);
+                            File.Copy(file, _tempDirFull + filename);
+                        }
+                    }
+                    foreach (var folder in Dirs) {
+                        if (folder != Dir) {
+                            foreach (var file in Directory.GetFiles(folder, "*.jpg")) {
+                                var filename = Path.GetFileName(file);
+                                File.Copy(file, _tempDirFull + filename);
+                            }
+
+                            foreach (var file in Directory.GetFiles(folder, "*.png")) {
+                                var filename = Path.GetFileName(file);
+                                File.Copy(file, _tempDirFull + filename);
+                            }
+
+                            foreach (var file in Directory.GetFiles(folder, "*.jpeg")) {
+                                var filename = Path.GetFileName(file);
+                                File.Copy(file, _tempDirFull + filename);
+                            }
+
+                            foreach (var file in Directory.GetFiles(folder, "*.gif")) {
+                                var filename = Path.GetFileName(file);
+                                File.Copy(file, _tempDirFull + filename);
+                            }
+                        }
+                    }
+                }
+                catch (Exception e) {
+                    Console.WriteLine(e.Message);
+                }
             }
 
         }

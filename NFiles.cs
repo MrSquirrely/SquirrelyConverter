@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SquirrelyConverter
 {
-    class Tools
+    internal class Tools
     {
         public string Name { get; set; }
         public string Type { get; set; }

@@ -17,15 +17,15 @@
 
 ##Things I know I am changing.
 
-	- Changing the tabs from "WebP & WebM" with "Encode and Decode" sub tabs to "Encode and Decode" with "WebP and WebM" sub tabs.
-	- Allowing you to drop both images and videos into the program.
-	- Allowing you to change the colors of the program.
+- Changing the tabs from "WebP & WebM" with "Encode and Decode" sub tabs to "Encode and Decode" with "WebP and WebM" sub tabs.
+- Allowing you to drop both images and videos into the program.
+- Allowing you to change the colors of the program.
 	
 
 The icon was created by Honza Dousek(https://www.iconfinder.com/Lexter)
 
-WebP Converter || Convert your images to WebP
-    Copyright (C) 2017  James Ferguson<MrSquirrely.net>
+Squirrely Converter || Convert your images to WebP & Videos to WebM 
+Copyright (C) 2017  James Ferguson<MrSquirrely.net>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

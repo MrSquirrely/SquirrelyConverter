@@ -184,9 +184,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="LICENSE.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="cwebp.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

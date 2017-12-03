@@ -1,18 +1,7 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
 using Notifications.Wpf;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace SquirrelyConverter
 {
@@ -21,12 +10,24 @@ namespace SquirrelyConverter
     /// </summary>
     public partial class SettingsWindow
     {
-        NotificationManager toast = new NotificationManager();
+        private readonly NotificationManager _toast = new NotificationManager();
 
         public SettingsWindow() {
             InitializeComponent();
-            TempFolderBox.Text = $"{Utils.WorkingDir}/{Utils.tempDir}";
+            TempFolderBox.Text = $"{Utils.WorkingDir}/{Utils.TempDir}";
             DeleteTemp.IsChecked = Options.DeleteTemp;
+            ChangeOutput.IsChecked = Options.SetCustomOutput;
+            if (Options.SetCustomOutput) {
+                OutputFolderBox.Text = Options.OutDir;
+                OutputFolderBox.IsEnabled = true;
+                OutputButton.IsEnabled = true;
+            }
+            if (Options.ChangeTemp) {
+                TempFolderBox.Text = Options.TempDir;
+                TempFolderBox.IsEnabled = true;
+                TempButton.IsEnabled = true;
+            }
+            ChangeTemp.IsChecked = Options.ChangeTemp;
             Quality.Value = Options.WebPQuality;
             Lossless.IsChecked = Options.WebPLossless;
             NoAlpha.IsChecked = Options.WebPNoAlpha;
@@ -34,16 +35,18 @@ namespace SquirrelyConverter
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e) {
-            //Options.TempDir = TempFolderBox.Text;
-            //Options.OutDir = OutputFolderBox.Text; //This doesn't work at the moment so it does nothing!
+            Options.TempDir = TempFolderBox.Text;
+            Options.OutDir = OutputFolderBox.Text;
             Options.DeleteTemp = DeleteTemp.IsChecked.GetValueOrDefault();
+            Options.SetCustomOutput = ChangeOutput.IsChecked.GetValueOrDefault();
+            Options.ChangeTemp = ChangeTemp.IsChecked.GetValueOrDefault();
             Options.WebPQuality = Quality.Value;
             Options.WebPLossless = Lossless.IsChecked.GetValueOrDefault();
             Options.WebPNoAlpha = NoAlpha.IsChecked.GetValueOrDefault();
             Options.WebPCopyMeta = SaveEXIF.IsChecked.GetValueOrDefault();
             Options.Save();
 
-            toast.Show(new NotificationContent {
+            _toast.Show(new NotificationContent {
                 Title = "Settings Saved",
                 Message = "The settings were saved.",
                 Type = NotificationType.Success
@@ -53,9 +56,13 @@ namespace SquirrelyConverter
 
         private void ResetButton_Click(object sender, RoutedEventArgs e) {
             //Default Settings
-            OutputFolderBox.Text = "N/A";
-            TempFolderBox.Text = Utils.WorkingDir + Utils.tempDir;
+            OutputFolderBox.Text = "";
+            TempFolderBox.Text = $"{Utils.WorkingDir}/{Utils.TempDir}";
             DeleteTemp.IsChecked = false;
+            ChangeOutput.IsChecked = false;
+            OutputFolderBox.IsEnabled = false;
+            OutputButton.IsEnabled = false;
+
 
             //WebP Settings
             NoAlpha.IsChecked = false;
@@ -69,31 +76,40 @@ namespace SquirrelyConverter
             Close();
         }
 
-        private void TempButton_Click(object sender, RoutedEventArgs e) {
+        private void OpenFolder(object sender, RoutedEventArgs e) {
 
-            var dlg = new CommonOpenFileDialog();
-            dlg.Title = "Choose Temp Folder";
-            dlg.IsFolderPicker = true;
-            dlg.InitialDirectory = Utils.WorkingDir;
-            dlg.AddToMostRecentlyUsedList = false;
-            dlg.AllowNonFileSystemItems = false;
-            dlg.DefaultDirectory = Utils.WorkingDir;
-            dlg.EnsureFileExists = true;
-            dlg.EnsurePathExists = true;
-            dlg.EnsureReadOnly = false;
-            dlg.EnsureValidNames = true;
-            dlg.Multiselect = false;
-            dlg.ShowPlacesList = true;
+            var dlg = new CommonOpenFileDialog
+            {
+                Title = "Choose Folder",
+                IsFolderPicker = true,
+                InitialDirectory = Utils.WorkingDir,
+                AddToMostRecentlyUsedList = false,
+                AllowNonFileSystemItems = false,
+                DefaultDirectory = Utils.WorkingDir,
+                EnsureFileExists = true,
+                EnsurePathExists = true,
+                EnsureReadOnly = false,
+                EnsureValidNames = true,
+                Multiselect = false,
+                ShowPlacesList = true
+            };
 
             if (dlg.ShowDialog() == CommonFileDialogResult.Ok) {
-                TempFolderBox.Text = dlg.FileName;
+                if(Equals(sender, TempButton)) TempFolderBox.Text = dlg.FileName;
+                if (Equals(sender, OutputButton)) OutputFolderBox.Text = dlg.FileName;
             }
             Topmost = true;
             Topmost = false;
+        }
 
-            //This is for later. When the Material Design Extensions is updated.
-            //OpenFolder folder = new OpenFolder();
-            //folder.ShowDialog();
+        private void ChangeOutput_Click(object sender, RoutedEventArgs e) {
+            if (ChangeOutput.IsChecked == true) { OutputFolderBox.IsEnabled = true; OutputButton.IsEnabled = true; }
+            if (ChangeOutput.IsChecked != true) { OutputFolderBox.IsEnabled = false; OutputButton.IsEnabled = false; }
+        }
+
+        private void ChangeTemp_Click(object sender, RoutedEventArgs e) {
+            if (ChangeTemp.IsChecked == true) { OutputFolderBox.IsEnabled = true; ChangeTemp.IsEnabled = true; }
+            if (ChangeTemp.IsChecked != true) { OutputFolderBox.IsEnabled = false; ChangeTemp.IsEnabled = false; }
         }
     }
 }
