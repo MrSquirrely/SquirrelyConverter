@@ -1,7 +1,7 @@
 ## Unexpected behavior
-*Type the unexpected nehavior here. try to be as discriptive as possible.*
+*Type the unexpected behavior here. try to be as descriptive as possible.*
 
-## Actual behavoir
+## Actual behavior
 *Type what the behavior is actually supposed to be.*
 
 ## Steps to reproduce the behavior
