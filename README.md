@@ -20,12 +20,15 @@ A Simple and **Hopefully** easy to use converter for the WebP and WebM container
 
  - [Costura Fody](https://www.nuget.org/packages/Costura.Fody/)
  - [Dragablz](https://www.nuget.org/packages/Dragablz/)
+ - [Notifications Wpf |My Edit|](https://github.com/MrSquirrelyNet/Notifications.Wpf)
+ - [Notifications Wpf |Original|](https://github.com/Federerer/Notifications.Wpf)
  - [MahApps Metro](https://www.nuget.org/packages/MahApps.Metro/1.5.0)
  - [MahApps Metro IconPacks](https://www.nuget.org/packages/MahApps.Metro.IconPacks/)
  - [Material Design in XAML](https://www.nuget.org/packages/MaterialDesignThemes/)
  - [Material Design in XAML MahApps](https://www.nuget.org/packages/MaterialDesignThemes.MahApps/)
  - [Material Message Box](https://www.nuget.org/packages/MaterialMessageBox/)
  - [Microsoft WindowsAPICodePack Shell](https://www.nuget.org/packages/Microsoft.WindowsAPICodePack-Shell/)
+ - [Xabe FFMpeg](https://www.nuget.org/packages/Xabe.FFmpeg/)
 
 The current icon was created by [Honza Dousek](https://www.iconfinder.com/Lexter)<br>
 The new Icon **Not Yet Released** was generated with [Android Asset Studio](https://romannurik.github.io/AndroidAssetStudio/index.html)
