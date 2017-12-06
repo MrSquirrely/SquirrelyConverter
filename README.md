@@ -1,5 +1,4 @@
-# ![alt-text][source] Squirrely Converter [![GitHub (pre-)release](https://img.shields.io/github/release/MrSquirrelyNet/SquirrelyConverter/all.svg?style=for-the-badge)](https://github.com/MrSquirrelyNet/SquirrelyConverter/releases)
-[source]: https://cdn3.iconfinder.com/data/icons/lexter-flat-colorfull-file-formats/56/webp-32.png
+# Squirrely Converter [![GitHub (pre-)release](https://img.shields.io/github/release/MrSquirrelyNet/SquirrelyConverter/all.svg?style=for-the-badge)](https://github.com/MrSquirrelyNet/SquirrelyConverter/releases)
 
 ###### A simple converter for WebP and WebM
 ### Currently there is minimal support for WebM. It is coming.
@@ -30,7 +29,7 @@ A Simple and **Hopefully,** easy to use a converter for the WebP and WebM contai
 
 ## Change Log
     V0.6:
-        - Removed Encoding all together
+        - Removed Decoding all together
         - Added WebM Support
         - Moved all code into the Utils class
         - Changed Icon
