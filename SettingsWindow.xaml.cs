@@ -10,7 +10,6 @@ namespace SquirrelyConverter
     /// </summary>
     public partial class SettingsWindow
     {
-        private readonly NotificationManager _toast = new NotificationManager();
 
         public SettingsWindow() {
             InitializeComponent();
@@ -45,12 +44,7 @@ namespace SquirrelyConverter
             Options.WebPNoAlpha = NoAlpha.IsChecked.GetValueOrDefault();
             Options.WebPCopyMeta = SaveEXIF.IsChecked.GetValueOrDefault();
             Options.Save();
-
-            _toast.Show(new NotificationContent {
-                Title = "Settings Saved",
-                Message = "The settings were saved.",
-                Type = NotificationType.Success
-            }, expirationTime: TimeSpan.FromSeconds(6));
+            Utils.ShowToast(Toast.SettingsSaved);
             Close();
         }
 

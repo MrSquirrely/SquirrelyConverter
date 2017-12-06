@@ -25,19 +25,24 @@ using System.IO;
 using BespokeFusion;
 using System.Collections.Generic;
 using System.Text;
+using Notifications.Wpf;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Threading;
 
-namespace SquirrelyConverter
-{
-    class Utils
-    {
-        public static string Dir;
+namespace SquirrelyConverter {
+    class Utils {
+        #region Variables
         public static string WorkingDir;
+        //public static string WorkingDir;
         public static bool IsFolder;
         public static bool HasFolder = false;
         public static List<string> Dirs = new List<string>();
         public static List<string> Files = new List<string>();
+        public static List<string> DecodeFiles = new List<string>();
         public static List<string> DroppedFiles = new List<string>();
-        public static int DirNum;
+        public static bool RemovedItems = true;
+        public static int DirNum = -1;
         public static double FileNum;
         public static double CurrentImage;
         public static string TempDir = "/Stemp/";
@@ -45,12 +50,134 @@ namespace SquirrelyConverter
         private static string _tempDirFull;
         public static bool IsRunning = false;
 
+        public const string Encode = "encode";
+        public const string Decode = "decode";
+
         public static string FileName;
         public static string FileType;
         public static string FileLocation;
 
         private static string ErrorFile = "/Logs/Error.txt";
 
+        private static readonly NotificationManager _toast = new NotificationManager();
+        private static Thread _ThreadEncode;
+        #endregion
+
+        #region Start Encode
+        public static void StartEncode() {
+            if (DroppedFiles == null) return;
+            CheckFolder();
+            BackupFiles();
+
+            ThreadStart starter = EncodeStarter;
+            starter += () => {
+                ShowToast(Toast.Finished);
+                IsRunning = false;
+                if (!Options.DeleteTemp) return;
+                if (!Options.ChangeTemp) DeleteFolder($"{WorkingDir}/{Utils.TempDir}");
+            };
+
+            _ThreadEncode = new Thread(starter);
+            _ThreadEncode.SetApartmentState(ApartmentState.STA);
+            _ThreadEncode.IsBackground = true;
+            _ThreadEncode.Start();
+        }
+        private static void EncodeStarter() => Convert.WebPEncode();
+        #endregion
+
+        #region Clear Items
+        internal static void ClearItems(int selectedIndex,ListView encodeItems , KeyEventArgs e) {
+            if (e.Key != Key.Delete) return;
+            if (selectedIndex <= -1) return;
+            Files.RemoveAt(selectedIndex);
+            encodeItems.Items.RemoveAt(selectedIndex);
+            encodeItems.Items.Refresh();
+        }
+        #endregion
+
+        #region Open Settings Window
+        public static void OpenSettings() {
+            SettingsWindow sets = new SettingsWindow();
+            sets.ShowDialog();
+        }
+        #endregion
+
+        #region Remove Dropped Items
+        public static void RemoveDropped(ListView encodeItems) {
+            CustomMaterialMessageBox msg = new CustomMaterialMessageBox {
+                TxtMessage = { Text = "There are already files loaded, Do you wish to delete them?" },
+                TxtTitle = { Text = "Already Files In Loaded" },
+                BtnOk = { Content = "Yes" },
+                BtnCancel = { Content = "No" }
+            };
+            msg.Show();
+            MessageBoxResult result = msg.Result;
+            switch (result) {
+                case MessageBoxResult.OK:
+                    ClearDropped(encodeItems);
+                    RemovedItems = true;
+                    break;
+                case MessageBoxResult.Cancel:
+                    Utils.RemovedItems = false;
+                    break;
+            }
+        }
+        #endregion
+
+        #region Items Dropped
+        public static void ItemsDropped(ListView encodeItems, string[] files) {
+            if (!IsRunning) {
+                if (encodeItems.HasItems) RemoveDropped(encodeItems);
+                DroppedFiles.Clear();
+                foreach (string file in files) DroppedFiles.Add(file);
+                WorkingDir = Path.GetDirectoryName(DroppedFiles[DroppedFiles.Count - 1]);
+                GetFiles(encodeItems);
+            }
+        }
+        #endregion
+
+        #region Get Files
+        public static void GetFiles(ListView encodeItems) {
+            if (RemovedItems) Files.Clear();
+            try {
+                foreach (string file in DroppedFiles) {
+                    string nName = Path.GetFileNameWithoutExtension(file);
+                    string nType = Path.GetExtension(file.ToLower());
+                    string nLocation = Path.GetDirectoryName(file);
+                    FileAttributes attr = File.GetAttributes(file);
+                    if (Types.WebPTypes.Contains(nType) || Types.WebMTypes.Contains(nType)) {
+                        encodeItems.Items.Add(new nFile { Name = nName, Type = nType, Location = nLocation });
+                        Files.Add(file);
+                    }
+                    if ((attr & FileAttributes.Directory) == FileAttributes.Directory) {
+                        Dirs.Add($"{file}\\");
+                        DirNum++;
+
+                        string[] files = Directory.GetFiles(Dirs[DirNum]);
+
+                        foreach (string file2 in files) {
+                            string nName2 = Path.GetFileNameWithoutExtension(file2);
+                            string nType2 = Path.GetExtension(file2.ToLower());
+                            string nLocation2 = Path.GetDirectoryName(file2);
+                            if (Types.WebPTypes.Contains(nType2) || Types.WebMTypes.Contains(nType2)) {
+                                encodeItems.Items.Add(new nFile { Name = nName2, Type = nType2, Location = nLocation2 });
+                                Files.Add(file2);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+            }
+        }
+        #endregion
+
+        #region Clear Dropped
+        public static void ClearDropped(ListView encodeItems) {
+            encodeItems.Items.Clear();
+        }
+        #endregion
 
         #region Create Error File
         public void CreateError(string message) {
@@ -69,8 +196,8 @@ namespace SquirrelyConverter
         #region Check Folder
         public static void CheckFolder() {
             if (!Options.ChangeTemp) {
-                Console.WriteLine(Dir + TempDir);
-                if (Directory.Exists(Dir + TempDir)) {
+                Console.WriteLine(WorkingDir + TempDir);
+                if (Directory.Exists(WorkingDir + TempDir)) {
 
                     var msg = new CustomMaterialMessageBox {
                         TxtMessage = { Text = "The temp folder already exists, do you want to delete it?" },
@@ -85,19 +212,19 @@ namespace SquirrelyConverter
                     switch (result) {
                         case MessageBoxResult.Cancel:
                             _tempDirNum = new Random().Next(0, 100);
-                            Directory.CreateDirectory(Dir + "/" + _tempDirNum + "Stemp/");
-                            _tempDirFull = Dir + "/" + _tempDirNum + TempDir;
+                            Directory.CreateDirectory(WorkingDir + "/" + _tempDirNum + "Stemp/");
+                            _tempDirFull = WorkingDir + "/" + _tempDirNum + TempDir;
                             break;
                         case MessageBoxResult.OK:
-                            DeleteFolder(Dir + TempDir);
-                            Directory.CreateDirectory(Dir + TempDir);
-                            _tempDirFull = Dir + TempDir;
+                            DeleteFolder(WorkingDir + TempDir);
+                            Directory.CreateDirectory(WorkingDir + TempDir);
+                            _tempDirFull = WorkingDir + TempDir;
                             break;
                     }
                 }
                 else {
-                    Directory.CreateDirectory(Dir + TempDir);
-                    _tempDirFull = Dir + TempDir;
+                    Directory.CreateDirectory(WorkingDir + TempDir);
+                    _tempDirFull = WorkingDir + TempDir;
                 }
             }
         }
@@ -124,7 +251,7 @@ namespace SquirrelyConverter
                         }
                     }
                     foreach (var folder in Dirs) {
-                        if (folder != Dir) {
+                        if (folder != WorkingDir) {
                             foreach (var file in Directory.GetFiles(folder, "*.jpg")) {
                                 var filename = Path.GetFileName(file);
                                 File.Copy(file, $"{Options.TempDir}/{filename}");
@@ -161,7 +288,7 @@ namespace SquirrelyConverter
                         }
                     }
                     foreach (var folder in Dirs) {
-                        if (folder != Dir) {
+                        if (folder != WorkingDir) {
                             foreach (var file in Directory.GetFiles(folder, "*.jpg")) {
                                 var filename = Path.GetFileName(file);
                                 File.Copy(file, _tempDirFull + filename);
@@ -192,6 +319,44 @@ namespace SquirrelyConverter
         }
         #endregion
 
-       
+        #region Show Toast
+        public static void ShowToast(Toast toast) {
+            switch (toast) {
+                case Toast.Finished:
+                    _toast.Show(new NotificationContent {
+                        Title = "Finished",
+                        Message = "Finished encoding the images.",
+                        Type = NotificationType.Success
+                    }, expirationTime: TimeSpan.FromSeconds(6));
+                    break;
+                case Toast.EncodeCleared:
+                    _toast.Show(new NotificationContent {
+                        Title = "Encode Items Cleared",
+                        Message = "The items in the encode list were cleared.",
+                        Type = NotificationType.Success
+                    }, expirationTime: TimeSpan.FromSeconds(6));
+                    break;
+                case Toast.DecodeCleared:
+                    _toast.Show(new NotificationContent {
+                        Title = "Decode Items Cleared",
+                        Message = "The items in the decode list were cleared.",
+                        Type = NotificationType.Success
+                    }, expirationTime: TimeSpan.FromSeconds(6));
+                    break;
+                case Toast.SettingsSaved:
+                    _toast.Show(new NotificationContent {
+                        Title = "Settings Saved",
+                        Message = "The settings were saved.",
+                        Type = NotificationType.Success
+                    }, expirationTime: TimeSpan.FromSeconds(6));
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        internal static void DisposeToast() { _toast.Dispose(); }
+        #endregion
+
     }
 }

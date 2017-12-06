@@ -12,7 +12,6 @@
                    FontFamily="{DynamicResource MaterialDesignFont}"
                    BorderThickness="1"
                    ResizeMode="NoResize"
-    xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         Title="Settings" Height="400" Width="500">
     <Grid>
         <!--dragablz:TabablzControl-->

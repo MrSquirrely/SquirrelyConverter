@@ -101,40 +101,5 @@ namespace SquirrelyConverter
         }
         #endregion
 
-        #region Decode
-        public void Decode() {
-            if (WebPImage == null) throw new ArgumentException("Input must not be empty!"); //Checks if the input is null
-            if (WebPOutput == null) throw new ArgumentException("WebPOutput must not be empty!"); //Checks if the output is null
-            if (WebPImage != null && WebPOutput != null) _ready = true; else throw new ArgumentException("There has to be an input and an output!"); //Just a final test to be safe.
-
-            if (!_ready) return;
-            try {
-                _cmdText = $"dwebp {WebPImage} -o {WebPOutput}";
-                var process = new Process
-                {
-                    StartInfo =
-                    {
-                        FileName = "cmd.exe",
-                        RedirectStandardInput = true,
-                        RedirectStandardOutput = true,
-                        CreateNoWindow = true,
-                        UseShellExecute = false
-                    }
-                };
-                process.Start();
-
-                process.StandardInput.WriteLine(_cmdText);
-                process.StandardInput.Flush();
-                process.StandardInput.Close();
-                process.WaitForExit();
-
-                _ready = false;
-            }
-            catch (Exception e) {
-                Console.WriteLine(e.Message);
-            }
-        }
-        #endregion
-
     }
 }
