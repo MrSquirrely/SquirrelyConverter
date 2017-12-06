@@ -8,15 +8,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         mc:Ignorable="d"
                    xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                    BorderThickness="1"
                    Title="Squirrely converter"
-         Height="720" Width="1280" Closed="MetroWindow_Closed" KeyDown="MetroWindow_KeyDown">
+                   ShowTitleBar="False"
+         Height="720" Width="1280" Closed="MetroWindow_Closed" KeyDown="MetroWindow_KeyDown" Drop="ItemsDropped">
     <metro:MetroWindow.RightWindowCommands>
         <metro:WindowCommands>
+            <Label Name="ItemsLoadedLabel" Content="Items Loaded: 0" Margin="0,4,0,0"/>
             <Button x:Name="SettingsButton" Click="SettingsButton_Click">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource= {RelativeSource AncestorType=Button}, Path=Foreground}">
@@ -30,57 +31,17 @@
         </metro:WindowCommands>
     </metro:MetroWindow.RightWindowCommands>
     <Grid>
-        <!--dragablz:TabablzControl (You can't edit the window in the editor, so to do so you have to change it to TabControl)-->
-        <dragablz:TabablzControl>
-            <TabItem Header="WebP">
-                <Grid Background="#FFE5E5E5">
-                    <dragablz:TabablzControl>
-                        <TabItem Header="Encode" HorizontalAlignment="Right" Width="98">
-                            <Grid Background="#FFE5E5E5">
-                                <ListView x:Name="EncodeItems" AllowDrop="True" Drop="EncodeItems_Drop" Margin="0,0,0,47">
-                                    <ListView.View>
-                                        <GridView>
-                                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="300"/>
-                                            <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Type}" Width="80"/>
-                                            <GridViewColumn Header="Saved" DisplayMemberBinding="{Binding Saved}" Width="100"/>
-                                            <GridViewColumn Header="Location" DisplayMemberBinding="{Binding Location}" Width="794"/>
-                                        </GridView>
-                                    </ListView.View>
-                                </ListView>
-                                <Button x:Name="WebPEncodeButton" Content="Encode" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="80" Click="EncodeButton_Click" />
-                                <Button x:Name="ClearButton" Content="Clear" HorizontalAlignment="Right" Margin="0,0,95,10" VerticalAlignment="Bottom" Width="80" Click="ClearButton_Click" />
-                            </Grid>
-                        </TabItem>
-                        <TabItem Header="Decode" HorizontalAlignment="Right" Width="98">
-                            <Grid Background="#FFE5E5E5">
-                                <ListView x:Name="DecodeItems" AllowDrop="True" Drop="DecodeItems_Drop" Margin="0,0,0,47">
-                                    <ListView.View>
-                                        <GridView>
-                                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="300"/>
-                                            <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Type}" Width="80"/>
-                                            <GridViewColumn Header="Saved" DisplayMemberBinding="{Binding Saved}" Width="100"/>
-                                            <GridViewColumn Header="Location" DisplayMemberBinding="{Binding Location}" Width="794"/>
-                                        </GridView>
-                                    </ListView.View>
-                                </ListView>
-                                <Button x:Name="WebPDecodeButton" Content="Encode" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="80" Click="DecodeButton_Click" />
-                            </Grid>
-                        </TabItem>
-                    </dragablz:TabablzControl>
-                </Grid>
-            </TabItem>
-            <TabItem Header="WebM">
-                <Grid Background="#FFE5E5E5">
-
-                </Grid>
-            </TabItem>
-            <TabItem Header="About">
-                <Grid Background="#FFE5E5E5">
-                    <TextBlock Margin="0,10,0,0" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Top" Height="84"><Run Text="Thank you for downloading Squirrely Converter!"/><LineBreak/><Run Text="There are some things you should know before you go!"/><LineBreak/><Run Text="This is a early build of the program, so there are going to be bugs."/><LineBreak/><Run Text="Right now there is no WebM support, but it is coming."/><LineBreak/><Run Text="There is no decoding at all at the moment, it is coming though."/></TextBlock>
-
-                </Grid>
-            </TabItem>
-        </dragablz:TabablzControl>
+        <ListView x:Name="EncodeItems" AllowDrop="True">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="300"/>
+                    <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Type}" Width="80"/>
+                    <GridViewColumn Header="Location" DisplayMemberBinding="{Binding Location}" Width="794"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="EncodeButton" Content="Encode" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="80" Click="EncodeButton_Click" />
+        <Button x:Name="EncodeClear" Content="Clear" HorizontalAlignment="Right" Margin="0,0,95,10" VerticalAlignment="Bottom" Width="80" Click="ClearButton_Click" />
         <Button 
             Content="{materialDesign:PackIcon Kind=Bug}"
             Name="ReportBug"
@@ -92,5 +53,6 @@
             VerticalAlignment="Bottom" 
             Width="50"
             Click="ReportBug_OnClick"/>
+        <Grid Name="MoveWindow" Margin="0,0,0,0" VerticalAlignment="Top" Width="1265" Height="48" MouseDown="MoveWindow_MouseDown" Background="Transparent"/>
     </Grid>
 </metro:MetroWindow>

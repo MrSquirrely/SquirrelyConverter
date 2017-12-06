@@ -1,38 +1,15 @@
-﻿using System;
+﻿using MediaToolkit;
+using MediaToolkit.Model;
+using System;
 using System.IO;
-
 
 namespace SquirrelyConverter
 {
     internal class Convert
     {
         #region WebP
-        public static void WebP(string coding) {
-            if (Utils.IsRunning) return;
-            switch (coding) {
-                case "encode":
-                    try {
-                        WebPEncode();
-                    }
-                    catch (Exception e) {
-                        Console.WriteLine(e.Message);
-                    }
-                    break;
-                case "decode":
-                    try {
-                        WebPDecode();
-                    }
-                    catch (Exception e) {
-                        Console.WriteLine(e.Message);
-                    }
-                    break;
-            }
-            Utils.IsRunning = true;
-        }
-
-
         #region Encode
-        private static void WebPEncode() {
+        public static void WebPEncode() {
             try {
                 foreach (var file in Utils.Files) {
                     Utils.FileName = Path.GetFileNameWithoutExtension(file);
@@ -51,7 +28,7 @@ namespace SquirrelyConverter
                         Utils.FileNum++;
                         File.Delete(file);
                     }
-                    else {
+                    else if(Types.WebPTypes.Contains(Utils.FileType) && Utils.FileType != ".gif"){
                         var image = new WebP
                         {
                             WebPImage = file,
@@ -66,36 +43,31 @@ namespace SquirrelyConverter
                         image.Encode();
                         Utils.FileNum++;
                         File.Delete(file);
-                    }                
+                    }
+                    else if (Types.WebMTypes.Contains(Utils.FileType)) {
+                        var inputFile = new MediaFile { Filename = file};
+                        var outputFile = new MediaFile {
+                            Filename = Options.SetCustomOutput
+                            ? $"{Options.OutDir}/{Utils.FileName}.webm"
+                            : $"{Utils.FileLocation}/{Utils.FileName}.webm"
+                        };
+
+                        var engine = new Engine();
+                        engine.Convert(inputFile, outputFile);
+                    }
                 }
             }
             catch (Exception e) {
                 Console.WriteLine(e.Message);
             }
         }
-        #endregion
 
-        #region Decode
-        private static void WebPDecode() {
-
-            try {
-                foreach (var file in Utils.Files) {
-                    Utils.FileName = Path.GetFileNameWithoutExtension(file);
-                    Utils.FileLocation = Path.GetDirectoryName(file);
-
-                    var image = new WebP
-                    {
-                        WebPImage = file,
-                        WebPOutput = Utils.FileLocation + "/" + Utils.FileName + ".png"
-                    };
-                    image.Decode();
-                    File.Delete(file);
-                }
-                Utils.IsRunning = false;
-            }
-            catch (Exception e) {
-                Console.WriteLine(e.Message);
-            }
+        private static async void WebMEncodeAsync(string file) {
+            //string outPut = Options.SetCustomOutput
+            //                ? $"{Options.OutDir}/{Utils.FileName}.webm"
+            //                : $"{Utils.FileLocation}/{Utils.FileName}.webm";
+            //IConversion conversion = new Conversion();
+            //bool conversionResult = await conversion.SetInput(file).SetOutput(outPut).Start();
         }
         #endregion
         #endregion
