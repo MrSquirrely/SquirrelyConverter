@@ -12,6 +12,11 @@ namespace SquirrelyConverter {
         public string Location { get; set; }
     }
 
+    enum Message {
+       DirectoryExists,
+       AlreadyFilesLoaded,
+       WebM
+    }
     class Types {
         /// <summary>
         /// A list of supported image containers. I'm not sure if this is all of them, but this is all I could find.

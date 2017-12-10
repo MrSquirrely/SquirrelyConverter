@@ -22,13 +22,15 @@
 using System;
 using System.Windows;
 using System.IO;
-using BespokeFusion;
 using System.Collections.Generic;
 using System.Text;
 using Notifications.Wpf;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Threading;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using System.Threading.Tasks;
 
 namespace SquirrelyConverter {
     class Utils {
@@ -59,14 +61,19 @@ namespace SquirrelyConverter {
 
         private static string ErrorFile = "/Logs/Error.txt";
 
+        public static MetroWindow Main;
+        public static ListView encodeItems;
+
         private static readonly NotificationManager _toast = new NotificationManager();
         private static Thread _ThreadEncode;
         #endregion
 
         #region Start Encode
-        public static void StartEncode() {
+        public static async void StartEncodeAsync() {
             if (DroppedFiles == null) return;
-            CheckFolder();
+            if (Options.ChangeTemp && !Directory.Exists(Options.TempDir)) await DialogManager.ShowMessageAsync(Main, "Missing Temp Folder", "Cannot find the temp folder, make sure it exists!", MessageDialogStyle.Affirmative);
+            if(Options.SetCustomOutput && !Directory.Exists(Options.OutDir)) await DialogManager.ShowMessageAsync(Main, "Missing Output Folder", "Cannot find the output folder, make sure it exists!", MessageDialogStyle.Affirmative);
+            CheckFolderAsync();
             BackupFiles();
 
             ThreadStart starter = EncodeStarter;
@@ -86,7 +93,7 @@ namespace SquirrelyConverter {
         #endregion
 
         #region Clear Items
-        internal static void ClearItems(int selectedIndex,ListView encodeItems , KeyEventArgs e) {
+        internal static void ClearItems(int selectedIndex, KeyEventArgs e) {
             if (e.Key != Key.Delete) return;
             if (selectedIndex <= -1) return;
             Files.RemoveAt(selectedIndex);
@@ -102,42 +109,36 @@ namespace SquirrelyConverter {
         }
         #endregion
 
-        #region Remove Dropped Items
-        public static void RemoveDropped(ListView encodeItems) {
-            CustomMaterialMessageBox msg = new CustomMaterialMessageBox {
-                TxtMessage = { Text = "There are already files loaded, Do you wish to delete them?" },
-                TxtTitle = { Text = "Already Files In Loaded" },
-                BtnOk = { Content = "Yes" },
-                BtnCancel = { Content = "No" }
-            };
-            msg.Show();
-            MessageBoxResult result = msg.Result;
-            switch (result) {
-                case MessageBoxResult.OK:
-                    ClearDropped(encodeItems);
-                    RemovedItems = true;
-                    break;
-                case MessageBoxResult.Cancel:
-                    Utils.RemovedItems = false;
-                    break;
-            }
-        }
-        #endregion
-
         #region Items Dropped
-        public static void ItemsDropped(ListView encodeItems, string[] files) {
+        public static async void ItemsDroppedAsync(string[] files) {
             if (!IsRunning) {
-                if (encodeItems.HasItems) RemoveDropped(encodeItems);
+                if (encodeItems.HasItems) {
+                    MessageDialogResult result = await DialogManager.ShowMessageAsync(Main, "Already Files In Loaded", "There are already files loaded, Do you wish to delete them?", MessageDialogStyle.AffirmativeAndNegative);
+
+                    switch (result) {
+                        case MessageDialogResult.Negative:
+                            RemovedItems = false;
+                            break;
+                        case MessageDialogResult.Affirmative:
+                            ClearDropped();
+                            RemovedItems = true;
+                            break;
+                    }
+                }
                 DroppedFiles.Clear();
-                foreach (string file in files) DroppedFiles.Add(file);
+                foreach (string file in files) {
+                    string nType = Path.GetExtension(file);
+                    if (Types.WebMTypes.Contains(nType)) await DialogManager.ShowMessageAsync(Main, "WebM Files Take A While", "Video files take a while to convert, you may want to convert them seperatly.", MessageDialogStyle.Affirmative);
+                    DroppedFiles.Add(file);
+                }
                 WorkingDir = Path.GetDirectoryName(DroppedFiles[DroppedFiles.Count - 1]);
-                GetFiles(encodeItems);
+                GetFiles();
             }
         }
         #endregion
 
         #region Get Files
-        public static void GetFiles(ListView encodeItems) {
+        public static void GetFiles() {
             if (RemovedItems) Files.Clear();
             try {
                 foreach (string file in DroppedFiles) {
@@ -174,7 +175,7 @@ namespace SquirrelyConverter {
         #endregion
 
         #region Clear Dropped
-        public static void ClearDropped(ListView encodeItems) {
+        public static void ClearDropped() {
             encodeItems.Items.Clear();
         }
         #endregion
@@ -194,33 +195,24 @@ namespace SquirrelyConverter {
         #endregion
 
         #region Check Folder
-        public static void CheckFolder() {
+        public static async void CheckFolderAsync() {
             if (!Options.ChangeTemp) {
                 Console.WriteLine(WorkingDir + TempDir);
                 if (Directory.Exists(WorkingDir + TempDir)) {
-
-                    var msg = new CustomMaterialMessageBox {
-                        TxtMessage = { Text = "The temp folder already exists, do you want to delete it?" },
-                        TxtTitle = { Text = "Temp Folder Exists" },
-                        BtnOk = { Content = "Yes" },
-                        BtnCancel = { Content = "No" }
-                    };
-                    msg.Show();
-                    var result = msg.Result;
-
+                    MessageDialogResult result = await DialogManager.ShowMessageAsync(Main, "Temp Folder Exists", "The temp folder already exists, do you want to delete it?", MessageDialogStyle.AffirmativeAndNegative);
 
                     switch (result) {
-                        case MessageBoxResult.Cancel:
+                        case MessageDialogResult.Negative:
                             _tempDirNum = new Random().Next(0, 100);
                             Directory.CreateDirectory(WorkingDir + "/" + _tempDirNum + "Stemp/");
                             _tempDirFull = WorkingDir + "/" + _tempDirNum + TempDir;
                             break;
-                        case MessageBoxResult.OK:
+                        case MessageDialogResult.Affirmative:
                             DeleteFolder(WorkingDir + TempDir);
                             Directory.CreateDirectory(WorkingDir + TempDir);
                             _tempDirFull = WorkingDir + TempDir;
                             break;
-                    }
+                    };
                 }
                 else {
                     Directory.CreateDirectory(WorkingDir + TempDir);
@@ -230,6 +222,7 @@ namespace SquirrelyConverter {
         }
 
         public static void DeleteFolder(string folder) {
+            if (!Directory.Exists(folder)) return;
             if (Directory.GetFiles(folder).Length > 0) {
                 foreach (var file in Directory.GetFiles(folder)) {
                     File.Delete(file);
@@ -241,35 +234,27 @@ namespace SquirrelyConverter {
 
         #region Backup Files
         public static void BackupFiles() {
-            if (Options.ChangeTemp) {
                 try {
                     foreach (string file in DroppedFiles) {
-                        var nType = Path.GetExtension(file)?.ToLower();
-                        if (nType == ".jpg" || nType == ".png" || nType == ".jpeg" || nType == ".gif") {
-                            var filename = Path.GetFileName(file);
-                            File.Copy(file, $"{Options.TempDir}/{filename}");
+                        string nType = Path.GetExtension(file).ToLower();
+                        if (Types.WebPTypes.Contains(nType) || Types.WebMTypes.Contains(nType)) {
+                            string filename = Path.GetFileName(file);
+                            File.Copy(file, Options.ChangeTemp?
+                                $"{Options.TempDir}/{filename}"
+                                : $"{_tempDirFull}/{filename}");
+                            
                         }
                     }
-                    foreach (var folder in Dirs) {
+                    foreach (string folder in Dirs) {
                         if (folder != WorkingDir) {
-                            foreach (var file in Directory.GetFiles(folder, "*.jpg")) {
-                                var filename = Path.GetFileName(file);
-                                File.Copy(file, $"{Options.TempDir}/{filename}");
-                            }
-
-                            foreach (var file in Directory.GetFiles(folder, "*.png")) {
-                                var filename = Path.GetFileName(file);
-                                File.Copy(file, $"{Options.TempDir}/{filename}");
-                            }
-
-                            foreach (var file in Directory.GetFiles(folder, "*.jpeg")) {
-                                var filename = Path.GetFileName(file);
-                                File.Copy(file, $"{Options.TempDir}/{filename}");
-                            }
-
-                            foreach (var file in Directory.GetFiles(folder, "*.gif")) {
-                                var filename = Path.GetFileName(file);
-                                File.Copy(file, $"{Options.TempDir}/{filename}");
+                            foreach (var file in Directory.GetFiles(folder)) {
+                                string nType = Path.GetExtension(file).ToLower();
+                                if (Types.WebPTypes.Contains(nType) || Types.WebMTypes.Contains(nType)) {
+                                    string filename = Path.GetFileName(file);
+                                    File.Copy(file, Options.ChangeTemp ?
+                                $"{Options.TempDir}/{filename}"
+                                : $"{_tempDirFull}/{filename}");
+                                }
                             }
                         }
                     }
@@ -277,44 +262,6 @@ namespace SquirrelyConverter {
                 catch (Exception e) {
                     Console.WriteLine(e.Message);
                 }
-            }
-            else {
-                try {
-                    foreach (var file in DroppedFiles) {
-                        var nType = Path.GetExtension(file)?.ToLower();
-                        if (nType == ".jpg" || nType == ".png" || nType == ".jpeg" || nType == ".gif") {
-                            var filename = Path.GetFileName(file);
-                            File.Copy(file, _tempDirFull + filename);
-                        }
-                    }
-                    foreach (var folder in Dirs) {
-                        if (folder != WorkingDir) {
-                            foreach (var file in Directory.GetFiles(folder, "*.jpg")) {
-                                var filename = Path.GetFileName(file);
-                                File.Copy(file, _tempDirFull + filename);
-                            }
-
-                            foreach (var file in Directory.GetFiles(folder, "*.png")) {
-                                var filename = Path.GetFileName(file);
-                                File.Copy(file, _tempDirFull + filename);
-                            }
-
-                            foreach (var file in Directory.GetFiles(folder, "*.jpeg")) {
-                                var filename = Path.GetFileName(file);
-                                File.Copy(file, _tempDirFull + filename);
-                            }
-
-                            foreach (var file in Directory.GetFiles(folder, "*.gif")) {
-                                var filename = Path.GetFileName(file);
-                                File.Copy(file, _tempDirFull + filename);
-                            }
-                        }
-                    }
-                }
-                catch (Exception e) {
-                    Console.WriteLine(e.Message);
-                }
-            }
 
         }
         #endregion
@@ -354,9 +301,8 @@ namespace SquirrelyConverter {
                     break;
             }
         }
-
         internal static void DisposeToast() { _toast.Dispose(); }
         #endregion
-
+        
     }
 }

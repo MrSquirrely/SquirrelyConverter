@@ -21,7 +21,6 @@ namespace SquirrelyConverter
 
         #region Encode
         public void Encode() {
-            //These are remnants from when this was going to be a library. I still want to make it one, but for now it'll stay.
             if (WebPImage == null) throw new ArgumentException("Input must not be empty!");  //Checks if the input is null and if so throws exception
             if (WebPOutput == null) throw new ArgumentException("WebPOutput must not be empty!"); //Checks if the output is null and if so throws exception
             if (WebPImage != null && WebPOutput != null) _ready = true; else throw new ArgumentException("There has to be an input and an output!"); //Just a final test to be safe.

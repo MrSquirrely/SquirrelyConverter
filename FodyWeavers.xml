@@ -3,7 +3,6 @@
 <Costura CreateTemporaryAssemblies='true'/>
   <Costura>
     <IncludeAssemblies>
-      BespokeFusion
       MahApps.Metro
       MahApps.Metro.IconPacks
       MaterialDesignColors

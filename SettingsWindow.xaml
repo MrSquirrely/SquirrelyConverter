@@ -33,15 +33,9 @@
                 <Grid Background="#FFE5E5E5">
                     <CheckBox x:Name="NoAlpha" Content="No Alpha" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                     <CheckBox x:Name="SaveEXIF" Content="Save Metadata" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top"/>
-                    <Label Content="More to come!" HorizontalAlignment="Left" Margin="10,179,0,0" VerticalAlignment="Top"/>
                     <Slider x:Name="Quality" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top" Width="466" Maximum="100" SmallChange="1" Value="80"/>
                     <Label Content="WebPQuality (Default 80)" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top"/>
                     <CheckBox x:Name="Lossless" Content="WebPLossless" HorizontalAlignment="Left" Margin="87,10,0,0" VerticalAlignment="Top"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="WebM">
-                <Grid Background="#FFE5E5E5">
-                    <Label Content="Coming Soon!" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
         </TabControl>
