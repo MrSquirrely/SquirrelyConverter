@@ -59,9 +59,5 @@ namespace SquirrelyConverter
             catch (Exception e) {
                 Console.WriteLine(e.Message);
             }
-        }
-        #endregion
-        #endregion
-
     }
 }

@@ -301,7 +301,6 @@ namespace SquirrelyConverter {
                     break;
             }
         }
-
         internal static void DisposeToast() { _toast.Dispose(); }
         #endregion
         
