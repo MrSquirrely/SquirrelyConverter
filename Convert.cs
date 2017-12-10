@@ -17,7 +17,7 @@ namespace SquirrelyConverter
                     Utils.FileLocation = Path.GetDirectoryName(file);
 
                     if (Utils.FileType == ".gif") {
-                        var image = new WebP
+                        WebP image = new WebP
                         {
                             WebPImage = file,
                             WebPOutput = Options.SetCustomOutput
@@ -29,7 +29,7 @@ namespace SquirrelyConverter
                         File.Delete(file);
                     }
                     else if(Types.WebPTypes.Contains(Utils.FileType) && Utils.FileType != ".gif"){
-                        var image = new WebP
+                        WebP image = new WebP
                         {
                             WebPImage = file,
                             WebPQuality = Options.WebPQuality,
@@ -45,29 +45,20 @@ namespace SquirrelyConverter
                         File.Delete(file);
                     }
                     else if (Types.WebMTypes.Contains(Utils.FileType)) {
-                        var inputFile = new MediaFile { Filename = file};
-                        var outputFile = new MediaFile {
-                            Filename = Options.SetCustomOutput
+                        WebM video = new WebM {
+                            WebMInput = file,
+                            WebMOutput = Options.SetCustomOutput
                             ? $"{Options.OutDir}/{Utils.FileName}.webm"
                             : $"{Utils.FileLocation}/{Utils.FileName}.webm"
                         };
-
-                        var engine = new Engine();
-                        engine.Convert(inputFile, outputFile);
+                        video.Encode();
+                        File.Delete(file);
                     }
                 }
             }
             catch (Exception e) {
                 Console.WriteLine(e.Message);
             }
-        }
-
-        private static async void WebMEncodeAsync(string file) {
-            //string outPut = Options.SetCustomOutput
-            //                ? $"{Options.OutDir}/{Utils.FileName}.webm"
-            //                : $"{Utils.FileLocation}/{Utils.FileName}.webm";
-            //IConversion conversion = new Conversion();
-            //bool conversionResult = await conversion.SetInput(file).SetOutput(outPut).Start();
         }
         #endregion
         #endregion
