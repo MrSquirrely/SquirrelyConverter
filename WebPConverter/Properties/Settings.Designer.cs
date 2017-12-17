@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SquirrelyConverter.Properties {
+namespace WebPConverter.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.3.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -62,48 +62,48 @@ namespace SquirrelyConverter.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("80")]
-        public double WebPQuality {
+        public int Quality {
             get {
-                return ((double)(this["WebPQuality"]));
+                return ((int)(this["Quality"]));
             }
             set {
-                this["WebPQuality"] = value;
+                this["Quality"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool WebPLossless {
+        public bool Lossless {
             get {
-                return ((bool)(this["WebPLossless"]));
+                return ((bool)(this["Lossless"]));
             }
             set {
-                this["WebPLossless"] = value;
+                this["Lossless"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool WebPNoAlpha {
+        public bool NoAlpha {
             get {
-                return ((bool)(this["WebPNoAlpha"]));
+                return ((bool)(this["NoAlpha"]));
             }
             set {
-                this["WebPNoAlpha"] = value;
+                this["NoAlpha"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool WebPCopyMeta {
+        public bool CopyMeta {
             get {
-                return ((bool)(this["WebPCopyMeta"]));
+                return ((bool)(this["CopyMeta"]));
             }
             set {
-                this["WebPCopyMeta"] = value;
+                this["CopyMeta"] = value;
             }
         }
         

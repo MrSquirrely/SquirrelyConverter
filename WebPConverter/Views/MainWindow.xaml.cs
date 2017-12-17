@@ -24,9 +24,9 @@ using System.Windows;
 using System.Diagnostics;
 using System.Windows.Input;
 using System.Collections.Specialized;
-using MahApps.Metro.Controls.Dialogs;
+using WebPConverter.Class;
 
-namespace SquirrelyConverter {
+namespace WebPConverter.Views {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -35,22 +35,22 @@ namespace SquirrelyConverter {
         public MainWindow() {
             InitializeComponent();
             Utils.Main = this;
-            Utils.encodeItems = EncodeItems;
+            Utils.EncodeItems = EncodeItems;
             ((INotifyCollectionChanged)EncodeItems.Items).CollectionChanged += EncodeItems_DataContextChanged;
             Options.FirstRun();
-            var left = Mouse.LeftButton;
+            if (Environment.ProcessorCount > 1) Utils.MultiCore = true; 
         }
 
         private void ItemsDropped(object sender, DragEventArgs e) => Utils.ItemsDroppedAsync(e.Data.GetData(DataFormats.FileDrop) as string[]);
         private void MoveWindow_MouseDown(object sender, MouseButtonEventArgs e) { if (e.ChangedButton == MouseButton.Left) DragMove(); }
         private void EncodeItems_DataContextChanged(object sender, NotifyCollectionChangedEventArgs e) => ItemsLoadedLabel.Content = $"Items Loaded: {EncodeItems.Items.Count}";
-        private void ClearButton_Click(object sender, RoutedEventArgs e) => EncodeItems.Items.Clear();
+        private void ClearButton_Click(object sender, RoutedEventArgs e) => Utils.NFiles.Clear();
         private void MetroWindow_Closed(object sender, EventArgs e) => Utils.DisposeToast();
         private void SettingsButton_Click(object sender, RoutedEventArgs e) => Utils.OpenSettings();
         private void MetroWindow_KeyDown(object sender, KeyEventArgs e) => Utils.ClearItems(EncodeItems.SelectedIndex, e);
         private void ReportBug_OnClick(object sender, RoutedEventArgs e) => Process.Start("https://github.com/MrSquirrely/SquirrelyConverter/issues/new");
         private void EncodeButton_Click(object sender, RoutedEventArgs e) => Utils.StartEncodeAsync();
-
+        public void UpdateView() => EncodeItems.Items.Refresh();
     }
 
 }

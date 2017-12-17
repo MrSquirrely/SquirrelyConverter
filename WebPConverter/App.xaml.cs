@@ -27,8 +27,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace SquirrelyConverter
-{
+namespace WebPConverter {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>

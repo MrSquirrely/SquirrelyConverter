@@ -4,11 +4,10 @@
   <Costura>
     <IncludeAssemblies>
       MahApps.Metro
-      MahApps.Metro.IconPacks
+      MahApps.Metro.IconPacks.Material
       MaterialDesignColors
       MaterialDesignThemes.MahApps
       MaterialDesignThemes.Wpf
-      MediaToolkit
       Microsoft.WindowsAPICodePack
       Microsoft.WindowsAPICodePack.Shell
       Microsoft.WindowsAPICodePack.ShellExtensions

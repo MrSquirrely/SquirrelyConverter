@@ -1,5 +1,4 @@
-﻿namespace SquirrelyConverter
-{
+﻿namespace WebPConverter.Class {
     internal class Options
     {
         //Default
@@ -9,10 +8,10 @@
         public static bool SetCustomOutput { get; set; }
         public static bool ChangeTemp { get; set; }
         //WeBP
-        public static double WebPQuality { get; set; }
-        public static bool WebPLossless { get; set; }
-        public static bool WebPNoAlpha { get; set; }
-        public static bool WebPCopyMeta { get; set; }
+        public static int Quality { get; set; }
+        public static bool Lossless { get; set; }
+        public static bool NoAlpha { get; set; }
+        public static bool CopyMeta { get; set; }
 
         public static void FirstRun() {
             TempDir = Properties.Settings.Default.TempDir;
@@ -20,10 +19,10 @@
             DeleteTemp = Properties.Settings.Default.DeleteTempDir;
             SetCustomOutput = Properties.Settings.Default.SetCustomOutput;
             ChangeTemp = Properties.Settings.Default.ChangeTemp;
-            WebPQuality = Properties.Settings.Default.WebPQuality;
-            WebPLossless = Properties.Settings.Default.WebPLossless;
-            WebPNoAlpha = Properties.Settings.Default.WebPNoAlpha;
-            WebPCopyMeta = Properties.Settings.Default.WebPCopyMeta;
+            Quality = Properties.Settings.Default.Quality;
+            Lossless = Properties.Settings.Default.Lossless;
+            NoAlpha = Properties.Settings.Default.NoAlpha;
+            CopyMeta = Properties.Settings.Default.CopyMeta;
         }
 
         public static void Save() {
@@ -32,10 +31,10 @@
             Properties.Settings.Default.SetCustomOutput = SetCustomOutput;
             Properties.Settings.Default.DeleteTempDir = DeleteTemp;
             Properties.Settings.Default.ChangeTemp = ChangeTemp;
-            Properties.Settings.Default.WebPQuality = WebPQuality;
-            Properties.Settings.Default.WebPLossless = WebPLossless;
-            Properties.Settings.Default.WebPNoAlpha = WebPNoAlpha;
-            Properties.Settings.Default.WebPCopyMeta = WebPCopyMeta;
+            Properties.Settings.Default.Quality = Quality;
+            Properties.Settings.Default.Lossless = Lossless;
+            Properties.Settings.Default.NoAlpha = NoAlpha;
+            Properties.Settings.Default.CopyMeta = CopyMeta;
             Properties.Settings.Default.Save();
         }
     }

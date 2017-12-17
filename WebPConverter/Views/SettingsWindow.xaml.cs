@@ -1,13 +1,8 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
-using Notifications.Wpf;
-using System;
 using System.Windows;
+using WebPConverter.Class;
 
-namespace SquirrelyConverter
-{
-    /// <summary>
-    /// Interaction logic for SettingsWindow.xaml
-    /// </summary>
+namespace WebPConverter.Views {
     public partial class SettingsWindow
     {
 
@@ -27,10 +22,10 @@ namespace SquirrelyConverter
                 TempButton.IsEnabled = true;
             }
             ChangeTemp.IsChecked = Options.ChangeTemp;
-            Quality.Value = Options.WebPQuality;
-            Lossless.IsChecked = Options.WebPLossless;
-            NoAlpha.IsChecked = Options.WebPNoAlpha;
-            SaveEXIF.IsChecked = Options.WebPCopyMeta;
+            Quality.Value = Options.Quality;
+            Lossless.IsChecked = Options.Lossless;
+            NoAlpha.IsChecked = Options.NoAlpha;
+            SaveExif.IsChecked = Options.CopyMeta;
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e) {
@@ -39,10 +34,10 @@ namespace SquirrelyConverter
             Options.DeleteTemp = DeleteTemp.IsChecked.GetValueOrDefault();
             Options.SetCustomOutput = ChangeOutput.IsChecked.GetValueOrDefault();
             Options.ChangeTemp = ChangeTemp.IsChecked.GetValueOrDefault();
-            Options.WebPQuality = Quality.Value;
-            Options.WebPLossless = Lossless.IsChecked.GetValueOrDefault();
-            Options.WebPNoAlpha = NoAlpha.IsChecked.GetValueOrDefault();
-            Options.WebPCopyMeta = SaveEXIF.IsChecked.GetValueOrDefault();
+            Options.Quality = (int)Quality.Value;
+            Options.Lossless = Lossless.IsChecked.GetValueOrDefault();
+            Options.NoAlpha = NoAlpha.IsChecked.GetValueOrDefault();
+            Options.CopyMeta = SaveExif.IsChecked.GetValueOrDefault();
             Options.Save();
             Utils.ShowToast(Toast.SettingsSaved);
             Close();
@@ -60,7 +55,7 @@ namespace SquirrelyConverter
 
             //WebP Settings
             NoAlpha.IsChecked = false;
-            SaveEXIF.IsChecked = false;
+            SaveExif.IsChecked = false;
             Lossless.IsChecked = false;
             Quality.Value = 80;
             
@@ -98,12 +93,12 @@ namespace SquirrelyConverter
 
         private void ChangeOutput_Click(object sender, RoutedEventArgs e) {
             if (ChangeOutput.IsChecked == true) { OutputFolderBox.IsEnabled = true; OutputButton.IsEnabled = true; }
-            if (ChangeOutput.IsChecked != true) { OutputFolderBox.IsEnabled = false; OutputButton.IsEnabled = false; }
+            else if (ChangeOutput.IsChecked != true) { OutputFolderBox.IsEnabled = false; OutputButton.IsEnabled = false; }
         }
 
         private void ChangeTemp_Click(object sender, RoutedEventArgs e) {
             if (ChangeTemp.IsChecked == true) { OutputFolderBox.IsEnabled = true; ChangeTemp.IsEnabled = true; }
-            if (ChangeTemp.IsChecked != true) { OutputFolderBox.IsEnabled = false; ChangeTemp.IsEnabled = false; }
+            else if (ChangeTemp.IsChecked != true) { OutputFolderBox.IsEnabled = false; ChangeTemp.IsEnabled = false; }
         }
     }
 }

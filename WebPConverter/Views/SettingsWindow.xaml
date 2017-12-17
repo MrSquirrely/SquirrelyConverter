@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SquirrelyConverter"
-        xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls" x:Class="SquirrelyConverter.SettingsWindow"
+    xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls" x:Class="WebPConverter.Views.SettingsWindow"
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
                    Background="{DynamicResource MaterialDesignPaper}"					  
@@ -32,7 +31,7 @@
             <TabItem Header="WebP">
                 <Grid Background="#FFE5E5E5">
                     <CheckBox x:Name="NoAlpha" Content="No Alpha" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                    <CheckBox x:Name="SaveEXIF" Content="Save Metadata" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="SaveExif" Content="Save Metadata" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top"/>
                     <Slider x:Name="Quality" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top" Width="466" Maximum="100" SmallChange="1" Value="80"/>
                     <Label Content="WebPQuality (Default 80)" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top"/>
                     <CheckBox x:Name="Lossless" Content="WebPLossless" HorizontalAlignment="Left" Margin="87,10,0,0" VerticalAlignment="Top"/>
