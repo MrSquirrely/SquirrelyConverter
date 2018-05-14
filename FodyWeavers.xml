@@ -1,19 +1,24 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <Weavers>
-<Costura CreateTemporaryAssemblies='true'/>
+  <Costura CreateTemporaryAssemblies='true'/>
   <Costura>
     <IncludeAssemblies>
+<<<<<<< HEAD
+=======
+      Costura
+      ControlzEx
+      Dragablz
+      Magick.NET-Q8-AnyCPU
+>>>>>>> dev
       MahApps.Metro
-      MahApps.Metro.IconPacks
       MaterialDesignColors
       MaterialDesignThemes.MahApps
       MaterialDesignThemes.Wpf
-      MediaToolkit
-      Microsoft.WindowsAPICodePack
-      Microsoft.WindowsAPICodePack.Shell
-      Microsoft.WindowsAPICodePack.ShellExtensions
-      Notifications.Wpf
+      Markdig
+      Markdig.Wpf
       System.Windows.Interactivity
+      ToastNotifications
+      ToastNotifications.Messages
     </IncludeAssemblies>
-</Costura>
+  </Costura>
 </Weavers>
