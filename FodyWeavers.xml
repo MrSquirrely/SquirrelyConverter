@@ -3,13 +3,10 @@
   <Costura CreateTemporaryAssemblies='true'/>
   <Costura>
     <IncludeAssemblies>
-<<<<<<< HEAD
-=======
       Costura
       ControlzEx
       Dragablz
       Magick.NET-Q8-AnyCPU
->>>>>>> dev
       MahApps.Metro
       MaterialDesignColors
       MaterialDesignThemes.MahApps
