@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace WebMConverter {
+namespace Mr_Squirrely_Converters {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
