@@ -8,20 +8,21 @@ using ImageMagick;
 
 namespace Mr_Squirrely_Converters.Class
 {
-    class Convert
     {
-
-        public void ConvertWebP(List<string> files) {
+        //If alpha true = remove else = set
+        internal static void ConvertWebP(List<string> files) {
             foreach (string file in files) {
                 string fileName = Path.GetFileNameWithoutExtension(file);
                 string fileLocation = Path.GetDirectoryName(file);
                 MagickImage image = new MagickImage(file);
+                image.Settings.SetDefine(MagickFormat.WebP, "lossless", true);
+                image.Settings.SetDefine(MagickFormat.WebP, "emulate-jpeg-size", false);
                 image.Format = MagickFormat.WebP;
                 image.Write($"{fileLocation}\\{fileName}.webp");
             }
         }
 
-        internal void ConvertJPEG(List<string> files) {
+        internal static void ConvertJPEG(List<string> files) {
             foreach (string file in files) {
                 string fileName = Path.GetFileNameWithoutExtension(file);
                 string fileLocation = Path.GetDirectoryName(file);
@@ -31,7 +32,7 @@ namespace Mr_Squirrely_Converters.Class
             }
         }
 
-        internal void ConvertPNG(List<string> files) {
+        internal static void ConvertPNG(List<string> files) {
             foreach (string file in files) {
                 string fileName = Path.GetFileNameWithoutExtension(file);
                 string fileLocation = Path.GetDirectoryName(file);

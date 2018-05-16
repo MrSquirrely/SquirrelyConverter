@@ -46,6 +46,7 @@ namespace Mr_Squirrely_Converters.Views {
                     Viewer.Document = document;
                 }
             }
+            streamReader.Dispose();
         }
 
         private void OpenHyperlink(object sender, System.Windows.Input.ExecutedRoutedEventArgs e) {

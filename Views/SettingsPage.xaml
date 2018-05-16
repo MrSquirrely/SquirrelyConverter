@@ -1,28 +1,23 @@
-﻿<metro:MetroWindow x:Class="Mr_Squirrely_Converters.Views.Settings"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Mr_Squirrely_Converters.Views"
-                   xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"  
-                   ShowMaxRestoreButton="False"
-        xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
-                   xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        mc:Ignorable="d"
-                   WindowStartupLocation="CenterOwner"
-        Title="Settings" Height="450" Width="800" MinHeight="450" MinWidth="800" MaxHeight="450" MaxWidth="800">
+﻿<Page x:Class="Mr_Squirrely_Converters.Views.SettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Mr_Squirrely_Converters.Views"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="SettingsPage">
+
     <Grid>
-        <!--
-        dragablz:TabablzControl
-        TabControl
-        -->
-        <!--<TabControl>
+        <TabControl>
             <TabItem Header="Default">
                 <Grid Background="#FFE5E5E5">
                     <CheckBox Content="Create A Temp Folder?" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsEnabled="False"/>
                     <TextBox HorizontalAlignment="Left" Height="23" Margin="10,33,0,0" TextWrapping="Wrap" Text="Temp Location" VerticalAlignment="Top" Width="766" IsEnabled="False"/>
                     <Button Content="Browse" HorizontalAlignment="Left" Margin="701,61,0,0" VerticalAlignment="Top" Height="Auto" IsEnabled="False"/>
                     <Label Content="Temp Settings Coming Soon" HorizontalAlignment="Left" Margin="10,61,0,0" VerticalAlignment="Top"/>
+                    <Button Content="Button" HorizontalAlignment="Left" Margin="366,200,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Images">
@@ -47,6 +42,6 @@
                     <Label Content="Coming Soon!" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
-        </TabControl>-->
+        </TabControl>
     </Grid>
-</metro:MetroWindow>
+</Page>

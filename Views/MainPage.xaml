@@ -1,50 +1,16 @@
-﻿<metro:MetroWindow x:Class="Mr_Squirrely_Converters.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Mr_Squirrely_Converters"
-        xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
-                   xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz" 
-                   xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-                   mc:Ignorable="d"
-                   TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-                   Background="{DynamicResource MaterialDesignPaper}"
-                   TextElement.FontWeight="Medium"
-                   TextElement.FontSize="14"
-                   FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-        Title="Mr. Squirrely's Image Converter" Height="450" Width="800" Closed="MetroWindow_Closed">
-    <metro:MetroWindow.RightWindowCommands>
-        <metro:WindowCommands>
-            <Button Name="RightWindowSettings" ToolTip="Settings" Click="RightWindowSettings_Click">
-                <materialDesign:PackIcon Kind="Settings" />
-            </Button>
-            <Button Name="RightWindowAbout" ToolTip="About" Click="RightWindowAbout_Click">
-                <materialDesign:PackIcon Kind="Help" />
-            </Button>
-            <Button Name="RightWindowGithub" ToolTip="Report Bugs" Click="RightWindowGithub_Click">
-                <materialDesign:PackIcon Kind="GithubFace" />
-            </Button>
-        </metro:WindowCommands>
-    </metro:MetroWindow.RightWindowCommands>
-    <metro:MetroWindow.LeftWindowCommands>
-        <metro:WindowCommands>
-            <Button x:Name="HamburgerButton" Click="HamburgerButton_Click">
-                <Button.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Settings" x:Name="SettingsMenu" Click="SettingsMenu_Click"/>
-                        <MenuItem Header="About" x:Name="AboutMenu" Click="AboutMenu_Click"/>
-                        <MenuItem Header="Clear" x:Name="ClearMenu" Click="ClearMenu_Click"/>
-                        <Separator/>
-                        <MenuItem Header="Check For Update" x:Name="UpdateMenu" Click="UpdateMenu_Click"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
-                <materialDesign:PackIcon Kind="Hamburger" />
-            </Button>
-        </metro:WindowCommands>
-    </metro:MetroWindow.LeftWindowCommands>
+﻿<Page x:Class="Mr_Squirrely_Converters.Views.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Mr_Squirrely_Converters.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz" 
+      Title="MainPage">
+
     <Grid>
-        <!--<dragablz:TabablzControl FixedHeaderCount="2" x:Name="ConverterTabs" SelectionChanged="ConverterTabs_SelectionChanged">
+        <dragablz:TabablzControl FixedHeaderCount="2" x:Name="ConverterTabs" SelectionChanged="ConverterTabs_SelectionChanged">
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController />
             </dragablz:TabablzControl.InterTabController>
@@ -98,6 +64,6 @@
                     </ComboBox>
                 </Grid>
             </TabItem>
-        </dragablz:TabablzControl>-->
+        </dragablz:TabablzControl>
     </Grid>
-</metro:MetroWindow>
+</Page>

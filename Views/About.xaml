@@ -9,6 +9,7 @@
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
                    xmlns:markdig="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                   WindowStartupLocation="CenterOwner"
         Title="About" Height="450" Width="800" Loaded="OnLoad">
     <FrameworkElement.CommandBindings>
         <CommandBinding Command="{x:Static markdig:Commands.Hyperlink}" Executed="OpenHyperlink" />
