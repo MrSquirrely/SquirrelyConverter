@@ -8,6 +8,7 @@ using ImageMagick;
 
 namespace Mr_Squirrely_Converters.Class
 {
+    class Converter
     {
         //If alpha true = remove else = set
         internal static void ConvertWebP(List<string> files) {
