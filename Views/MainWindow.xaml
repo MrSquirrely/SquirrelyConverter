@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Mr_Squirrely_Converters"
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+                   xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz" 
                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                    mc:Ignorable="d"
                    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -12,16 +13,13 @@
                    TextElement.FontWeight="Medium"
                    TextElement.FontSize="14"
                    FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-        Title="Mr. Squirrely's Image Converter" Height="450" Width="800" Closed="MetroWindow_Closed">
+        Title="Mr. Squirrely's Image Converter" Height="720" Width="1280" Closed="MetroWindow_Closed" MinWidth="1000" MinHeight="600">
     <metro:MetroWindow.RightWindowCommands>
         <metro:WindowCommands>
             <Button Name="RightWindowSettings" ToolTip="Settings" Click="RightWindowSettings_Click">
                 <materialDesign:PackIcon Kind="Settings" />
             </Button>
-            <Button Name="RightWindowAbout" ToolTip="About" Click="RightWindowAbout_Click">
-                <materialDesign:PackIcon Kind="Help" />
-            </Button>
-            <Button Name="RightWindowGithub" ToolTip="Report Bugs" Click="RightWindowGithub_Click">
+            <Button Name="RightWindowGithub" ToolTip="Report Bugs and Request Features" Click="RightWindowGithub_Click">
                 <materialDesign:PackIcon Kind="GithubFace" />
             </Button>
         </metro:WindowCommands>
@@ -32,7 +30,6 @@
                 <Button.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Settings" x:Name="SettingsMenu" Click="SettingsMenu_Click"/>
-                        <MenuItem Header="About" x:Name="AboutMenu" Click="AboutMenu_Click"/>
                         <MenuItem Header="Clear" x:Name="ClearMenu" Click="ClearMenu_Click"/>
                         <Separator/>
                         <MenuItem Header="Check For Update" x:Name="UpdateMenu" Click="UpdateMenu_Click"/>
@@ -43,26 +40,5 @@
         </metro:WindowCommands>
     </metro:MetroWindow.LeftWindowCommands>
     <Grid>
-        <ListView x:Name="DroppedFiles" Drop="DroppedFiles_Drop" AllowDrop="True">
-            <ListView.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Clear" Click="ClearMenu_Click"/>
-                </ContextMenu>
-            </ListView.ContextMenu>
-            <ListView.View>
-                <GridView x:Name="DroppedFilesList">
-                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" Width="200"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Type}" Header="Type"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Converted}" Header="Converted"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Location}" Header="Location"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Button Content="Convert" x:Name="ConvertButton" Height="Auto" Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="ConvertButton_Click"/>
-        <ComboBox x:Name="ImageFormatSelector" Margin="0,0,97,10" VerticalAlignment="Bottom" Width="55" HorizontalAlignment="Right" SelectedIndex="0">
-            <ComboBoxItem Content="WebP"/>
-            <ComboBoxItem Content="PNG"/>
-            <ComboBoxItem Content="JPEG"/>
-        </ComboBox>
     </Grid>
 </metro:MetroWindow>

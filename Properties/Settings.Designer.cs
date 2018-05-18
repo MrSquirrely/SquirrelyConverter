@@ -22,5 +22,137 @@ namespace Mr_Squirrely_Converters.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Create_Temp {
+            get {
+                return ((bool)(this["Create_Temp"]));
+            }
+            set {
+                this["Create_Temp"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(".image_temp")]
+        public string Temp_Location {
+            get {
+                return ((string)(this["Temp_Location"]));
+            }
+            set {
+                this["Temp_Location"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Images_Delete {
+            get {
+                return ((bool)(this["Images_Delete"]));
+            }
+            set {
+                this["Images_Delete"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool WebP_Lossess {
+            get {
+                return ((bool)(this["WebP_Lossess"]));
+            }
+            set {
+                this["WebP_Lossess"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool WebP_Emulate_JPEG {
+            get {
+                return ((bool)(this["WebP_Emulate_JPEG"]));
+            }
+            set {
+                this["WebP_Emulate_JPEG"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("80")]
+        public double WebP_Quality {
+            get {
+                return ((double)(this["WebP_Quality"]));
+            }
+            set {
+                this["WebP_Quality"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool WebP_RemoveAlpha {
+            get {
+                return ((bool)(this["WebP_RemoveAlpha"]));
+            }
+            set {
+                this["WebP_RemoveAlpha"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("80")]
+        public double JPEG_Quality {
+            get {
+                return ((double)(this["JPEG_Quality"]));
+            }
+            set {
+                this["JPEG_Quality"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool PNG_Lossess {
+            get {
+                return ((bool)(this["PNG_Lossess"]));
+            }
+            set {
+                this["PNG_Lossess"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("80")]
+        public double PNG_Quality {
+            get {
+                return ((double)(this["PNG_Quality"]));
+            }
+            set {
+                this["PNG_Quality"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PNG_RemoveAlpha {
+            get {
+                return ((bool)(this["PNG_RemoveAlpha"]));
+            }
+            set {
+                this["PNG_RemoveAlpha"] = value;
+            }
+        }
     }
 }
