@@ -8,10 +8,11 @@ using System.Diagnostics;
 using System.Windows.Controls;
 using System.IO;
 using System.Collections.ObjectModel;
-using System.Collections.Immutable;
 using System.Threading;
 using System.Net;
 using MahApps.Metro.Controls;
+using MaterialDesignThemes.Wpf;
+using System.Security.Cryptography;
 
 namespace Mr_Squirrely_Converters.Class {
     class Utils {
@@ -21,8 +22,10 @@ namespace Mr_Squirrely_Converters.Class {
         internal static List<string> _Dirs = new List<string>();
         internal static ObservableCollection<NewFile> _Images = new ObservableCollection<NewFile>(); // I'm keeping both for a reason that might come later.
         internal static ObservableCollection<NewFile> _Videos = new ObservableCollection<NewFile>();
-        internal static string _CurrentVersion = "2018.1b";
+        internal static string _CurrentVersion = "1.0rc1";
         internal static string _UpdateVerstion { get; set; }
+        internal static bool _FirstClicked = true;
+        internal static MD5 _MD5Hash = MD5.Create();
 
         internal static string _WorkingDir { get; set; }
         internal static bool _IsFolder { get; set; }
@@ -30,9 +33,7 @@ namespace Mr_Squirrely_Converters.Class {
 
         internal static ListView _ImageItems;
         internal static ListView _VideoItems;
-        internal static MetroWindow _MainWindow;
-        internal static MainPage _MainPage = new MainPage();
-        internal static SettingsPage _SettingsPage = new SettingsPage();
+        internal static DialogHost _VideoDialog;
 
         internal static WebClient _WebClient = new WebClient();
         private static string _VERSION_URL = "https://raw.githubusercontent.com/MrSquirrelyNet/SquirrelyConverter/master/current.version";
@@ -41,45 +42,12 @@ namespace Mr_Squirrely_Converters.Class {
         private readonly static string _README_FILENAME = "README.md";
 
         #region Windows
-        private static About _Aboutwindow;
-        private static Settings _SettingsWindow;
         private static String _Github = "https://github.com/MrSquirrelyNet/SquirrelyConverter/issues";
-
-        internal static void OpenSettings() {
-            _SettingsWindow = new Settings();
-            _SettingsWindow.Show();
-        }
-
-        internal static void CloseSettings() {
-            try {
-                _SettingsWindow.Close();
-            }
-            catch (Exception) {
-
-            }
-                
-        }
-
-        internal static void OpenAbout() {
-            _Aboutwindow = new About();
-            _Aboutwindow.Show();
-        }
-
-        internal static void CloseAbout() {
-            try {
-                _Aboutwindow.Close();
-            }
-            catch (Exception) {
-            }
-                
-        }
-
-        internal static void CloseWindows() {
-            CloseSettings();
-            CloseAbout();
-            Toast.Dispose();
-        }
-
+        internal static MetroWindow _MainWindow;
+        internal static MainPage _MainPage = new MainPage();
+        internal static SettingsPage _SettingsPage;
+        internal static void OpenSettings() => _SettingsPage = new SettingsPage();
+        internal static void Dispose() => Toast.Dispose();
         internal static void OpenGithub() => Process.Start(_Github);
 
         #endregion
@@ -92,20 +60,26 @@ namespace Mr_Squirrely_Converters.Class {
                     break;
                 case 1:
                     _MainWindow.Title = "Mr. Squirrely's Video Converter";
+                    if (_FirstClicked == true) {
+                        Toast.VideoMessage2();
+                        _FirstClicked = false;
+                    }
                     break;
             }
         }
 
         internal static void DownloadFiles() {
             try {
-                if (File.Exists(Utils._README_FILENAME)) File.Delete(Utils._README_FILENAME);
-                _WebClient.DownloadFile(Utils._README_URL, Utils._README_FILENAME);
                 if (File.Exists(@"current.version")) File.Delete(@"current.version");
                 _WebClient.DownloadFile(_VERSION_URL, _VERSION_FILENAME);
             }
-            catch (Exception) {
+            catch (Exception ex) {
+                Console.WriteLine("versions not found");
+                Console.WriteLine(ex.Source);
+                Console.WriteLine(ex.Message);
             }
         }
+
         internal static void CheckForUpdate(bool ShowSuccess) {
             try {
                 StreamReader streamReader = new StreamReader(@"current.version");
@@ -167,7 +141,59 @@ namespace Mr_Squirrely_Converters.Class {
         }
 
         private static void ConvertVideo(int selectedIndex) {
-            //Add a switch case here for videos
+            switch (selectedIndex) {
+                case 0:
+                    ConvertWebM();
+                    break;
+                case 1:
+                    ConvertMP4();
+                    break;
+            }
+        }
+        #endregion
+
+        #region Video Converters
+        private static void StartConvertWebM() => Converter.ConvertWebM(_Files);
+        private static void StartConvertMP4() => Converter.ConvertMP4(_Files);
+
+        private static void ConvertWebM() {
+            if (_DroppedFiles == null) return;
+            if (_IsWorking) {
+                Toast.AlreadyConverting();
+                return;
+            }
+            _IsWorking = true;
+            Thread _ThreadEncode;
+            ThreadStart _Starter = StartConvertWebM;
+            _Starter += () => {
+                Toast.ConvertFinished();
+                _IsWorking = false;
+            };
+
+            _ThreadEncode = new Thread(_Starter);
+            _ThreadEncode.SetApartmentState(ApartmentState.STA);
+            _ThreadEncode.IsBackground = true;
+            _ThreadEncode.Start();
+        }
+
+        private static void ConvertMP4() {
+            if (_DroppedFiles == null) return;
+            if (_IsWorking) {
+                Toast.AlreadyConverting();
+                return;
+            }
+            _IsWorking = true;
+            Thread _ThreadEncode;
+            ThreadStart _Starter = StartConvertMP4;
+            _Starter += () => {
+                Toast.ConvertFinished();
+                _IsWorking = false;
+            };
+
+            _ThreadEncode = new Thread(_Starter);
+            _ThreadEncode.SetApartmentState(ApartmentState.STA);
+            _ThreadEncode.IsBackground = true;
+            _ThreadEncode.Start();
         }
         #endregion
 
@@ -298,7 +324,7 @@ namespace Mr_Squirrely_Converters.Class {
             string fileLocation = Path.GetFullPath(file);
             FileAttributes fileAttributes = File.GetAttributes(file);
             if (Types.ImageFormats.Contains(fileType)) {
-                _Images.Add(new NewFile { Name = fileName, Type = fileType, Converted = "Queued", Location = fileLocation });
+                _Images.Add(new NewFile { Name = fileName, Type = fileType, Converted = "Queued", Location = fileLocation});
                 _Files.Add(file);
             }
             if (scanDir == true) {

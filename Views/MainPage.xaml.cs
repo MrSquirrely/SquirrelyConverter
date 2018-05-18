@@ -29,10 +29,10 @@ namespace Mr_Squirrely_Converters.Views
             Utils.CheckForUpdate(false);
         }
 
-        private void RightWindowSettings_Click(object sender, RoutedEventArgs e) => Utils.OpenSettings();
-        private void RightWindowAbout_Click(object sender, RoutedEventArgs e) => Utils.OpenAbout();
+        private void RightWindowSettings_Click(object sender, RoutedEventArgs e) { }
+        private void RightWindowAbout_Click(object sender, RoutedEventArgs e) { }
         private void RightWindowGithub_Click(object sender, RoutedEventArgs e) => Utils.OpenGithub();
-        private void MetroWindow_Closed(object sender, EventArgs e) => Utils.CloseWindows();
+        private void MetroWindow_Closed(object sender, EventArgs e) => Utils.Dispose();
 
         private void ImageFiles_Drop(object sender, DragEventArgs e) => Utils.PopulateList(e.Data.GetData(DataFormats.FileDrop) as string[], Types.Images());
         private void VideoFiles_Drop(object sender, DragEventArgs e) => Utils.PopulateList(e.Data.GetData(DataFormats.FileDrop) as string[], Types.Videos());
@@ -40,9 +40,8 @@ namespace Mr_Squirrely_Converters.Views
         private void ImageConvertButton_Click(object sender, RoutedEventArgs e) => Utils.Convert(ImageFormatSelector.SelectedIndex, Types.Images());
         private void VideoConvertButton_Click(object sender, RoutedEventArgs e) => Utils.Convert(ImageFormatSelector.SelectedIndex, Types.Videos());
 
-        //private void HamburgerButton_Click(object sender, RoutedEventArgs e) => HamburgerButton.ContextMenu.IsOpen = true;
-        private void SettingsMenu_Click(object sender, RoutedEventArgs e) => Utils.OpenSettings();
-        private void AboutMenu_Click(object sender, RoutedEventArgs e) => Utils.OpenAbout();
+        private void SettingsMenu_Click(object sender, RoutedEventArgs e) { }
+        private void AboutMenu_Click(object sender, RoutedEventArgs e) { }
         private void ClearMenu_Click(object sender, RoutedEventArgs e) => Utils.Clear();
         private void UpdateMenu_Click(object sender, RoutedEventArgs e) => Utils.CheckForUpdate(true);
 

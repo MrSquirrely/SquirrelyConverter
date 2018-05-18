@@ -16,6 +16,8 @@
       System.Windows.Interactivity
       ToastNotifications
       ToastNotifications.Messages
+      System.Collections.Immutable
+      NReco.VideoConverter
     </IncludeAssemblies>
   </Costura>
 </Weavers>

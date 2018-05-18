@@ -7,13 +7,16 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       Title="MainPage">
-
+    
     <Grid>
-        <dragablz:TabablzControl FixedHeaderCount="2" x:Name="ConverterTabs" SelectionChanged="ConverterTabs_SelectionChanged">
-            <dragablz:TabablzControl.InterTabController>
+        
+        <!--dragablz:TabablzControl  FixedHeaderCount="2"  -->
+        <dragablz:TabablzControl  FixedHeaderCount="2" x:Name="ConverterTabs" SelectionChanged="ConverterTabs_SelectionChanged">
+            <!--<dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController />
-            </dragablz:TabablzControl.InterTabController>
+            </dragablz:TabablzControl.InterTabController>-->
             <TabItem Header="Image">
                 <Grid>
                     <ListView x:Name="ImageFiles" Drop="ImageFiles_Drop" AllowDrop="True">
@@ -41,7 +44,7 @@
             </TabItem>
             <TabItem Header="Video">
                 <Grid>
-                    <ListView x:Name="VideoFiles" Drop="VideoFiles_Drop" AllowDrop="True">
+                    <ListView x:Name="VideoFiles" Drop="VideoFiles_Drop" AllowDrop="True" IsEnabled="False">
                         <ListView.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Clear" Click="ClearMenu_Click"/>
@@ -56,11 +59,11 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Content="Convert" x:Name="VideoConvertButton" Height="Auto" Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="VideoConvertButton_Click"/>
-                    <ComboBox x:Name="VideoFormatSelector" Margin="0,0,97,10" VerticalAlignment="Bottom" Width="55" HorizontalAlignment="Right" SelectedIndex="0">
-                        <ComboBoxItem Content="WebP"/>
-                        <ComboBoxItem Content="PNG"/>
-                        <ComboBoxItem Content="JPEG"/>
+                    <Button Content="Convert" x:Name="VideoConvertButton" Height="Auto" Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="VideoConvertButton_Click" IsEnabled="False"/>
+                    <ComboBox x:Name="VideoFormatSelector" Margin="0,0,97,10" VerticalAlignment="Bottom" Width="55" HorizontalAlignment="Right" SelectedIndex="0" IsEnabled="False">
+                        <ComboBoxItem Content="WebM"/>
+                        <ComboBoxItem Content="MP4"/>
+                        <ComboBoxItem Content="AVI"/>
                     </ComboBox>
                 </Grid>
             </TabItem>

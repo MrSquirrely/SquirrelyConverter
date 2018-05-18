@@ -37,7 +37,7 @@ namespace Mr_Squirrely_Converters.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute(".image_temp")]
         public string Temp_Location {
             get {
                 return ((string)(this["Temp_Location"]));
@@ -86,9 +86,9 @@ namespace Mr_Squirrely_Converters.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("80")]
-        public int WebP_Quality {
+        public double WebP_Quality {
             get {
-                return ((int)(this["WebP_Quality"]));
+                return ((double)(this["WebP_Quality"]));
             }
             set {
                 this["WebP_Quality"] = value;
@@ -110,9 +110,9 @@ namespace Mr_Squirrely_Converters.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("80")]
-        public int JPEG_Quality {
+        public double JPEG_Quality {
             get {
-                return ((int)(this["JPEG_Quality"]));
+                return ((double)(this["JPEG_Quality"]));
             }
             set {
                 this["JPEG_Quality"] = value;
@@ -134,9 +134,9 @@ namespace Mr_Squirrely_Converters.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("80")]
-        public int PNG_Quality {
+        public double PNG_Quality {
             get {
-                return ((int)(this["PNG_Quality"]));
+                return ((double)(this["PNG_Quality"]));
             }
             set {
                 this["PNG_Quality"] = value;
