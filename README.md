@@ -1,4 +1,5 @@
 # Squirrely Converter [![GitHub (pre-)release](https://img.shields.io/github/release/MrSquirrelyNet/SquirrelyConverter/all.svg?style=for-the-badge)](https://github.com/MrSquirrelyNet/SquirrelyConverter/releases)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FMrSquirrelyNet%2FSquirrelyConverter.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FMrSquirrelyNet%2FSquirrelyConverter?ref=badge_shield)
 [source]: https://cdn3.iconfinder.com/data/icons/lexter-flat-colorfull-file-formats/56/webp-32.png
 
 ##### Simple Converters for Everyone
@@ -66,3 +67,6 @@ Copyright (C) 2018  James Ferguson<MrSquirrely.net>
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FMrSquirrelyNet%2FSquirrelyConverter.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FMrSquirrelyNet%2FSquirrelyConverter?ref=badge_large)
