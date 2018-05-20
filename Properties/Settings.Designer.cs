@@ -61,7 +61,7 @@ namespace Mr_Squirrely_Converters.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool WebP_Lossess {
             get {
                 return ((bool)(this["WebP_Lossess"]));
@@ -152,6 +152,54 @@ namespace Mr_Squirrely_Converters.Properties {
             }
             set {
                 this["PNG_RemoveAlpha"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Video_ChangeSize {
+            get {
+                return ((bool)(this["Video_ChangeSize"]));
+            }
+            set {
+                this["Video_ChangeSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("800")]
+        public int Video_Width {
+            get {
+                return ((int)(this["Video_Width"]));
+            }
+            set {
+                this["Video_Width"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("450")]
+        public int Video_Height {
+            get {
+                return ((int)(this["Video_Height"]));
+            }
+            set {
+                this["Video_Height"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Video_RemoveAudio {
+            get {
+                return ((bool)(this["Video_RemoveAudio"]));
+            }
+            set {
+                this["Video_RemoveAudio"] = value;
             }
         }
     }

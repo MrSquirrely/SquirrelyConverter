@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace Mr_Squirrely_Converters.Class {
-    class Enum { }
-
     class NewFile {
         public string Name { get; set; }
         public string Type { get; set; }
@@ -17,13 +15,14 @@ namespace Mr_Squirrely_Converters.Class {
         public string Location { get; set; }
     }
 
-    class Types {
+    static class Types {
 
         internal static string Images() { return "images"; }
         internal static string Videos() { return "videos"; }
 
         //Doesn't support GIF Images
-        internal static List<string> ImageFormats = new List<string>() {
+        internal readonly static List<string> ImageFormats = new List<string>{
+            ".gif",
             ".png",
             ".jpg",
             ".jpeg",
@@ -36,7 +35,8 @@ namespace Mr_Squirrely_Converters.Class {
         };
 
         //This list is rather large and will possibly shorten at some point
-        internal static List<string> VideoFormats = new List<string>() {
+        internal readonly static List<string> VideoFormats = new List<string>{
+            ".gif",
             ".3gp",
             ".3g2",
             ".asf",

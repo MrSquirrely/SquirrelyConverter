@@ -59,5 +59,14 @@ namespace Mr_Squirrely_Converters.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mr_Squirrely_Converters.Resources.gif2webp.exe.
+        /// </summary>
+        internal static string WebPGif {
+            get {
+                return ResourceManager.GetString("WebPGif", resourceCulture);
+            }
+        }
     }
 }

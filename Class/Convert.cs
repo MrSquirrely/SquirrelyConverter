@@ -6,28 +6,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ImageMagick;
-using NReco.VideoConverter;
+using MediaToolkit;
+using MediaToolkit.Model;
+using MediaToolkit.Options;
 
-namespace Mr_Squirrely_Converters.Class
-{
-    class Converter
-    {
+namespace Mr_Squirrely_Converters.Class {
+    class Converter {
 
         #region Video Converters
         internal static void ConvertWebM(List<string> files) {
             try {
 
-                // Currently disabled
-                //FFMpegConverter video = new FFMpegConverter();
-                //foreach (string file in files) {
-                //    string fileName = Path.GetFileNameWithoutExtension(file);
-                //    string fileLocation = Path.GetDirectoryName(file);
-                //    string fileType = Path.GetExtension(file);
-                //    video.ConvertMedia(file, $"{fileLocation}\\{fileName}.webm", Format.webm);
-                //}
-                
-            }
-            catch (Exception) {
+                foreach (string file in files) {
+                    string fileName = Path.GetFileNameWithoutExtension(file);
+                    string fileLocation = Path.GetDirectoryName(file);
+                    string fileType = Path.GetExtension(file);
+                    Engine engine = new Engine();
+                    MediaFile inputFile = new MediaFile { Filename = file };
+                    MediaFile outputFile = new MediaFile { Filename = $"{fileLocation}\\{fileName}.webm" };
+
+                    if (Options.VideoChangeSize) {
+                        ConversionOptions conversionOptions = new ConversionOptions {
+                            CustomWidth = Options.VideoWidth,
+                            CustomHeight = Options.VideoHeight
+                        };
+                        engine.Convert(inputFile, outputFile, conversionOptions);
+                    } else {
+                        engine.Convert(inputFile, outputFile);
+                    }
+
+                }
+            } catch (Exception) {
 
             }
         }
@@ -38,93 +47,108 @@ namespace Mr_Squirrely_Converters.Class
         #endregion
 
         #region Image Converters
-        //If alpha true = remove else = set
         internal static void ConvertWebP(List<string> files) {
             foreach (string file in files) {
-                string fileName = Path.GetFileNameWithoutExtension(file);
-                string fullName = Path.GetFileName(file);
-                string fileLocation = Path.GetDirectoryName(file);
-                string fullLocation = Path.GetFullPath(file);
-                MagickImage image = new MagickImage(file);
-                image.Settings.SetDefine(MagickFormat.WebP, "-lossless", Options.WebPLossless);
-                image.Settings.SetDefine(MagickFormat.WebP, "-emulate-jpeg-size", Options.WebPEmulateJPEG);
-                image.Settings.SetDefine(MagickFormat.WebP, "-alpha", Options.GetWebPRemoveAlpha());
-                image.Settings.SetDefine(MagickFormat.WebP, "-quality", Options.WebPQuality.ToString());
-                image.Format = MagickFormat.WebP;
-                image.Write($"{fileLocation}\\{fileName}.webp");
+                if (Utils.GetFileType(file) != ".gif") {
+                    MagickImage image = new MagickImage(file);
+                    image.Settings.SetDefine(MagickFormat.WebP, "-lossless", Options.WebPLossless);
+                    image.Settings.SetDefine(MagickFormat.WebP, "-emulate-jpeg-size", Options.WebPEmulateJPEG);
+                    image.Settings.SetDefine(MagickFormat.WebP, "-alpha", Options.GetWebPRemoveAlpha());
+                    image.Settings.SetDefine(MagickFormat.WebP, "-quality", Options.WebPQuality.ToString());
+                    image.Format = MagickFormat.WebP;
+                    image.Write($"{Utils.GetFileDirectory(file)}\\{Utils.GetFileName(file)}.webp");
+                }else if (Utils.GetFileType(file) == ".gif") {
+                    ConvertWebPGif(file);
+                }
+                
                 //I need help on this. There has to be a better way to do this?!
                 foreach (NewFile newFile in Utils._Images) {
                     int index = Utils._Images.IndexOf(newFile);
-                    if (Utils._Images[index].Location == fullLocation) {
+                    if (Utils._Images[index].Location == Utils.GetFileLocation(file)) {
                         Utils._Images[index].Converted = "Converted";
                     }
                 }
-                Utils._MainPage.Dispatcher.Invoke(() => { Utils._MainPage.ImageFiles.Items.Refresh(); }, System.Windows.Threading.DispatcherPriority.Background);
-                if (Options.CreateTemp) {
-                    if (!Directory.Exists($"{Utils._WorkingDir}\\image_temp")) Directory.CreateDirectory($"{Utils._WorkingDir}\\image_temp");
-                    File.Copy(file, $"{Utils._WorkingDir}\\image_temp\\{fullName}");
-                }
+                UpdateView();
+                CopyFile(file);
                 DeleteFile(file);
             }
         }
 
+        private static void ConvertWebPGif(string file) {
+            Utils.ExtractWebP();
+
+            Process process = new Process {
+                StartInfo = {
+                    FileName = "cmd.exe",
+                    RedirectStandardInput = true,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true,
+                    UseShellExecute = false
+                }
+            };
+            process.Start();
+            process.StandardInput.WriteLine($"cd {Directory.GetCurrentDirectory()}\\Files");
+            Console.WriteLine($"gif2webp {Options.WebPQuality} \"{file}\" -o \"{Utils.GetFileDirectory(file)}\\{Utils.GetFileNameWithoutExtension(file)}.webp\"");
+            process.StandardInput.WriteLine($"gif2webp {Options.WebPQuality} \"{file}\" -o \"{Utils.GetFileDirectory(file)}\\{Utils.GetFileNameWithoutExtension(file)}.webp\"");
+            process.StandardInput.Flush();
+            process.StandardInput.Close();
+            process.WaitForExit();
+        }
+
         internal static void ConvertJPEG(List<string> files) {
             foreach (string file in files) {
-                string fileName = Path.GetFileNameWithoutExtension(file);
-                string fullName = Path.GetFileName(file);
-                string fileLocation = Path.GetDirectoryName(file);
-                string fullLocation = Path.GetFullPath(file);
                 MagickImage image = new MagickImage(file);
                 image.Settings.SetDefine(MagickFormat.Jpeg, "-quality", Options.WebPQuality.ToString());
                 image.Format = MagickFormat.Jpeg;
-                image.Write($"{fileLocation}\\{fileName}.Jpeg");
+                image.Write($"{Utils.GetFileDirectory(file)}\\{Utils.GetFileName(file)}.Jpeg");
                 //I need help on this. There has to be a better way to do this?!
                 foreach (NewFile newFile in Utils._Images) {
                     int index = Utils._Images.IndexOf(newFile);
-                    if (Utils._Images[index].Location == fullLocation) {
+                    if (Utils._Images[index].Location == Utils.GetFileLocation(file)) {
                         Utils._Images[index].Converted = "Converted";
                     }
                 }
-                Utils._MainPage.Dispatcher.Invoke(() => { Utils._MainPage.ImageFiles.Items.Refresh(); }, System.Windows.Threading.DispatcherPriority.Background);
-                if (Options.CreateTemp) {
-                    if (!Directory.Exists($"{Utils._WorkingDir}\\image_temp")) Directory.CreateDirectory($"{Utils._WorkingDir}\\image_temp");
-                    File.Copy(file, $"{Utils._WorkingDir}\\image_temp\\{fullName}");
-                }
+                UpdateView();
+                CopyFile(file);
                 DeleteFile(file);
             }
         }
 
         internal static void ConvertPNG(List<string> files) {
             foreach (string file in files) {
-                string fileName = Path.GetFileNameWithoutExtension(file);
-                string fullName = Path.GetFileName(file);
-                string fileLocation = Path.GetDirectoryName(file);
-                string fullLocation = Path.GetFullPath(file);
                 MagickImage image = new MagickImage(file);
                 image.Settings.SetDefine(MagickFormat.Png, "-lossless", Options.WebPLossless);
                 image.Settings.SetDefine(MagickFormat.Png, "-alpha", Options.GetWebPRemoveAlpha());
                 image.Settings.SetDefine(MagickFormat.Png, "-quality", Options.WebPQuality.ToString());
                 image.Format = MagickFormat.Png;
-                image.Write($"{fileLocation}\\{fileName}.Png");
+                image.Write($"{Utils.GetFileDirectory(file)}\\{Utils.GetFileName(file)}.Png");
                 //I need help on this. There has to be a better way to do this?!
                 foreach (NewFile newFile in Utils._Images) {
                     int index = Utils._Images.IndexOf(newFile);
-                    if (Utils._Images[index].Location == fullLocation) {
+                    if (Utils._Images[index].Location == Utils.GetFileLocation(file)) {
                         Utils._Images[index].Converted = "Converted";
                     }
                 }
-                Utils._MainPage.Dispatcher.Invoke(() => { Utils._MainPage.ImageFiles.Items.Refresh(); }, System.Windows.Threading.DispatcherPriority.Background);
-                if (Options.CreateTemp) {
-                    if (!Directory.Exists($"{Utils._WorkingDir}\\image_temp")) Directory.CreateDirectory($"{Utils._WorkingDir}\\image_temp");
-                    File.Copy(file, $"{Utils._WorkingDir}\\image_temp\\{fullName}");
-                }
+                UpdateView();
+                CopyFile(file);
                 DeleteFile(file);
             }
         }
         #endregion
 
+        private static void UpdateView() => Utils._MainPage.Dispatcher.Invoke(() => { Utils._MainPage.ImageFiles.Items.Refresh(); }, System.Windows.Threading.DispatcherPriority.Background);
+
+        private static void CopyFile(string file) {
+            if (Options.CreateTemp) {
+                if (!Directory.Exists($"{Utils.GetTempDir()}"))
+                    Directory.CreateDirectory($"{Utils.GetTempDir()}");
+                File.Copy(file, $"{Utils.GetTempDir()}");
+            }
+        }
+
         private static void DeleteFile(string file) {
-            if (Options.ImagesDelete) File.Delete(file);
+            if (Options.ImagesDelete)
+                File.Delete(file);
         }
 
     }

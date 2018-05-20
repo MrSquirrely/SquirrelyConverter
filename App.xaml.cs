@@ -11,5 +11,6 @@ namespace Mr_Squirrely_Converters {
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application {
+
     }
 }

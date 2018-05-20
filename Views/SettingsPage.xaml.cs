@@ -14,19 +14,17 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Mr_Squirrely_Converters.Class;
 
-namespace Mr_Squirrely_Converters.Views
-{
+namespace Mr_Squirrely_Converters.Views {
     /// <summary>
     /// Interaction logic for SettingsPage.xaml
     /// </summary>
-    public partial class SettingsPage : Page
-    {
+    public partial class SettingsPage : Page {
         //I need to work on this a little bit. 
         //Currently it sets the view and even if you cancel it never goes back. only a Restart would fix it.
-        public SettingsPage()
-        {
+        public SettingsPage() {
             InitializeComponent();
             SetValues();
+            CheckVideoSize();
         }
 
         private void SetValues() {
@@ -41,6 +39,10 @@ namespace Mr_Squirrely_Converters.Views
             RemoveAlphaPNG.IsChecked = Options.PNGRemoveAlpha;
             QualityPNG.Value = Options.PNGQuality;
             QualityJPEG.Value = Options.JPEGQuality;
+            ChangeVideoSize.IsChecked = Options.VideoChangeSize;
+            VideoWidth.Text = Options.VideoWidth.ToString();
+            VideoHeight.Text = Options.VideoHeight.ToString();
+            //RemoveAudioVideo.IsChecked = Options.VideoRemoveAudio;
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e) {
@@ -55,6 +57,10 @@ namespace Mr_Squirrely_Converters.Views
             Options.PNGRemoveAlpha = RemoveAlphaPNG.IsChecked.Value;
             Options.PNGQuality = QualityPNG.Value;
             Options.JPEGQuality = QualityJPEG.Value;
+            Options.VideoChangeSize = ChangeVideoSize.IsChecked.Value;
+            Options.VideoWidth = Convert.ToInt32(VideoWidth.Text);
+            Options.VideoHeight = Convert.ToInt32(VideoHeight.Text);
+            //Options.VideoRemoveAudio = RemoveAudioVideo.IsChecked.Value;
 
             Toast.SettingsSaved();
 
@@ -79,5 +85,17 @@ namespace Mr_Squirrely_Converters.Views
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e) => Utils._MainWindow.Content = Utils._MainPage;
+        private void ChangeVideoSize_Clicked(object sender, RoutedEventArgs e) => CheckVideoSize();
+
+        private void CheckVideoSize() {
+            if (ChangeVideoSize.IsChecked.Value == true) {
+                VideoWidth.IsEnabled = true;
+                VideoHeight.IsEnabled = true;
+            } else if (ChangeVideoSize.IsChecked.Value == false) {
+                VideoWidth.IsEnabled = false;
+                VideoHeight.IsEnabled = false;
+            }
+        }
+
     }
 }
