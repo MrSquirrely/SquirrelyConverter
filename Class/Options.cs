@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Mr_Squirrely_Converters.Class {
+﻿namespace Mr_Squirrely_Converters.Class {
     static class Options {
 
         internal static bool CreateTemp { get { return Properties.Settings.Default.Create_Temp; } set { Properties.Settings.Default.Create_Temp = value; } }

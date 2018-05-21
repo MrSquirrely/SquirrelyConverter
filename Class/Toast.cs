@@ -1,22 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
 using ToastNotifications.Position;
 
-namespace Mr_Squirrely_Converters.Class
-{
+namespace Mr_Squirrely_Converters.Class {
     class Toast {
         private static Notifier _Notifier;
 
         internal static void CreateNotifier() {
             _Notifier = new Notifier(cfg => {
             cfg.PositionProvider = new WindowPositionProvider(parentWindow: Utils._MainWindow, corner: Corner.BottomRight, offsetX: 10, offsetY: 10);
-            cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(notificationLifetime: TimeSpan.FromSeconds(10), maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+            cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(notificationLifetime: TimeSpan.FromSeconds(5), maximumNotificationCount: MaximumNotificationCount.FromCount(5));
             cfg.Dispatcher = App.Current.Dispatcher;
             });
         }

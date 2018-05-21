@@ -1,11 +1,4 @@
-﻿using ImageMagick;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+﻿using System.Collections.Generic;
 
 namespace Mr_Squirrely_Converters.Class {
     class NewFile {

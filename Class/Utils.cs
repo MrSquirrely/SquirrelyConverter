@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
 using System.Net;
 using System.Reflection;
 using System.Threading;
@@ -13,8 +12,7 @@ using MaterialDesignThemes.Wpf;
 using Mr_Squirrely_Converters.Properties;
 using Mr_Squirrely_Converters.Views;
 
-namespace Mr_Squirrely_Converters.Class
-{
+namespace Mr_Squirrely_Converters.Class {
     // TODO:
     //  Comment what everything is for and does.
     //  Clean code up a bit. It's still not the best looking.
@@ -51,7 +49,11 @@ namespace Mr_Squirrely_Converters.Class
         internal static MainPage _MainPage = new MainPage();
         internal static SettingsPage _SettingsPage;
         internal static void OpenSettings() => _SettingsPage = new SettingsPage();
-        internal static void Dispose() => Toast.Dispose();
+        internal static void Dispose() {
+            Toast.Dispose();
+            DeleteWebP();
+            File.Delete("current.version");
+        }
         internal static void OpenGithub() => Process.Start(_Github);
 
         #endregion
