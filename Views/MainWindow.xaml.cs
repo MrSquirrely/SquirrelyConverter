@@ -27,5 +27,6 @@ namespace Mr_Squirrely_Converters {
         private void SettingsMenu_Click(object sender, RoutedEventArgs e) => Utils._MainWindow.Content = Utils._SettingsPage;
         private void ClearMenu_Click(object sender, RoutedEventArgs e) => Utils.Clear();
         private void UpdateMenu_Click(object sender, RoutedEventArgs e) => Utils.CheckForUpdate(true);
+
     }
 }

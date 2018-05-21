@@ -1,3 +1,4 @@
+
 ﻿namespace Mr_Squirrely_Converters.Class {
     class NewFile {
         public string Name { get; set; }

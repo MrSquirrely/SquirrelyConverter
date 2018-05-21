@@ -192,5 +192,11 @@ namespace Mr_Squirrely_Converters.Class {
             if (Options.ImagesDelete)
                 File.Delete(file);
         }
+        #endregion
+
+        private static void DeleteFile(string file) {
+            if (Options.ImagesDelete) File.Delete(file);
+        }
+
     }
 }

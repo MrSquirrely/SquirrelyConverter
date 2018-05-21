@@ -30,7 +30,6 @@ namespace Mr_Squirrely_Converters.Class {
         internal static string _WorkingDir { get; set; }
         internal static bool _IsFolder { get; set; }
         internal static bool _IsWorking { get; set; }
-
         internal static ListView _ImageItems;
         internal static ListView _VideoItems;
         internal static DialogHost _VideoDialog;

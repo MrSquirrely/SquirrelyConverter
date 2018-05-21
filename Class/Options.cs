@@ -1,3 +1,4 @@
+
 ﻿namespace Mr_Squirrely_Converters.Class {
     static class Options {
         internal static bool CreateTemp { get { return Properties.Settings.Default.Create_Temp; } set { Properties.Settings.Default.Create_Temp = value; } }

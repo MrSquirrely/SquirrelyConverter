@@ -11,7 +11,6 @@
       Title="MainPage">
 
     <Grid>
-
         <!--dragablz:TabablzControl  FixedHeaderCount="2"  -->
         <dragablz:TabablzControl  FixedHeaderCount="2" x:Name="ConverterTabs" SelectionChanged="ConverterTabs_SelectionChanged">
             <!--<dragablz:TabablzControl.InterTabController>
