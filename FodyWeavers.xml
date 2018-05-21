@@ -11,13 +11,10 @@
       MaterialDesignColors
       MaterialDesignThemes.MahApps
       MaterialDesignThemes.Wpf
-      Markdig
-      Markdig.Wpf
       System.Windows.Interactivity
       ToastNotifications
       ToastNotifications.Messages
-      System.Collections.Immutable
-      NReco.VideoConverter
+      MediaToolkit
     </IncludeAssemblies>
   </Costura>
 </Weavers>

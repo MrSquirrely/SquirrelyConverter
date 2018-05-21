@@ -1,22 +1,23 @@
-﻿using Mr_Squirrely_Converters.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using System.Windows.Controls;
-using System.IO;
 using System.Collections.ObjectModel;
-using System.Threading;
+using System.Diagnostics;
+using System.IO;
 using System.Net;
+using System.Reflection;
+using System.Threading;
+using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MaterialDesignThemes.Wpf;
-using System.Security.Cryptography;
+using Mr_Squirrely_Converters.Properties;
+using Mr_Squirrely_Converters.Views;
 
 namespace Mr_Squirrely_Converters.Class {
-    class Utils {
-
+    // TODO:
+    //  Comment what everything is for and does.
+    //  Clean code up a bit. It's still not the best looking.
+    //  Adding things to there own class.
+    static class Utils {
         internal static List<string> _DroppedFiles = new List<string>();
         internal static List<string> _Files = new List<string>();
         internal static List<string> _Dirs = new List<string>();
@@ -25,34 +26,60 @@ namespace Mr_Squirrely_Converters.Class {
         internal static string _CurrentVersion = "1.0rc1";
         internal static string _UpdateVerstion { get; set; }
         internal static bool _FirstClicked = true;
-        internal static MD5 _MD5Hash = MD5.Create();
 
         internal static string _WorkingDir { get; set; }
         internal static bool _IsFolder { get; set; }
-        internal static bool _IsWorking { get; set; } = false;
-
+        internal static bool _IsWorking { get; set; }
         internal static ListView _ImageItems;
         internal static ListView _VideoItems;
         internal static DialogHost _VideoDialog;
 
         internal static WebClient _WebClient = new WebClient();
-        private static string _VERSION_URL = "https://raw.githubusercontent.com/MrSquirrelyNet/SquirrelyConverter/master/current.version";
+        private static readonly string _VERSION_URL = "https://raw.githubusercontent.com/MrSquirrelyNet/SquirrelyConverter/master/current.version";
         private static string _VERSION_FILENAME = "current.version";
-        private  static string _README_URL = "https://raw.githubusercontent.com/MrSquirrelyNet/SquirrelyConverter/master/README.md";
+        private static string _README_URL = "https://raw.githubusercontent.com/MrSquirrelyNet/SquirrelyConverter/master/README.md";
         private readonly static string _README_FILENAME = "README.md";
+        internal static string _WebPLocation = $"{Directory.GetCurrentDirectory()}/Files/gif2webp.exe";
 
         #region Windows
-        private static String _Github = "https://github.com/MrSquirrelyNet/SquirrelyConverter/issues";
+        private static string _Github = "https://github.com/MrSquirrelyNet/SquirrelyConverter/issues";
         internal static MetroWindow _MainWindow;
         internal static MainPage _MainPage = new MainPage();
         internal static SettingsPage _SettingsPage;
         internal static void OpenSettings() => _SettingsPage = new SettingsPage();
-        internal static void Dispose() => Toast.Dispose();
+        internal static void Dispose() {
+            Toast.Dispose();
+            DeleteWebP();
+            File.Delete("current.version");
+        }
         internal static void OpenGithub() => Process.Start(_Github);
 
         #endregion
 
         #region Utilities
+        internal static string GetTempDir() => $"{_WorkingDir}\\{(Options.CreateTemp ? $"{Options.TempLocation}" : $"image_temp")}"; //Gets the temp directory
+        internal static string GetFileName(string file) => Path.GetFileName(file); // Gets the file name
+        internal static string GetFileNameWithoutExtension(string file) => Path.GetFileNameWithoutExtension(file); //Gets the file name without extension Ex: example.txt would be 'example'
+        internal static string GetFileType(string file) => Path.GetExtension(file); //Gets the extension of a file
+        internal static string GetFileDirectory(string file) => Path.GetDirectoryName(file); //Gets the directory
+        internal static string GetFileLocation(string file) => Path.GetFullPath(file); //Gets the location of the file
+
+        internal static void ExtractWebP() {
+            Directory.CreateDirectory($"{Directory.GetCurrentDirectory()}\\Files");
+            using (Stream commpressedWeBP = Assembly.GetExecutingAssembly().GetManifestResourceStream(Resources.WebPGif))
+            using (BinaryReader binaryReader = new BinaryReader(commpressedWeBP))
+            using (FileStream fileStream = new FileStream(_WebPLocation, FileMode.OpenOrCreate))
+            using (BinaryWriter binaryWriter = new BinaryWriter(fileStream))
+                binaryWriter.Write(binaryReader.ReadBytes((int)commpressedWeBP.Length));
+        }
+
+        internal static void DeleteWebP() {
+            if (File.Exists(_WebPLocation)) {
+                File.Delete(_WebPLocation);
+                Directory.Delete($"{Directory.GetCurrentDirectory()}/Files");
+            }
+        }
+
         internal static void UpdateTitle(int SelectedIndex) {
             switch (SelectedIndex) {
                 case 0:
@@ -70,7 +97,8 @@ namespace Mr_Squirrely_Converters.Class {
 
         internal static void DownloadFiles() {
             try {
-                if (File.Exists(@"current.version")) File.Delete(@"current.version");
+                if (File.Exists(@"current.version"))
+                    File.Delete(@"current.version");
                 _WebClient.DownloadFile(_VERSION_URL, _VERSION_FILENAME);
             }
             catch (Exception ex) {
@@ -86,14 +114,17 @@ namespace Mr_Squirrely_Converters.Class {
                 _UpdateVerstion = streamReader.ReadLine();
                 Console.WriteLine(_CurrentVersion);
                 Console.WriteLine(_UpdateVerstion);
-                if (_CurrentVersion != _UpdateVerstion) Toast.Update();
-                else if (ShowSuccess) Toast.NoUpdate();
+                if (_CurrentVersion != _UpdateVerstion)
+                    Toast.Update();
+                else if (ShowSuccess)
+                    Toast.NoUpdate();
                 streamReader.Dispose();
             }
             catch (Exception) {
+                //Todo
             }
         }
-        
+
         internal static void Clear() {
             ClearLists();
             if (_Images.Count != 0) {
@@ -107,9 +138,12 @@ namespace Mr_Squirrely_Converters.Class {
         }
 
         private static void ClearLists() {
-            if (_DroppedFiles.Count != 0) _DroppedFiles.Clear();
-            if (_Files.Count != 0) _Files.Clear();
-            if (_Dirs.Count != 0) _Dirs.Clear();
+            if (_DroppedFiles.Count != 0)
+                _DroppedFiles.Clear();
+            if (_Files.Count != 0)
+                _Files.Clear();
+            if (_Dirs.Count != 0)
+                _Dirs.Clear();
         }
         #endregion
 
@@ -123,7 +157,6 @@ namespace Mr_Squirrely_Converters.Class {
                     ConvertVideo(selectedIndex);
                     break;
             }
-            
         }
 
         private static void ConvertImage(int selectedIndex) {
@@ -157,7 +190,8 @@ namespace Mr_Squirrely_Converters.Class {
         private static void StartConvertMP4() => Converter.ConvertMP4(_Files);
 
         private static void ConvertWebM() {
-            if (_DroppedFiles == null) return;
+            if (_DroppedFiles == null)
+                return;
             if (_IsWorking) {
                 Toast.AlreadyConverting();
                 return;
@@ -177,7 +211,8 @@ namespace Mr_Squirrely_Converters.Class {
         }
 
         private static void ConvertMP4() {
-            if (_DroppedFiles == null) return;
+            if (_DroppedFiles == null)
+                return;
             if (_IsWorking) {
                 Toast.AlreadyConverting();
                 return;
@@ -203,7 +238,8 @@ namespace Mr_Squirrely_Converters.Class {
         private static void StartConvertWebP() => Converter.ConvertWebP(_Files);
 
         private static void ConvertJPEG() {
-            if (_DroppedFiles == null) return;
+            if (_DroppedFiles == null)
+                return;
             if (_IsWorking) {
                 Toast.AlreadyConverting();
                 return;
@@ -223,7 +259,8 @@ namespace Mr_Squirrely_Converters.Class {
         }
 
         private static void ConvertPNG() {
-            if (_DroppedFiles == null) return;
+            if (_DroppedFiles == null)
+                return;
             if (_IsWorking) {
                 Toast.AlreadyConverting();
                 return;
@@ -243,7 +280,8 @@ namespace Mr_Squirrely_Converters.Class {
         }
 
         private static void ConvertWebP() {
-            if (_DroppedFiles == null) return;
+            if (_DroppedFiles == null)
+                return;
             if (_IsWorking) {
                 Toast.AlreadyConverting();
                 return;
@@ -260,7 +298,6 @@ namespace Mr_Squirrely_Converters.Class {
             _ThreadEncode.SetApartmentState(ApartmentState.STA);
             _ThreadEncode.IsBackground = true;
             _ThreadEncode.Start();
-            
         }
         #endregion
 
@@ -299,7 +336,8 @@ namespace Mr_Squirrely_Converters.Class {
         private static void PopulateVideos(string[] DroppedFiles) {
             ClearLists();
 
-            if (_DroppedFiles.Count != 0) _DroppedFiles.Clear();
+            if (_DroppedFiles.Count != 0)
+                _DroppedFiles.Clear();
 
             foreach (string dropped in DroppedFiles) {
                 _DroppedFiles.Add(dropped);
@@ -311,7 +349,7 @@ namespace Mr_Squirrely_Converters.Class {
 
             foreach (string dir in _Dirs) {
                 string[] files = Directory.GetFiles(dir);
-                foreach(string file in files) {
+                foreach (string file in files) {
                     GetVideos(file, false);
                 }
             }
@@ -324,7 +362,7 @@ namespace Mr_Squirrely_Converters.Class {
             string fileLocation = Path.GetFullPath(file);
             FileAttributes fileAttributes = File.GetAttributes(file);
             if (Types.ImageFormats.Contains(fileType)) {
-                _Images.Add(new NewFile { Name = fileName, Type = fileType, Converted = "Queued", Location = fileLocation});
+                _Images.Add(new NewFile { Name = fileName, Type = fileType, Converted = "Queued", Location = fileLocation });
                 _Files.Add(file);
             }
             if (scanDir == true) {
@@ -350,6 +388,5 @@ namespace Mr_Squirrely_Converters.Class {
             }
         }
         #endregion
-
     }
 }

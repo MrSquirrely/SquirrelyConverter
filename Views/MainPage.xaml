@@ -9,9 +9,8 @@
       xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       Title="MainPage">
-    
+
     <Grid>
-        
         <!--dragablz:TabablzControl  FixedHeaderCount="2"  -->
         <dragablz:TabablzControl  FixedHeaderCount="2" x:Name="ConverterTabs" SelectionChanged="ConverterTabs_SelectionChanged">
             <!--<dragablz:TabablzControl.InterTabController>
@@ -44,7 +43,7 @@
             </TabItem>
             <TabItem Header="Video">
                 <Grid>
-                    <ListView x:Name="VideoFiles" Drop="VideoFiles_Drop" AllowDrop="True" IsEnabled="False">
+                    <ListView x:Name="VideoFiles" Drop="VideoFiles_Drop" AllowDrop="True">
                         <ListView.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Clear" Click="ClearMenu_Click"/>
@@ -59,11 +58,10 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Content="Convert" x:Name="VideoConvertButton" Height="Auto" Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="VideoConvertButton_Click" IsEnabled="False"/>
-                    <ComboBox x:Name="VideoFormatSelector" Margin="0,0,97,10" VerticalAlignment="Bottom" Width="55" HorizontalAlignment="Right" SelectedIndex="0" IsEnabled="False">
+                    <Button Content="Convert" x:Name="VideoConvertButton" Height="Auto" Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="VideoConvertButton_Click"/>
+                    <ComboBox x:Name="VideoFormatSelector" Margin="0,0,97,10" VerticalAlignment="Bottom" Width="55" HorizontalAlignment="Right" SelectedIndex="0">
                         <ComboBoxItem Content="WebM"/>
                         <ComboBoxItem Content="MP4"/>
-                        <ComboBoxItem Content="AVI"/>
                     </ComboBox>
                 </Grid>
             </TabItem>
