@@ -126,6 +126,7 @@
     <Compile Include="Class\Enum.cs" />
     <Compile Include="Class\Options.cs" />
     <Compile Include="Class\Toast.cs" />
+    <Compile Include="Class\Types.cs" />
     <Compile Include="Class\Utils.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
