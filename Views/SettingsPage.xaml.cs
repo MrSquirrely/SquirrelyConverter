@@ -86,6 +86,5 @@ namespace Mr_Squirrely_Converters.Views {
                 VideoHeight.IsEnabled = false;
             }
         }
-
     }
 }

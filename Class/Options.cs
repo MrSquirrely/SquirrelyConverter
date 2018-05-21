@@ -1,6 +1,5 @@
 ﻿namespace Mr_Squirrely_Converters.Class {
     static class Options {
-
         internal static bool CreateTemp { get { return Properties.Settings.Default.Create_Temp; } set { Properties.Settings.Default.Create_Temp = value; } }
         internal static string TempLocation { get { return Properties.Settings.Default.Temp_Location; } set { Properties.Settings.Default.Temp_Location = value; } }
         internal static bool ImagesDelete { get { return Properties.Settings.Default.Images_Delete; } set { Properties.Settings.Default.Images_Delete = value; } }

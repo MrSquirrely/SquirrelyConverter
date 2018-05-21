@@ -57,7 +57,6 @@ namespace Mr_Squirrely_Converters.Class {
                     else {
                         engine.Convert(inputFile, outputFile);
                     }
-
                 }
             }
             catch (Exception) {
@@ -148,7 +147,6 @@ namespace Mr_Squirrely_Converters.Class {
             catch (Exception) {
                 //todo
             }
-
         }
 
         internal static void ConvertPNG(List<string> files) {
@@ -194,6 +192,5 @@ namespace Mr_Squirrely_Converters.Class {
             if (Options.ImagesDelete)
                 File.Delete(file);
         }
-
     }
 }

@@ -17,8 +17,7 @@ namespace Mr_Squirrely_Converters.Class {
     //  Comment what everything is for and does.
     //  Clean code up a bit. It's still not the best looking.
     //  Adding things to there own class.
-    class Utils {
-
+    static class Utils {
         internal static List<string> _DroppedFiles = new List<string>();
         internal static List<string> _Files = new List<string>();
         internal static List<string> _Dirs = new List<string>();
@@ -390,6 +389,5 @@ namespace Mr_Squirrely_Converters.Class {
             }
         }
         #endregion
-
     }
 }
