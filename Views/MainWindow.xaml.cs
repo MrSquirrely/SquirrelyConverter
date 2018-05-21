@@ -8,14 +8,14 @@ namespace Mr_Squirrely_Converters {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow {
-        
+
         public MainWindow() {
             InitializeComponent();
             Toast.CreateNotifier();
             Utils.DownloadFiles();
             Utils.OpenSettings();
             Utils._MainWindow = this;
-            
+
             Utils._MainWindow.Content = Utils._MainPage;
             Utils._WorkingDir = Directory.GetCurrentDirectory();
         }

@@ -10,9 +10,9 @@ namespace Mr_Squirrely_Converters.Class {
 
         internal static void CreateNotifier() {
             _Notifier = new Notifier(cfg => {
-            cfg.PositionProvider = new WindowPositionProvider(parentWindow: Utils._MainWindow, corner: Corner.BottomRight, offsetX: 10, offsetY: 10);
-            cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(notificationLifetime: TimeSpan.FromSeconds(5), maximumNotificationCount: MaximumNotificationCount.FromCount(5));
-            cfg.Dispatcher = App.Current.Dispatcher;
+                cfg.PositionProvider = new WindowPositionProvider(parentWindow: Utils._MainWindow, corner: Corner.BottomRight, offsetX: 10, offsetY: 10);
+                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(notificationLifetime: TimeSpan.FromSeconds(5), maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+                cfg.Dispatcher = App.Current.Dispatcher;
             });
         }
         #region Messages

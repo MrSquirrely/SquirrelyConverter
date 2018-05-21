@@ -80,7 +80,8 @@ namespace Mr_Squirrely_Converters.Views {
             if (ChangeVideoSize.IsChecked.Value == true) {
                 VideoWidth.IsEnabled = true;
                 VideoHeight.IsEnabled = true;
-            } else if (ChangeVideoSize.IsChecked.Value == false) {
+            }
+            else if (ChangeVideoSize.IsChecked.Value == false) {
                 VideoWidth.IsEnabled = false;
                 VideoHeight.IsEnabled = false;
             }

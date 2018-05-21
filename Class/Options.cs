@@ -20,11 +20,17 @@
         internal static void Save() => Properties.Settings.Default.Save();
 
         internal static string GetWebPRemoveAlpha() {
-            if (WebPRemoveAlpha) return "remove"; else return "set";
+            if (WebPRemoveAlpha)
+                return "remove";
+            else
+                return "set";
         }
 
         internal static string GetPNGRemoveAlpha() {
-            if (PNGRemoveAlpha) return "remove"; else return "set";
+            if (PNGRemoveAlpha)
+                return "remove";
+            else
+                return "set";
         }
     }
 }

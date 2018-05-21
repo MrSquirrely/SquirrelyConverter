@@ -73,7 +73,6 @@ namespace Mr_Squirrely_Converters.Class {
             using (FileStream fileStream = new FileStream(_WebPLocation, FileMode.OpenOrCreate))
             using (BinaryWriter binaryWriter = new BinaryWriter(fileStream))
                 binaryWriter.Write(binaryReader.ReadBytes((int)commpressedWeBP.Length));
-            
         }
 
         internal static void DeleteWebP() {
@@ -100,7 +99,8 @@ namespace Mr_Squirrely_Converters.Class {
 
         internal static void DownloadFiles() {
             try {
-                if (File.Exists(@"current.version")) File.Delete(@"current.version");
+                if (File.Exists(@"current.version"))
+                    File.Delete(@"current.version");
                 _WebClient.DownloadFile(_VERSION_URL, _VERSION_FILENAME);
             }
             catch (Exception ex) {
@@ -116,15 +116,17 @@ namespace Mr_Squirrely_Converters.Class {
                 _UpdateVerstion = streamReader.ReadLine();
                 Console.WriteLine(_CurrentVersion);
                 Console.WriteLine(_UpdateVerstion);
-                if (_CurrentVersion != _UpdateVerstion) Toast.Update();
-                else if (ShowSuccess) Toast.NoUpdate();
+                if (_CurrentVersion != _UpdateVerstion)
+                    Toast.Update();
+                else if (ShowSuccess)
+                    Toast.NoUpdate();
                 streamReader.Dispose();
             }
             catch (Exception) {
-
+                //Todo
             }
         }
-        
+
         internal static void Clear() {
             ClearLists();
             if (_Images.Count != 0) {
@@ -138,9 +140,12 @@ namespace Mr_Squirrely_Converters.Class {
         }
 
         private static void ClearLists() {
-            if (_DroppedFiles.Count != 0) _DroppedFiles.Clear();
-            if (_Files.Count != 0) _Files.Clear();
-            if (_Dirs.Count != 0) _Dirs.Clear();
+            if (_DroppedFiles.Count != 0)
+                _DroppedFiles.Clear();
+            if (_Files.Count != 0)
+                _Files.Clear();
+            if (_Dirs.Count != 0)
+                _Dirs.Clear();
         }
         #endregion
 
@@ -154,7 +159,6 @@ namespace Mr_Squirrely_Converters.Class {
                     ConvertVideo(selectedIndex);
                     break;
             }
-            
         }
 
         private static void ConvertImage(int selectedIndex) {
@@ -188,7 +192,8 @@ namespace Mr_Squirrely_Converters.Class {
         private static void StartConvertMP4() => Converter.ConvertMP4(_Files);
 
         private static void ConvertWebM() {
-            if (_DroppedFiles == null) return;
+            if (_DroppedFiles == null)
+                return;
             if (_IsWorking) {
                 Toast.AlreadyConverting();
                 return;
@@ -208,7 +213,8 @@ namespace Mr_Squirrely_Converters.Class {
         }
 
         private static void ConvertMP4() {
-            if (_DroppedFiles == null) return;
+            if (_DroppedFiles == null)
+                return;
             if (_IsWorking) {
                 Toast.AlreadyConverting();
                 return;
@@ -234,7 +240,8 @@ namespace Mr_Squirrely_Converters.Class {
         private static void StartConvertWebP() => Converter.ConvertWebP(_Files);
 
         private static void ConvertJPEG() {
-            if (_DroppedFiles == null) return;
+            if (_DroppedFiles == null)
+                return;
             if (_IsWorking) {
                 Toast.AlreadyConverting();
                 return;
@@ -254,7 +261,8 @@ namespace Mr_Squirrely_Converters.Class {
         }
 
         private static void ConvertPNG() {
-            if (_DroppedFiles == null) return;
+            if (_DroppedFiles == null)
+                return;
             if (_IsWorking) {
                 Toast.AlreadyConverting();
                 return;
@@ -274,7 +282,8 @@ namespace Mr_Squirrely_Converters.Class {
         }
 
         private static void ConvertWebP() {
-            if (_DroppedFiles == null) return;
+            if (_DroppedFiles == null)
+                return;
             if (_IsWorking) {
                 Toast.AlreadyConverting();
                 return;
@@ -291,7 +300,6 @@ namespace Mr_Squirrely_Converters.Class {
             _ThreadEncode.SetApartmentState(ApartmentState.STA);
             _ThreadEncode.IsBackground = true;
             _ThreadEncode.Start();
-            
         }
         #endregion
 
@@ -330,7 +338,8 @@ namespace Mr_Squirrely_Converters.Class {
         private static void PopulateVideos(string[] DroppedFiles) {
             ClearLists();
 
-            if (_DroppedFiles.Count != 0) _DroppedFiles.Clear();
+            if (_DroppedFiles.Count != 0)
+                _DroppedFiles.Clear();
 
             foreach (string dropped in DroppedFiles) {
                 _DroppedFiles.Add(dropped);
@@ -342,7 +351,7 @@ namespace Mr_Squirrely_Converters.Class {
 
             foreach (string dir in _Dirs) {
                 string[] files = Directory.GetFiles(dir);
-                foreach(string file in files) {
+                foreach (string file in files) {
                     GetVideos(file, false);
                 }
             }
@@ -355,7 +364,7 @@ namespace Mr_Squirrely_Converters.Class {
             string fileLocation = Path.GetFullPath(file);
             FileAttributes fileAttributes = File.GetAttributes(file);
             if (Types.ImageFormats.Contains(fileType)) {
-                _Images.Add(new NewFile { Name = fileName, Type = fileType, Converted = "Queued", Location = fileLocation});
+                _Images.Add(new NewFile { Name = fileName, Type = fileType, Converted = "Queued", Location = fileLocation });
                 _Files.Add(file);
             }
             if (scanDir == true) {
