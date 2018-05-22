@@ -17,7 +17,7 @@ namespace Mr_Squirrely_Converters.Class {
     //  Comment what everything is for and does.
     //  Clean code up a bit. It's still not the best looking.
     //  Adding things to there own class.
-    static class Utils {
+    static class Utilities {
         internal static List<string> _DroppedFiles = new List<string>();
         internal static List<string> _Files = new List<string>();
         internal static List<string> _Dirs = new List<string>();
@@ -32,17 +32,12 @@ namespace Mr_Squirrely_Converters.Class {
         internal static bool _IsWorking { get; set; }
         internal static ListView _ImageItems;
         internal static ListView _VideoItems;
-        internal static DialogHost _VideoDialog;
 
         internal static WebClient _WebClient = new WebClient();
         private static readonly string _VERSION_URL = "https://raw.githubusercontent.com/MrSquirrelyNet/SquirrelyConverter/master/current.version";
-        private static string _VERSION_FILENAME = "current.version";
-        private static string _README_URL = "https://raw.githubusercontent.com/MrSquirrelyNet/SquirrelyConverter/master/README.md";
-        private readonly static string _README_FILENAME = "README.md";
-        internal static string _WebPLocation = $"{Directory.GetCurrentDirectory()}/Files/gif2webp.exe";
-
-        #region Windows
-        private static string _Github = "https://github.com/MrSquirrelyNet/SquirrelyConverter/issues";
+        private static readonly string _VERSION_FILENAME = "current.version";
+        internal static readonly string _WebPLocation = $"{Directory.GetCurrentDirectory()}/Files/gif2webp.exe";
+        private static readonly string _Github = "https://github.com/MrSquirrelyNet/SquirrelyConverter/issues";
         internal static MetroWindow _MainWindow;
         internal static MainPage _MainPage = new MainPage();
         internal static SettingsPage _SettingsPage;
@@ -53,8 +48,6 @@ namespace Mr_Squirrely_Converters.Class {
             File.Delete("current.version");
         }
         internal static void OpenGithub() => Process.Start(_Github);
-
-        #endregion
 
         #region Utilities
         internal static string GetTempDir() => $"{_WorkingDir}\\{(Options.CreateTemp ? $"{Options.TempLocation}" : $"image_temp")}"; //Gets the temp directory
@@ -87,10 +80,7 @@ namespace Mr_Squirrely_Converters.Class {
                     break;
                 case 1:
                     _MainWindow.Title = "Mr. Squirrely's Video Converter";
-                    if (_FirstClicked == true) {
-                        Toast.VideoMessage2();
-                        _FirstClicked = false;
-                    }
+                    Toast.VideoMessage();
                     break;
             }
         }

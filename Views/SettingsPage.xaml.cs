@@ -8,8 +8,6 @@ namespace Mr_Squirrely_Converters.Views {
     /// Interaction logic for SettingsPage.xaml
     /// </summary>
     public partial class SettingsPage : Page {
-        //I need to work on this a little bit. 
-        //Currently it sets the view and even if you cancel it never goes back. only a Restart would fix it.
         public SettingsPage() {
             InitializeComponent();
             SetValues();
@@ -31,7 +29,7 @@ namespace Mr_Squirrely_Converters.Views {
             ChangeVideoSize.IsChecked = Options.VideoChangeSize;
             VideoWidth.Text = Options.VideoWidth.ToString();
             VideoHeight.Text = Options.VideoHeight.ToString();
-            //RemoveAudioVideo.IsChecked = Options.VideoRemoveAudio;
+            //RemoveAudioVideo.IsChecked = Options.VideoRemoveAudio; // I can't seem to do this for some reason
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e) {
@@ -49,12 +47,12 @@ namespace Mr_Squirrely_Converters.Views {
             Options.VideoChangeSize = ChangeVideoSize.IsChecked.Value;
             Options.VideoWidth = Convert.ToInt32(VideoWidth.Text);
             Options.VideoHeight = Convert.ToInt32(VideoHeight.Text);
-            //Options.VideoRemoveAudio = RemoveAudioVideo.IsChecked.Value;
+            //Options.VideoRemoveAudio = RemoveAudioVideo.IsChecked.Value; // I can't seem to do this for some reason
 
             Toast.SettingsSaved();
 
             Options.Save();
-            Utils._MainWindow.Content = Utils._MainPage;
+            Utilities._MainWindow.Content = Utilities._MainPage;
         }
 
         private void ResetButton_Click(object sender, RoutedEventArgs e) {
@@ -73,7 +71,7 @@ namespace Mr_Squirrely_Converters.Views {
             Toast.SettingsReset();
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e) => Utils._MainWindow.Content = Utils._MainPage;
+        private void CancelButton_Click(object sender, RoutedEventArgs e) => Utilities._MainWindow.Content = Utilities._MainPage;
         private void ChangeVideoSize_Clicked(object sender, RoutedEventArgs e) => CheckVideoSize();
 
         private void CheckVideoSize() {

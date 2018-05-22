@@ -11,22 +11,25 @@ namespace Mr_Squirrely_Converters {
         public MainWindow() {
             InitializeComponent();
             Toast.CreateNotifier();
-            Utils.DownloadFiles();
-            Utils.OpenSettings();
-            Utils._MainWindow = this;
+            Utilities.DownloadFiles();
+            Utilities.OpenSettings();
+            Utilities._MainWindow = this;
 
-            Utils._MainWindow.Content = Utils._MainPage;
-            Utils._WorkingDir = Directory.GetCurrentDirectory();
+            Utilities._MainWindow.Content = Utilities._MainPage;
+            Utilities._WorkingDir = Directory.GetCurrentDirectory();
+
+            Logger.StartLogger();
+            Logger.LogDebug("Started!");
         }
 
-        private void RightWindowSettings_Click(object sender, RoutedEventArgs e) => Utils._MainWindow.Content = Utils._SettingsPage;
-        private void RightWindowGithub_Click(object sender, RoutedEventArgs e) => Utils.OpenGithub();
-        private void MetroWindow_Closed(object sender, EventArgs e) => Utils.Dispose();
+        private void RightWindowSettings_Click(object sender, RoutedEventArgs e) => Utilities._MainWindow.Content = Utilities._SettingsPage;
+        private void RightWindowGithub_Click(object sender, RoutedEventArgs e) => Utilities.OpenGithub();
+        private void MetroWindow_Closed(object sender, EventArgs e) => Utilities.Dispose();
 
         private void HamburgerButton_Click(object sender, RoutedEventArgs e) => HamburgerButton.ContextMenu.IsOpen = true;
-        private void SettingsMenu_Click(object sender, RoutedEventArgs e) => Utils._MainWindow.Content = Utils._SettingsPage;
-        private void ClearMenu_Click(object sender, RoutedEventArgs e) => Utils.Clear();
-        private void UpdateMenu_Click(object sender, RoutedEventArgs e) => Utils.CheckForUpdate(true);
+        private void SettingsMenu_Click(object sender, RoutedEventArgs e) => Utilities._MainWindow.Content = Utilities._SettingsPage;
+        private void ClearMenu_Click(object sender, RoutedEventArgs e) => Utilities.Clear();
+        private void UpdateMenu_Click(object sender, RoutedEventArgs e) => Utilities.CheckForUpdate(true);
 
     }
 }

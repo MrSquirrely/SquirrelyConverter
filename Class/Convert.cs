@@ -6,6 +6,7 @@ using ImageMagick;
 using MediaToolkit;
 using MediaToolkit.Model;
 using MediaToolkit.Options;
+using Mr_Squirrely_Converters.Class;
 
 namespace Mr_Squirrely_Converters.Class {
     class Converter {
@@ -69,24 +70,24 @@ namespace Mr_Squirrely_Converters.Class {
         internal static void ConvertWebP(List<string> files) {
             try {
                 foreach (string file in files) {
-                    if (Utils.GetFileType(file) != ".gif") {
+                    if (Utilities.GetFileType(file) != ".gif") {
                         MagickImage image = new MagickImage(file);
                         image.Settings.SetDefine(MagickFormat.WebP, "-lossless", Options.WebPLossless);
                         image.Settings.SetDefine(MagickFormat.WebP, "-emulate-jpeg-size", Options.WebPEmulateJPEG);
                         image.Settings.SetDefine(MagickFormat.WebP, "-alpha", Options.GetWebPRemoveAlpha());
                         image.Settings.SetDefine(MagickFormat.WebP, "-quality", Options.WebPQuality.ToString());
                         image.Format = MagickFormat.WebP;
-                        image.Write($"{Utils.GetFileDirectory(file)}\\{Utils.GetFileNameWithoutExtension(file)}.webp");
+                        image.Write($"{Utilities.GetFileDirectory(file)}\\{Utilities.GetFileNameWithoutExtension(file)}.webp");
                     }
-                    else if (Utils.GetFileType(file) == ".gif") {
+                    else if (Utilities.GetFileType(file) == ".gif") {
                         ConvertWebPGif(file);
                     }
 
                     //I need help on this. There has to be a better way to do this?!
-                    foreach (NewFile newFile in Utils._Images) {
-                        int index = Utils._Images.IndexOf(newFile);
-                        if (Utils._Images[index].Location == Utils.GetFileLocation(file)) {
-                            Utils._Images[index].Converted = "Converted";
+                    foreach (NewFile newFile in Utilities._Images) {
+                        int index = Utilities._Images.IndexOf(newFile);
+                        if (Utilities._Images[index].Location == Utilities.GetFileLocation(file)) {
+                            Utilities._Images[index].Converted = "Converted";
                         }
                     }
                     UpdateView();
@@ -101,7 +102,7 @@ namespace Mr_Squirrely_Converters.Class {
 
         private static void ConvertWebPGif(string file) {
             try {
-                Utils.ExtractWebP();
+                Utilities.ExtractWebP();
                 Process process = new Process {
                     StartInfo = {
                     FileName = "cmd.exe",
@@ -113,7 +114,7 @@ namespace Mr_Squirrely_Converters.Class {
                 };
                 process.Start();
                 process.StandardInput.WriteLine($"cd {Directory.GetCurrentDirectory()}\\Files");
-                process.StandardInput.WriteLine($"gif2webp {Options.WebPQuality} \"{file}\" -o \"{Utils.GetFileDirectory(file)}\\{Utils.GetFileNameWithoutExtension(file)}.webp\"");
+                process.StandardInput.WriteLine($"gif2webp {Options.WebPQuality} \"{file}\" -o \"{Utilities.GetFileDirectory(file)}\\{Utilities.GetFileNameWithoutExtension(file)}.webp\"");
                 process.StandardInput.Flush();
                 process.StandardInput.Close();
                 process.WaitForExit();
@@ -126,17 +127,17 @@ namespace Mr_Squirrely_Converters.Class {
         internal static void ConvertJPEG(List<string> files) {
             try {
                 foreach (string file in files) {
-                    if (Utils.GetFileType(file) == ".gif" || Utils.GetFileType(file) == ".jpg" || Utils.GetFileType(file) == ".jpeg")
+                    if (Utilities.GetFileType(file) == ".gif" || Utilities.GetFileType(file) == ".jpg" || Utilities.GetFileType(file) == ".jpeg")
                         continue;
                     MagickImage image = new MagickImage(file);
                     image.Settings.SetDefine(MagickFormat.Jpeg, "-quality", Options.WebPQuality.ToString());
                     image.Format = MagickFormat.Jpeg;
-                    image.Write($"{Utils.GetFileDirectory(file)}\\{Utils.GetFileNameWithoutExtension(file)}.jpeg");
+                    image.Write($"{Utilities.GetFileDirectory(file)}\\{Utilities.GetFileNameWithoutExtension(file)}.jpeg");
                     //I need help on this. There has to be a better way to do this?!
-                    foreach (NewFile newFile in Utils._Images) {
-                        int index = Utils._Images.IndexOf(newFile);
-                        if (Utils._Images[index].Location == Utils.GetFileLocation(file)) {
-                            Utils._Images[index].Converted = "Converted";
+                    foreach (NewFile newFile in Utilities._Images) {
+                        int index = Utilities._Images.IndexOf(newFile);
+                        if (Utilities._Images[index].Location == Utilities.GetFileLocation(file)) {
+                            Utilities._Images[index].Converted = "Converted";
                         }
                     }
                     UpdateView();
@@ -152,19 +153,19 @@ namespace Mr_Squirrely_Converters.Class {
         internal static void ConvertPNG(List<string> files) {
             try {
                 foreach (string file in files) {
-                    if (Utils.GetFileType(file) == ".gif" || Utils.GetFileType(file) == ".png")
+                    if (Utilities.GetFileType(file) == ".gif" || Utilities.GetFileType(file) == ".png")
                         continue;
                     MagickImage image = new MagickImage(file);
                     image.Settings.SetDefine(MagickFormat.Png, "-lossless", Options.WebPLossless);
                     image.Settings.SetDefine(MagickFormat.Png, "-alpha", Options.GetWebPRemoveAlpha());
                     image.Settings.SetDefine(MagickFormat.Png, "-quality", Options.WebPQuality.ToString());
                     image.Format = MagickFormat.Png;
-                    image.Write($"{Utils.GetFileDirectory(file)}\\{Utils.GetFileNameWithoutExtension(file)}.png");
+                    image.Write($"{Utilities.GetFileDirectory(file)}\\{Utilities.GetFileNameWithoutExtension(file)}.png");
                     //I need help on this. There has to be a better way to do this?!
-                    foreach (NewFile newFile in Utils._Images) {
-                        int index = Utils._Images.IndexOf(newFile);
-                        if (Utils._Images[index].Location == Utils.GetFileLocation(file)) {
-                            Utils._Images[index].Converted = "Converted";
+                    foreach (NewFile newFile in Utilities._Images) {
+                        int index = Utilities._Images.IndexOf(newFile);
+                        if (Utilities._Images[index].Location == Utilities.GetFileLocation(file)) {
+                            Utilities._Images[index].Converted = "Converted";
                         }
                     }
                     UpdateView();
@@ -178,13 +179,13 @@ namespace Mr_Squirrely_Converters.Class {
         }
         #endregion
 
-        private static void UpdateView() => Utils._MainPage.Dispatcher.Invoke(() => { Utils._MainPage.ImageFiles.Items.Refresh(); }, System.Windows.Threading.DispatcherPriority.Background);
+        private static void UpdateView() => Utilities._MainPage.Dispatcher.Invoke(() => { Utilities._MainPage.ImageFiles.Items.Refresh(); }, System.Windows.Threading.DispatcherPriority.Background);
 
         private static void CopyFile(string file) {
             if (Options.CreateTemp) {
-                if (!Directory.Exists($"{Utils.GetTempDir()}"))
-                    Directory.CreateDirectory($"{Utils.GetTempDir()}");
-                File.Copy(file, $"{Utils.GetTempDir()}");
+                if (!Directory.Exists($"{Utilities.GetTempDir()}"))
+                    Directory.CreateDirectory($"{Utilities.GetTempDir()}");
+                File.Copy(file, $"{Utilities.GetTempDir()}");
             }
         }
 
