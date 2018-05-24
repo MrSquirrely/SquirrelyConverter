@@ -13,21 +13,21 @@ namespace Mr_Squirrely_Converters {
             Toast.CreateNotifier();
             Utilities.DownloadFiles();
             Utilities.OpenSettings();
-            Utilities._MainWindow = this;
+            Utilities.MainWindow = this;
 
-            Utilities._MainWindow.Content = Utilities._MainPage;
-            Utilities._WorkingDir = Directory.GetCurrentDirectory();
+            Utilities.MainWindow.Content = Utilities.MainPage;
+            Utilities.WorkingDir = Directory.GetCurrentDirectory();
 
             Logger.StartLogger();
             Logger.LogDebug("Started!");
         }
 
-        private void RightWindowSettings_Click(object sender, RoutedEventArgs e) => Utilities._MainWindow.Content = Utilities._SettingsPage;
+        private void RightWindowSettings_Click(object sender, RoutedEventArgs e) => Utilities.MainWindow.Content = Utilities.SettingsPage;
         private void RightWindowGithub_Click(object sender, RoutedEventArgs e) => Utilities.OpenGithub();
         private void MetroWindow_Closed(object sender, EventArgs e) => Utilities.Dispose();
 
         private void HamburgerButton_Click(object sender, RoutedEventArgs e) => HamburgerButton.ContextMenu.IsOpen = true;
-        private void SettingsMenu_Click(object sender, RoutedEventArgs e) => Utilities._MainWindow.Content = Utilities._SettingsPage;
+        private void SettingsMenu_Click(object sender, RoutedEventArgs e) => Utilities.MainWindow.Content = Utilities.SettingsPage;
         private void ClearMenu_Click(object sender, RoutedEventArgs e) => Utilities.Clear();
         private void UpdateMenu_Click(object sender, RoutedEventArgs e) => Utilities.CheckForUpdate(true);
 

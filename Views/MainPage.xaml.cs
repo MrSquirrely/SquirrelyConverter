@@ -9,8 +9,8 @@ namespace Mr_Squirrely_Converters.Views {
     public partial class MainPage : Page {
         public MainPage() {
             InitializeComponent();
-            Utilities._ImageItems = ImageFiles;
-            Utilities._VideoItems = VideoFiles;
+            Utilities.ImageItems = ImageFiles;
+            Utilities.VideoItems = VideoFiles;
             Utilities.CheckForUpdate(false);
         }
 

@@ -33,8 +33,8 @@ namespace Mr_Squirrely_Converters.Class {
                     }
                 }
             }
-            catch (Exception) {
-                //Todo
+            catch (Exception ex) {
+                Logger.LogError(ex);
             }
         }
 
@@ -60,8 +60,8 @@ namespace Mr_Squirrely_Converters.Class {
                     }
                 }
             }
-            catch (Exception) {
-                //Todo
+            catch (Exception ex) {
+                Logger.LogError(ex);
             }
         }
         #endregion
@@ -84,10 +84,10 @@ namespace Mr_Squirrely_Converters.Class {
                     }
 
                     //I need help on this. There has to be a better way to do this?!
-                    foreach (NewFile newFile in Utilities._Images) {
-                        int index = Utilities._Images.IndexOf(newFile);
-                        if (Utilities._Images[index].Location == Utilities.GetFileLocation(file)) {
-                            Utilities._Images[index].Converted = "Converted";
+                    foreach (NewFile newFile in Utilities.Images) {
+                        int index = Utilities.Images.IndexOf(newFile);
+                        if (Utilities.Images[index].Location == Utilities.GetFileLocation(file)) {
+                            Utilities.Images[index].Converted = "Converted";
                         }
                     }
                     UpdateView();
@@ -95,8 +95,8 @@ namespace Mr_Squirrely_Converters.Class {
                     DeleteFile(file);
                 }
             }
-            catch (Exception) {
-                //Todo
+            catch (Exception ex) {
+                Logger.LogError(ex);
             }
         }
 
@@ -119,25 +119,27 @@ namespace Mr_Squirrely_Converters.Class {
                 process.StandardInput.Close();
                 process.WaitForExit();
             }
-            catch (Exception) {
-                //todo
+            catch (Exception ex) {
+                Logger.LogError(ex);
             }
         }
 
         internal static void ConvertJPEG(List<string> files) {
             try {
                 foreach (string file in files) {
-                    if (Utilities.GetFileType(file) == ".gif" || Utilities.GetFileType(file) == ".jpg" || Utilities.GetFileType(file) == ".jpeg")
+                    if (Utilities.GetFileType(file) == ".gif" || Utilities.GetFileType(file) == ".jpg" || Utilities.GetFileType(file) == ".jpeg") {
                         continue;
+                    }
+
                     MagickImage image = new MagickImage(file);
                     image.Settings.SetDefine(MagickFormat.Jpeg, "-quality", Options.WebPQuality.ToString());
                     image.Format = MagickFormat.Jpeg;
                     image.Write($"{Utilities.GetFileDirectory(file)}\\{Utilities.GetFileNameWithoutExtension(file)}.jpeg");
                     //I need help on this. There has to be a better way to do this?!
-                    foreach (NewFile newFile in Utilities._Images) {
-                        int index = Utilities._Images.IndexOf(newFile);
-                        if (Utilities._Images[index].Location == Utilities.GetFileLocation(file)) {
-                            Utilities._Images[index].Converted = "Converted";
+                    foreach (NewFile newFile in Utilities.Images) {
+                        int index = Utilities.Images.IndexOf(newFile);
+                        if (Utilities.Images[index].Location == Utilities.GetFileLocation(file)) {
+                            Utilities.Images[index].Converted = "Converted";
                         }
                     }
                     UpdateView();
@@ -145,16 +147,18 @@ namespace Mr_Squirrely_Converters.Class {
                     DeleteFile(file);
                 }
             }
-            catch (Exception) {
-                //todo
+            catch (Exception ex) {
+                Logger.LogError(ex);
             }
         }
 
         internal static void ConvertPNG(List<string> files) {
             try {
                 foreach (string file in files) {
-                    if (Utilities.GetFileType(file) == ".gif" || Utilities.GetFileType(file) == ".png")
+                    if (Utilities.GetFileType(file) == ".gif" || Utilities.GetFileType(file) == ".png") {
                         continue;
+                    }
+
                     MagickImage image = new MagickImage(file);
                     image.Settings.SetDefine(MagickFormat.Png, "-lossless", Options.WebPLossless);
                     image.Settings.SetDefine(MagickFormat.Png, "-alpha", Options.GetWebPRemoveAlpha());
@@ -162,10 +166,10 @@ namespace Mr_Squirrely_Converters.Class {
                     image.Format = MagickFormat.Png;
                     image.Write($"{Utilities.GetFileDirectory(file)}\\{Utilities.GetFileNameWithoutExtension(file)}.png");
                     //I need help on this. There has to be a better way to do this?!
-                    foreach (NewFile newFile in Utilities._Images) {
-                        int index = Utilities._Images.IndexOf(newFile);
-                        if (Utilities._Images[index].Location == Utilities.GetFileLocation(file)) {
-                            Utilities._Images[index].Converted = "Converted";
+                    foreach (NewFile newFile in Utilities.Images) {
+                        int index = Utilities.Images.IndexOf(newFile);
+                        if (Utilities.Images[index].Location == Utilities.GetFileLocation(file)) {
+                            Utilities.Images[index].Converted = "Converted";
                         }
                     }
                     UpdateView();
@@ -173,25 +177,28 @@ namespace Mr_Squirrely_Converters.Class {
                     DeleteFile(file);
                 }
             }
-            catch (Exception) {
-                //todo
+            catch (Exception ex) {
+                Logger.LogError(ex);
             }
         }
         #endregion
 
-        private static void UpdateView() => Utilities._MainPage.Dispatcher.Invoke(() => { Utilities._MainPage.ImageFiles.Items.Refresh(); }, System.Windows.Threading.DispatcherPriority.Background);
+        private static void UpdateView() => Utilities.MainPage.Dispatcher.Invoke(() => { Utilities.MainPage.ImageFiles.Items.Refresh(); }, System.Windows.Threading.DispatcherPriority.Background);
 
         private static void CopyFile(string file) {
             if (Options.CreateTemp) {
-                if (!Directory.Exists($"{Utilities.GetTempDir()}"))
+                if (!Directory.Exists($"{Utilities.GetTempDir()}")) {
                     Directory.CreateDirectory($"{Utilities.GetTempDir()}");
+                }
+
                 File.Copy(file, $"{Utilities.GetTempDir()}");
             }
         }
 
         private static void DeleteFile(string file) {
-            if (Options.ImagesDelete)
+            if (Options.ImagesDelete) {
                 File.Delete(file);
+            }
         }
 
     }

@@ -2,8 +2,8 @@
 
 namespace Mr_Squirrely_Converters.Class {
     static class Types {
-        internal static string Images() { return "images"; }
-        internal static string Videos() { return "videos"; }
+        internal static string Images() => "images";
+        internal static string Videos() => "videos";
 
         //Doesn't support GIF Images
         internal readonly static List<string> ImageFormats = new List<string>{

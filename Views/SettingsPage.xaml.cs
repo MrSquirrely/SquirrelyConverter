@@ -52,7 +52,7 @@ namespace Mr_Squirrely_Converters.Views {
             Toast.SettingsSaved();
 
             Options.Save();
-            Utilities._MainWindow.Content = Utilities._MainPage;
+            Utilities.MainWindow.Content = Utilities.MainPage;
         }
 
         private void ResetButton_Click(object sender, RoutedEventArgs e) {
@@ -71,7 +71,7 @@ namespace Mr_Squirrely_Converters.Views {
             Toast.SettingsReset();
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e) => Utilities._MainWindow.Content = Utilities._MainPage;
+        private void CancelButton_Click(object sender, RoutedEventArgs e) => Utilities.MainWindow.Content = Utilities.MainPage;
         private void ChangeVideoSize_Clicked(object sender, RoutedEventArgs e) => CheckVideoSize();
 
         private void CheckVideoSize() {
