@@ -1,0 +1,12 @@
+﻿Costura
+      ControlzEx
+      Dragablz
+      Magick.NET-Q8-AnyCPU
+      MahApps.Metro
+      MaterialDesignColors
+      MaterialDesignThemes.MahApps
+      MaterialDesignThemes.Wpf
+      System.Windows.Interactivity
+      ToastNotifications
+      ToastNotifications.Messages
+      MediaToolkit
