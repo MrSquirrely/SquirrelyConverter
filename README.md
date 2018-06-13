@@ -1,22 +1,19 @@
-# Squirrely Converter [![GitHub (pre-)release](https://img.shields.io/github/release/MrSquirrelyNet/SquirrelyConverter/all.svg?style=for-the-badge)](https://github.com/MrSquirrelyNet/SquirrelyConverter/releases) [![CodeFactor](https://www.codefactor.io/repository/github/mrsquirrelynet/squirrelyconverter/badge?longCache=true&style=for-the-badge)](https://www.codefactor.io/repository/github/mrsquirrelynet/squirrelyconverter?longCache=true&style=for-the-badge)
+# Squirrely Converters [![GitHub (pre-)release](https://img.shields.io/github/release/MrSquirrelyNet/SquirrelyConverter/all.svg?style=for-the-badge)](https://github.com/MrSquirrelyNet/SquirrelyConverter/releases) [![CodeFactor](https://www.codefactor.io/repository/github/mrsquirrelynet/squirrelyconverter/badge?longCache=true&style=for-the-badge)](https://www.codefactor.io/repository/github/mrsquirrelynet/squirrelyconverter?longCache=true&style=for-the-badge)
 
 ##### Simple Converters for Everyone
-A Simple and easy to use converter for Images and Videos.
-The original function was to be a WebP and WebM Converter. That is why WebP and WebM are the default selected image formats to convert to.
-
-## What is WebP and WebM?
-> [**WebP**](https://en.wikipedia.org/wiki/WebP) is an image format employing both lossy and lossless compression.<br>
-> [**WebM**](https://en.wikipedia.org/wiki/WebM) is a media file format. It is primarily intended to offer a royalty-free alternative to use in the HTML5 video and the HTML5 audio tags.
+Free and easy converters that anyone can use. Currently supports images and videos. Audio, office, and zip support is coming soon.
 
 ## Images
 Coming Soon!
 
 ## Change Log
+The version scheme is Main.Feature.bug
+
 - V 1.0
   - Removed about page
-	- Added video conversion
-	- Added gif conversion
-	- Can use either WebP or WebM
+  - Added video conversion
+  - Added gif conversion
+    - Can use either WebP or WebM
 
 - V 2018.1b:A Total recode.
   - Added Image conversion
@@ -24,9 +21,31 @@ Coming Soon!
 	  - WebP
       - JPEG
       - PNG
-    - Added about page
-    - Cleaned code to look just better       
+  - Added about page
+  - Cleaned code to look just better   
 
+## ToDo
+## News
+I will be removing costura fody in the next update, it's still there in the repo, but with the newest update the whole goal is to make it as lite as possible. We are doing this by not needing all the dlls for every converter that you don't want. With costura fody it loads all the dlls into the program so it is no longer needed. I'm also going to work on a website for this so I can post updates when I have them.
+
+- V 1.1
+  - Modulation
+    - Now you only see what you want
+  - Recreate the image converter
+  - Recreate the video converter
+  - Move all the util code
+  - Create better logging
+
+- V1.2
+  - Add audio conversion
+
+- V1.3
+  - Add office conversion
+    - Text
+    - Spreadsheet
+
+- V1.4
+  - Add zip support
 
 ## Libraries Used
  - [ControlzEx](https://github.com/ControlzEx/ControlzEx)
