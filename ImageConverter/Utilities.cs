@@ -1,44 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using ConverterUtilities;
 using static ConverterUtilities.Enums;
 
 namespace ImageConverter {
     public class ImageUtilities {
-        public static List<string> droppedFiles = new List<string>();
-        public static List<string> files = new List<string>();
-        public static List<string> directories = new List<string>();
-        public static ObservableCollection<NewFile> images = new ObservableCollection<NewFile>();
-        public static ListView imageListView;
-        public static ImageView imageView;
-        public static bool converting = false;
-        private static readonly string Queued = "Queued";
-        
-        public static void PopulateList(string[] DroppedFiles) {
-            droppedFiles.Clear();
+        public static List<string> DroppedFiles = new List<string>();
+        public static List<string> Files = new List<string>();
+        public static List<string> Directories = new List<string>();
+        public static ObservableCollection<NewFile> Images = new ObservableCollection<NewFile>();
+        public static ListView ImageListView;
+        public static ImageView ImageView;
+        private const string Queued = "Queued";
 
-            foreach (string droppedFile in DroppedFiles) {
-                droppedFiles.Add(droppedFile);
+        public static void PopulateList(string[] droppedFiles) {
+            DroppedFiles.Clear();
+
+            foreach (string droppedFile in droppedFiles) {
+                DroppedFiles.Add(droppedFile);
+                GetImages(droppedFile, true);
             }
 
-            foreach (string file in droppedFiles) {
-                GetImages(file, true);
-            }
-
-            foreach (string directory in directories) {
+            foreach (string directory in Directories) {
                 string[] filesInDirectory = Directory.GetFiles(directory);
                 foreach (string file in filesInDirectory) {
                     GetImages(file, false);
                 }
             }
-            imageListView.ItemsSource = images;
+            ImageListView.ItemsSource = Images;
         }
 
         internal static void Convert(int selectedIndex) {
@@ -47,25 +39,25 @@ namespace ImageConverter {
                     ConvertWebP();
                     break;
                 case 1:
-                    ConvertPNG();
+                    ConvertPng();
                     break;
                 case 2:
-                    ConvertJPEG();
+                    ConvertJpeg();
                     break;
             }
         }
 
-        private static void StartConvertWebP() => Converter.ConvertWebP(files);
-        private static void StartConvertPNG() => Converter.ConvertPNG(files);
-        private static void StartConvertJPEG() => Converter.ConvertJPEG(files);
+        private static void StartConvertWebP() => Converter.ConvertWebP(Files);
+        private static void StartConvertPng() => Converter.ConvertPng(Files);
+        private static void StartConvertJpeg() => Converter.ConvertJpeg(Files);
 
         private static void ConvertWebP() {
             NullCheck();
-            converting = true;
+            CUtilities.Converting = true;
             Thread _ThreadEncode;
             ThreadStart starter = StartConvertWebP;
             starter += () => {
-                converting = false;
+                CUtilities.Converting  = false;
             };
 
             _ThreadEncode = new Thread(starter);
@@ -74,13 +66,13 @@ namespace ImageConverter {
             _ThreadEncode.Start();
         }
 
-        private static void ConvertPNG() {
+        private static void ConvertPng() {
             NullCheck();
-            converting = true;
+            CUtilities.Converting  = true;
             Thread _ThreadEncode;
-            ThreadStart starter = StartConvertPNG;
+            ThreadStart starter = StartConvertPng;
             starter += () => {
-                converting = false;
+                CUtilities.Converting  = false;
             };
 
             _ThreadEncode = new Thread(starter);
@@ -89,13 +81,13 @@ namespace ImageConverter {
             _ThreadEncode.Start();
         }
 
-        private static void ConvertJPEG() {
+        private static void ConvertJpeg() {
             NullCheck();
-            converting = true;
+            CUtilities.Converting  = true;
             Thread _ThreadEncode;
-            ThreadStart starter = StartConvertJPEG;
+            ThreadStart starter = StartConvertJpeg;
             starter += () => {
-                converting = false;
+                CUtilities.Converting  = false;
             };
 
             _ThreadEncode = new Thread(starter);
@@ -106,7 +98,7 @@ namespace ImageConverter {
         }
 
         public static bool NullCheck() {
-            if (droppedFiles == null || converting == true) {
+            if (DroppedFiles == null || CUtilities.Converting) {
                 return true;
             }
             else {
@@ -115,17 +107,17 @@ namespace ImageConverter {
         }
 
         private static void GetImages(string file, bool scanDirectory) {
-            string Name = CUtilities.GetFileName(file, FileExtension.yes);
-            string Type = CUtilities.GetFileType(file);
-            string Location = CUtilities.GetFileDirectory(file);
-            FileAttributes Attributes = File.GetAttributes(file);
-            if (ImageFormats.Contains(Type)) {
-                images.Add(new NewFile { Name = Name, Type = Type, Converted = Queued, Location = Location});
-                files.Add(file);
+            string name = CUtilities.GetFileName(file, FileExtension.Yes);
+            string type = CUtilities.GetFileType(file);
+            string location = CUtilities.GetFileDirectory(file);
+            FileAttributes attributes = File.GetAttributes(file);
+            if (ImageFormats.Contains(type)) {
+                Images.Add(new NewFile { Name = name, Type = type, Converted = Queued, Location = location});
+                Files.Add(file);
             }
             if (scanDirectory) {
-                if ((Attributes & FileAttributes.Directory) == FileAttributes.Directory) {
-                    directories.Add($"{file}\\");
+                if ((attributes & FileAttributes.Directory) == FileAttributes.Directory) {
+                    Directories.Add($"{file}\\");
                 }
             }
         }

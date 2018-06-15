@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ConverterUtilities {
     public class Enums {
-        public enum FileExtension { yes, no }
+        public enum FileExtension { Yes, No }
 
-        public readonly static List<string> ImageFormats = new List<string>{
+        public static readonly List<string> ImageFormats = new List<string>{
             ".gif",
             ".png",
             ".jpg",
@@ -21,7 +17,7 @@ namespace ConverterUtilities {
             ".tif"
         };
 
-        public readonly static List<string> VideoFormats = new List<string>{
+        public static readonly List<string> VideoFormats = new List<string>{
             ".gif",
             ".3gp",
             ".3g2",

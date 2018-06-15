@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Threading;
 using static ConverterUtilities.Enums;
 using MahApps.Metro.Controls;
@@ -21,11 +17,11 @@ namespace ConverterUtilities {
         /// <summary>
         /// The url for the issues page
         /// </summary>
-        private readonly static string github = "https://github.com/MrSquirrelyNet/SquirrelyConverter/issues";
+        private static readonly string Github = "https://github.com/MrSquirrelyNet/SquirrelyConverter/issues";
         /// <summary>
         /// Opens the browser to the issues page on github.com
         /// </summary>
-        public static void OpenGithub() => Process.Start(github);
+        public static void OpenGithub() => Process.Start(Github);
         #endregion
 
         #region Versions
@@ -36,23 +32,23 @@ namespace ConverterUtilities {
         /// *Update tags are the download version
         /// *URL tags are the urls for the *Ver file
         /// </summary>
-        private readonly static string mainVersion = "1.0";
-        private readonly static string mainVer = "main.ver";
+        private static readonly string MainVersion = "1.0";
+        private static readonly string MainVer = "main.ver";
         private static string MainUpdate { get; set; }
-        private static string mainURL = "";
-        private readonly static string imageVersion = "1.0";
-        private readonly static string imageVer = "image.ver";
+        private static readonly string MainUrl = "";
+        private static readonly string ImageVersion = "1.0";
+        private static readonly string ImageVer = "image.ver";
         private static string ImageUpdate { get; set; }
-        private static string imageURL = "";
-        private readonly static string videoVersion = "1.0";
-        private readonly static string videoVer = "video.ver";
+        private static readonly string ImageUrl = "";
+        private static readonly string VideoVersion = "1.0";
+        private static readonly string VideoVer = "video.ver";
         private static string VideoUpdate { get; set; }
-        private static string videoURL = "";
+        private static readonly string VideoUrl = "";
 
         /// <summary>
         /// This is just the webclient used to download things
         /// </summary>
-        private static WebClient webClient = new WebClient();
+        private static readonly WebClient WebClient = new WebClient();
 
         /// <summary>
         /// Checks the version based on what you want
@@ -63,11 +59,11 @@ namespace ConverterUtilities {
         public static void CheckVersion(bool main, bool image, bool video) {
             StreamReader streamReader;
             if (main) {
-                File.Delete(mainVer);
-                webClient.DownloadFile(mainURL, mainVer);
-                streamReader = new StreamReader(mainVer);
+                File.Delete(MainVer);
+                WebClient.DownloadFile(MainUrl, MainVer);
+                streamReader = new StreamReader(MainVer);
                 MainUpdate = streamReader.ReadLine();
-                if (mainVersion != MainUpdate) {
+                if (MainVersion != MainUpdate) {
                     // show toast
                 }
                 else {
@@ -76,11 +72,11 @@ namespace ConverterUtilities {
                 streamReader.Dispose();
             }
             if (image) {
-                File.Delete(imageVer);
-                webClient.DownloadFile(imageURL, imageVer);
-                streamReader = new StreamReader(imageVer);
+                File.Delete(ImageVer);
+                WebClient.DownloadFile(ImageUrl, ImageVer);
+                streamReader = new StreamReader(ImageVer);
                 ImageUpdate = streamReader.ReadLine();
-                if (imageVersion != ImageUpdate) {
+                if (ImageVersion != ImageUpdate) {
                     // show toast
                 }
                 else {
@@ -89,11 +85,11 @@ namespace ConverterUtilities {
                 streamReader.Dispose();
             }
             if (video) {
-                File.Delete(videoVer);
-                webClient.DownloadFile(videoURL, videoVer);
-                streamReader = new StreamReader(videoVer);
+                File.Delete(VideoVer);
+                WebClient.DownloadFile(VideoUrl, VideoVer);
+                streamReader = new StreamReader(VideoVer);
                 VideoUpdate = streamReader.ReadLine();
-                if (videoVersion != VideoUpdate) {
+                if (VideoVersion != VideoUpdate) {
                     // show toast
                 }
                 else {
@@ -105,6 +101,26 @@ namespace ConverterUtilities {
         #endregion
 
         #region Window Things
+        /// <summary>
+        /// Gets or sets wether we are currently converting something
+        /// </summary>
+        public static bool Converting { get; set; }
+        /// <summary>
+        /// Is the image view loaded
+        /// </summary>
+        private static bool _imageLoaded;
+        /// <summary>
+        /// Is the video view loaded
+        /// </summary>
+        private static bool _videoLoaded;
+        /// <summary>
+        /// Returns if the image view is loaded or not
+        /// </summary>
+        public static bool IsImageLoaded { get => _imageLoaded; set => _imageLoaded = value; }
+        /// <summary>
+        /// Returns if the video view is loaded or not
+        /// </summary>
+        public static bool IsVideoLoaded { get => _videoLoaded; set => _videoLoaded = value; }
         /// <summary>
         /// Gets or sets the Main Window for other projects to update various items
         /// </summary>
@@ -122,8 +138,8 @@ namespace ConverterUtilities {
         /// Disposes of things during shutdown
         /// </summary>
         public static void Dispose() {
-            Toast.Instance.Dispose();
-            Logger.instance.Dispose();
+            Toast.Dispose();
+            Logger.Dispose();
         }
         #endregion
 
@@ -135,16 +151,16 @@ namespace ConverterUtilities {
         /// <param name="extension">Weather or not </param>
         /// <returns></returns>
         public static string GetFileName(string file, FileExtension extension) {
-            string FileName = "null";
+            string fileName = "null";
             switch (extension) {
-                case FileExtension.yes:
-                    FileName = Path.GetFileName(file);
+                case FileExtension.Yes:
+                    fileName = Path.GetFileName(file);
                     break;
-                case FileExtension.no:
-                    FileName = Path.GetFileNameWithoutExtension(file);
+                case FileExtension.No:
+                    fileName = Path.GetFileNameWithoutExtension(file);
                     break;
             }
-            return FileName;
+            return fileName;
         }
         /// <summary>
         /// Gets the file type of a given file
@@ -167,23 +183,23 @@ namespace ConverterUtilities {
         #endregion
 
         #region Directory Info
-        private static string workdingDir;
+        private static string _workdingDir;
         /// <summary>
         /// Gets the working directory
         /// </summary>
-        public static string GetWorkdingDir() => workdingDir ?? throw new Exception("No directory specified");
+        public static string GetWorkdingDir() => _workdingDir ?? throw new Exception("No directory specified");
         /// <summary>
         /// Sets the working directry
         /// </summary>
         /// <param name="value">The directory to set it to</param>
-        public static void SetWorkdingDir(string value) => workdingDir = value;
+        public static void SetWorkdingDir(string value) => _workdingDir = value;
         /// <summary>
         /// Gets the temp directory to store temp files
         /// </summary>
         /// <param name="createTemp">Wethere or not we are creating a custom temp directory</param>
         /// <param name="tempLocation">The name of the custom temp directory</param>
         /// <returns></returns>
-        public static string GetTempDir(bool createTemp, string tempLocation) => $"{workdingDir}\\{(createTemp ? $"{tempLocation}" : "converter_temp")}";
+        public static string GetTempDir(bool createTemp, string tempLocation) => $"{_workdingDir}\\{(createTemp ? $"{tempLocation}" : "converter_temp")}";
         #endregion
     }
 }

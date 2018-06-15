@@ -7,6 +7,25 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <ListView x:Name="VideoFiles" Drop="VideoFiles_OnDrop"  AllowDrop="True">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Clear" Click="MenuItem_OnClick"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.View>
+                <GridView x:Name="VideoFilesList">
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Type}" Header="Type"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Converted}" Header="Converted"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Location}" Header="Location"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Convert" x:Name="VideoConvertButton" Height="Auto" Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="VideoConvertButton_OnClick"/>
+        <ComboBox x:Name="VideoFormatSelector" Margin="0,0,97,10" VerticalAlignment="Bottom" Width="55" HorizontalAlignment="Right" SelectedIndex="0">
+            <ComboBoxItem Content="WebM"/>
+            <ComboBoxItem Content="MP4"/>
+        </ComboBox>
     </Grid>
 </UserControl>

@@ -6,10 +6,7 @@ using NLog.Targets;
 namespace ConverterUtilities {
     public class Logger {
 
-        public static Logger instance = new Logger();
-        private void Main() => StartLogger();
-
-        private void StartLogger() {
+        public static void StartLogger() {
             LoggingConfiguration config = new LoggingConfiguration();
             FileTarget logFile = new FileTarget() { FileName = "main.log", Name = "logfile" };
             ConsoleTarget logConsole = new ConsoleTarget() { Name = "logconsole" };
@@ -21,12 +18,12 @@ namespace ConverterUtilities {
             LogManager.Configuration = config;
         }
 
-        private NLog.Logger GetLogger() => LogManager.GetLogger("Logger");
+        private static NLog.Logger GetLogger() => LogManager.GetLogger("Logger");
 
-        public void LogError(Exception ex) => GetLogger().Error($"Source: {ex.Source} {Environment.NewLine} Message: {ex.Message}");
-        public void LogDebug(string debug) => GetLogger().Debug(debug);
-        public void LogDebug(Exception ex) => GetLogger().Debug($"Source: {ex.Source} {Environment.NewLine} Message: {ex.Message}");
+        public static void LogError(Exception ex) => GetLogger().Error($"Source: {ex.Source} {Environment.NewLine} Message: {ex.Message}");
+        public static void LogDebug(string debug) => GetLogger().Debug(debug);
+        public static void LogDebug(Exception ex) => GetLogger().Debug($"Source: {ex.Source} {Environment.NewLine} Message: {ex.Message}");
 
-        public void Dispose() => LogManager.Shutdown();
+        public static void Dispose() => LogManager.Shutdown();
     }
 }

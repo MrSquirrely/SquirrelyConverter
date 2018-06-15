@@ -12,30 +12,26 @@ namespace Mr_Squirrely_Converters.Views {
     public partial class MainPage : Page {
         public MainPage() {
             InitializeComponent();
-            //Utilities.ImageItems = ImageFiles;
-            //Utilities.VideoItems = VideoFiles;
             Utilities.ConverterTabs = ConverterTabs;
-
-            Utilities.CheckForUpdate(false);
-
-            Console.WriteLine($"{Directory.GetCurrentDirectory()}");
-
+            CUtilities.CheckVersion(true, true, true);
+            CUtilities.SetWorkdingDir(Directory.GetCurrentDirectory());
             try {
-                if (File.Exists($"{CUtilities.WorkingDir}ImageConverter.dll")) {
+                if (File.Exists($"{CUtilities.GetWorkdingDir()}ImageConverter.dll")) {
                     Utilities.AddImageTab();
                 }
             }
             catch {
-
+                Logger.LogDebug("ImageConverter.dll wasn't found");
             }
 
 
             try {
-                if (File.Exists($"{CUtilities.WorkingDir}VideoConverter.dll")) {
+                if (File.Exists($"{CUtilities.GetWorkdingDir()}VideoConverter.dll")) {
                     Utilities.AddVideoTab();
                 }
             }
             catch {
+                Logger.LogDebug("VideoConverter.dll wasn't found");
 
             }
             
@@ -44,14 +40,5 @@ namespace Mr_Squirrely_Converters.Views {
 
 
         }
-
-        private void ImageFiles_Drop(object sender, DragEventArgs e) => Class.Utilities.PopulateList(e.Data.GetData(DataFormats.FileDrop) as string[], Types.Images());
-        private void VideoFiles_Drop(object sender, DragEventArgs e) => Class.Utilities.PopulateList(e.Data.GetData(DataFormats.FileDrop) as string[], Types.Videos());
-
-        //private void ImageConvertButton_Click(object sender, RoutedEventArgs e) => Utilities.Convert(ImageFormatSelector.SelectedIndex, Types.Images());
-        //private void VideoConvertButton_Click(object sender, RoutedEventArgs e) => Utilities.Convert(ImageFormatSelector.SelectedIndex, Types.Videos());
-        private void ClearMenu_Click(object sender, RoutedEventArgs e) => Class.Utilities.Clear();
-
-        private void ConverterTabs_SelectionChanged(object sender, SelectionChangedEventArgs e) => Class.Utilities.UpdateTitle(ConverterTabs.SelectedIndex);
     }
 }

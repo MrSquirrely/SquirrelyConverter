@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using ConverterUtilities;
 using ImageMagick;
@@ -15,28 +16,28 @@ namespace ImageConverter {
                     if (CUtilities.GetFileType(file) != ".gif") {
                         MagickImage image = new MagickImage(file);
                         image.Settings.SetDefine(MagickFormat.WebP, "-lossless", Options.WebPLossless);
-                        image.Settings.SetDefine(MagickFormat.WebP, "-emulate-jpeg-size", Options.WebPEmulateJPEG);
+                        image.Settings.SetDefine(MagickFormat.WebP, "-emulate-jpeg-size", Options.WebPEmulateJpeg);
                         image.Settings.SetDefine(MagickFormat.WebP, "-alpha", Options.GetWebPRemoveAlpha());
-                        image.Settings.SetDefine(MagickFormat.WebP, "-quality", Options.WebPQuality.ToString());
+                        image.Settings.SetDefine(MagickFormat.WebP, "-quality", Options.WebPQuality.ToString(CultureInfo.InvariantCulture));
                         image.Format = MagickFormat.WebP;
-                        image.Write($"{CUtilities.GetFileDirectory(file)}\\{CUtilities.GetFileName(file, FileExtension.no)}.webp");
+                        image.Write($"{CUtilities.GetFileDirectory(file)}\\{CUtilities.GetFileName(file, FileExtension.No)}.webp");
                     }
                     else if (CUtilities.GetFileType(file) == ".gif") {
                         ConvertWebPGif(file);
                     }
 
                     // I need help on this. There has to be a better way to do this?
-                    foreach (NewFile newFile in ImageUtilities.images) {
-                        int index = ImageUtilities.images.IndexOf(newFile);
-                        if (ImageUtilities.images[index].Location == CUtilities.GetFileLocation(file)) {
-                            ImageUtilities.images[index].Converted = "Converted";
+                    foreach (NewFile newFile in ImageUtilities.Images) {
+                        int index = ImageUtilities.Images.IndexOf(newFile);
+                        if (ImageUtilities.Images[index].Location == CUtilities.GetFileLocation(file)) {
+                            ImageUtilities.Images[index].Converted = "Converted";
                         }
                     }
                     Finish(file);
                 }
             }
             catch (Exception ex) {
-                Log(ex);
+                Logger.LogError(ex);
             }
             
         }
@@ -54,32 +55,32 @@ namespace ImageConverter {
                 };
                 process.Start();
                 process.StandardInput.WriteLine($"cd {Directory.GetCurrentDirectory()}");
-                process.StandardInput.WriteLine($"gif2webp {Options.WebPQuality} \"{file}\" -o \"{CUtilities.GetFileDirectory(file)}\\{CUtilities.GetFileName(file, FileExtension.no)}.webp\"");
+                process.StandardInput.WriteLine($"gif2webp {Options.WebPQuality} \"{file}\" -o \"{CUtilities.GetFileDirectory(file)}\\{CUtilities.GetFileName(file, FileExtension.No)}.webp\"");
                 process.StandardInput.Flush();
                 process.StandardInput.Close();
                 process.WaitForExit();
             }
             catch (Exception ex) {
-                Log(ex);
+                Logger.LogError(ex);
             }
         }
 
-        public static void ConvertJPEG(List<string> files) {
+        public static void ConvertJpeg(List<string> files) {
             try {
                 foreach (string file in files) {
                     if (CUtilities.GetFileType(file) == ".gif" || CUtilities.GetFileType(file) == ".jpg" || CUtilities.GetFileType(file) == ".jpeg") {
                         continue;
                     }
                     MagickImage image = new MagickImage(file);
-                    image.Settings.SetDefine(MagickFormat.Jpeg, "-quality", Options.WebPQuality.ToString());
+                    image.Settings.SetDefine(MagickFormat.Jpeg, "-quality", Options.WebPQuality.ToString(CultureInfo.InvariantCulture));
                     image.Format = MagickFormat.Jpeg;
-                    image.Write($"{CUtilities.GetFileDirectory(file)}\\{CUtilities.GetFileName(file, FileExtension.no)}.jpeg");
+                    image.Write($"{CUtilities.GetFileDirectory(file)}\\{CUtilities.GetFileName(file, FileExtension.No)}.jpeg");
 
                     // I need help on this. There has to be a better way to do this?
-                    foreach (NewFile newFile in ImageUtilities.images) {
-                        int index = ImageUtilities.images.IndexOf(newFile);
-                        if (ImageUtilities.images[index].Location == CUtilities.GetFileLocation(file)) {
-                            ImageUtilities.images[index].Converted = "Converted";
+                    foreach (NewFile newFile in ImageUtilities.Images) {
+                        int index = ImageUtilities.Images.IndexOf(newFile);
+                        if (ImageUtilities.Images[index].Location == CUtilities.GetFileLocation(file)) {
+                            ImageUtilities.Images[index].Converted = "Converted";
                         }
                     }
                     Finish(file);
@@ -87,11 +88,11 @@ namespace ImageConverter {
                 
             }
             catch (Exception ex) {
-                Log(ex);
+                Logger.LogError(ex);
             }
         }
 
-        public static void ConvertPNG(List<string> files) {
+        public static void ConvertPng(List<string> files) {
             try {
                 foreach (string file in files) {
                     if (CUtilities.GetFileType(file) == ".gif" || CUtilities.GetFileType(file) == ".png") {
@@ -99,29 +100,27 @@ namespace ImageConverter {
                     }
 
                     MagickImage image = new MagickImage(file);
-                    image.Settings.SetDefine(MagickFormat.Png, "-lossless", Options.WebPLossless);
-                    image.Settings.SetDefine(MagickFormat.Png, "-alpha", Options.GetWebPRemoveAlpha());
-                    image.Settings.SetDefine(MagickFormat.Png, "-quality", Options.WebPQuality.ToString());
+                    image.Settings.SetDefine(MagickFormat.Png, "-lossless", Options.PngLossless);
+                    image.Settings.SetDefine(MagickFormat.Png, "-alpha", Options.GetPngRemoveAlpha());
+                    image.Settings.SetDefine(MagickFormat.Png, "-quality", Options.PngQuality.ToString(CultureInfo.InvariantCulture));
                     image.Format = MagickFormat.Png;
-                    image.Write($"{CUtilities.GetFileDirectory(file)}\\{CUtilities.GetFileName(file, FileExtension.no)}.png");
+                    image.Write($"{CUtilities.GetFileDirectory(file)}\\{CUtilities.GetFileName(file, FileExtension.No)}.png");
 
                     // I need help on this. There has to be a better way to do this?
-                    foreach (NewFile newFile in ImageUtilities.images) {
-                        int index = ImageUtilities.images.IndexOf(newFile);
-                        if (ImageUtilities.images[index].Location == CUtilities.GetFileLocation(file)) {
-                            ImageUtilities.images[index].Converted = "Converted";
+                    foreach (NewFile newFile in ImageUtilities.Images) {
+                        int index = ImageUtilities.Images.IndexOf(newFile);
+                        if (ImageUtilities.Images[index].Location == CUtilities.GetFileLocation(file)) {
+                            ImageUtilities.Images[index].Converted = "Converted";
                         }
                     }
                     Finish(file);
                 }
             }
             catch (Exception ex) {
-                Log(ex);
+                Logger.LogError(ex);
             }
         }
-
-        private static void Log(Exception ex) => Logger.instance.LogError(ex);
-
+        
         private static void Finish(string file) {
             UpdateView();
             CopyFile(file);
@@ -130,10 +129,13 @@ namespace ImageConverter {
 
         private static void UpdateView() {
             try {
-                ImageUtilities.imageListView.Items.Refresh();
+                ImageUtilities.ImageView.Dispatcher.Invoke(() => {
+                    ImageUtilities.ImageListView.Items.Refresh();
+                },
+                System.Windows.Threading.DispatcherPriority.Background);
             }
             catch (Exception ex) {
-                Logger.instance.LogDebug(ex);
+                Logger.LogDebug(ex);
             }
         }
 

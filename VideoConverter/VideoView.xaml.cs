@@ -22,5 +22,16 @@ namespace VideoConverter {
             InitializeComponent();
         }
 
+        private void VideoConvertButton_OnClick(object sender, RoutedEventArgs e) {
+            throw new NotImplementedException();
+        }
+
+        private void MenuItem_OnClick(object sender, RoutedEventArgs e) {
+            throw new NotImplementedException();
+        }
+
+        private void VideoFiles_OnDrop(object sender, DragEventArgs e) {
+            throw new NotImplementedException();
+        }
     }
 }

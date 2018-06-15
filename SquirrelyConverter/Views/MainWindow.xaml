@@ -24,21 +24,6 @@
             </Button>
         </metro:WindowCommands>
     </metro:MetroWindow.RightWindowCommands>
-    <metro:MetroWindow.LeftWindowCommands>
-        <metro:WindowCommands>
-            <Button x:Name="HamburgerButton" Click="HamburgerButton_Click">
-                <Button.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Settings" x:Name="SettingsMenu" Click="SettingsMenu_Click"/>
-                        <MenuItem Header="Clear" x:Name="ClearMenu" Click="ClearMenu_Click"/>
-                        <Separator/>
-                        <MenuItem Header="Check For Update" x:Name="UpdateMenu" Click="UpdateMenu_Click"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
-                <materialDesign:PackIcon Kind="Hamburger" />
-            </Button>
-        </metro:WindowCommands>
-    </metro:MetroWindow.LeftWindowCommands>
     <Grid>
     </Grid>
 </metro:MetroWindow>
