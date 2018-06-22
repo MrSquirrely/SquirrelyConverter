@@ -39,15 +39,15 @@ I will be removing costura fody in the next update, it's still there in the repo
   - Move all the util code
   - Create better logging
 
-- V1.2
+- V2.2
   - Add audio conversion
 
-- V1.3
+- V2.3
   - Add office conversion
     - Text
     - Spreadsheet
 
-- V1.4
+- V2.4
   - Add zip support
 
 ## Libraries Used
