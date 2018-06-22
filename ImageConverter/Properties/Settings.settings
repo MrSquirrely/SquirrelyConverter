@@ -30,7 +30,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Temp_Location" Type="System.String" Scope="User">
-      <Value Profile="(Default)">..\image_temp</Value>
+      <Value Profile="(Default)">.image_temp</Value>
     </Setting>
     <Setting Name="Images_Delete" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

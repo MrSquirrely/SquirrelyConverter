@@ -55,14 +55,21 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="VideoView.xaml">
+    <Page Include="View\VideoSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\VideoView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Converter.cs" />
-    <Compile Include="Options.cs" />
-    <Compile Include="Utilities.cs" />
-    <Compile Include="VideoView.xaml.cs">
+    <Compile Include="Class\Converter.cs" />
+    <Compile Include="Class\Options.cs" />
+    <Compile Include="Class\Utilities.cs" />
+    <Compile Include="View\VideoSettingsView.xaml.cs">
+      <DependentUpon>VideoSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\VideoView.xaml.cs">
       <DependentUpon>VideoView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>

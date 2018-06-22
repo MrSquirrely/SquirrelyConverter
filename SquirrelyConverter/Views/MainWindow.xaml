@@ -1,9 +1,8 @@
-﻿<metro:MetroWindow x:Class="Mr_Squirrely_Converters.MainWindow"
+﻿<metro:MetroWindow x:Class="Mr_Squirrely_Converters.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Mr_Squirrely_Converters"
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
                    xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz" 
                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -25,5 +24,10 @@
         </metro:WindowCommands>
     </metro:MetroWindow.RightWindowCommands>
     <Grid>
+        <dragablz:TabablzControl x:Name="ConverterTabs" SelectionChanged="ConverterTabs_OnSelectionChanged">
+            <dragablz:TabablzControl.InterTabController>
+                <dragablz:InterTabController />
+            </dragablz:TabablzControl.InterTabController>
+        </dragablz:TabablzControl>
     </Grid>
 </metro:MetroWindow>

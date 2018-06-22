@@ -1,43 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
-using System.Net;
-using System.Reflection;
-using System.Threading;
-using System.Windows.Controls;
-using MahApps.Metro.Controls;
-using MaterialDesignThemes.Wpf;
-using Mr_Squirrely_Converters.Properties;
+﻿using System.Windows.Controls;
+using ConverterUtilities;
 using Mr_Squirrely_Converters.Views;
 using Dragablz;
-using ConverterUtilities;
+using ImageConverter.View;
+using VideoConverter.View;
 
 namespace Mr_Squirrely_Converters.Class {
-    // TODO:
-    //  Comment what everything is for and does.
-    //  Clean code up a bit. It's still not the best looking.
-    static class Utilities {
+    internal static class Utilities {
 
-        internal static MainPage MainPage = new MainPage();
-        private static int Tabs { get; set; }
+        private static int Tabs { get; set; } = 0;
         public static TabablzControl ConverterTabs { get; set; }
 
         public static void AddImageTab() {
+            Logger.LogDebug("Adding Image Tab");
             Tabs = ConverterTabs.Items.Count;
             TabItem imageTab = new TabItem {
-                Content = new ImageConverter.ImageView(),
-                Header = "Convert Image"
+                Content = new ImageView(),
+                Header = "Image Converter"
             };
             ConverterTabs.Items.Insert(Tabs, imageTab);
         }
 
         public static void AddVideoTab() {
+            Logger.LogDebug("Adding Video Tab");
             Tabs = ConverterTabs.Items.Count;
             TabItem videoTab = new TabItem {
-                Content = new VideoConverter.VideoView(),
-                Header = "Convert Video"
+                Content = new VideoView(),
+                Header = "Video Converter"
             };
             ConverterTabs.Items.Insert(Tabs, videoTab);
         }

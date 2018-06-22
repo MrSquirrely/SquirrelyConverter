@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ImageConverter.Properties {
+namespace ConverterUtilities.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -25,133 +25,181 @@ namespace ImageConverter.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WebP_Lossess {
-            get {
-                return ((bool)(this["WebP_Lossess"]));
-            }
-            set {
-                this["WebP_Lossess"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool WebP_Emulate_JPEG {
+        public bool CreateTemp {
             get {
-                return ((bool)(this["WebP_Emulate_JPEG"]));
+                return ((bool)(this["CreateTemp"]));
             }
             set {
-                this["WebP_Emulate_JPEG"] = value;
+                this["CreateTemp"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("80")]
-        public double WebP_Quality {
+        [global::System.Configuration.DefaultSettingValueAttribute(".\\converter_temp")]
+        public string TempLocation {
             get {
-                return ((double)(this["WebP_Quality"]));
+                return ((string)(this["TempLocation"]));
             }
             set {
-                this["WebP_Quality"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool WebP_RemoveAlpha {
-            get {
-                return ((bool)(this["WebP_RemoveAlpha"]));
-            }
-            set {
-                this["WebP_RemoveAlpha"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("80")]
-        public double JPEG_Quality {
-            get {
-                return ((double)(this["JPEG_Quality"]));
-            }
-            set {
-                this["JPEG_Quality"] = value;
+                this["TempLocation"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool PNG_Lossess {
+        public bool DeleteTemp {
             get {
-                return ((bool)(this["PNG_Lossess"]));
+                return ((bool)(this["DeleteTemp"]));
             }
             set {
-                this["PNG_Lossess"] = value;
+                this["DeleteTemp"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool WebPLossless {
+            get {
+                return ((bool)(this["WebPLossless"]));
+            }
+            set {
+                this["WebPLossless"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool WebPEmulateJPEG {
+            get {
+                return ((bool)(this["WebPEmulateJPEG"]));
+            }
+            set {
+                this["WebPEmulateJPEG"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("80")]
-        public double PNG_Quality {
+        public double WebPQuality {
             get {
-                return ((double)(this["PNG_Quality"]));
+                return ((double)(this["WebPQuality"]));
             }
             set {
-                this["PNG_Quality"] = value;
+                this["WebPQuality"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool PNG_RemoveAlpha {
+        public bool WebPRemoveAlpha {
             get {
-                return ((bool)(this["PNG_RemoveAlpha"]));
+                return ((bool)(this["WebPRemoveAlpha"]));
             }
             set {
-                this["PNG_RemoveAlpha"] = value;
+                this["WebPRemoveAlpha"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("80")]
+        public double JPEGQuality {
+            get {
+                return ((double)(this["JPEGQuality"]));
+            }
+            set {
+                this["JPEGQuality"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool PNGLossless {
+            get {
+                return ((bool)(this["PNGLossless"]));
+            }
+            set {
+                this["PNGLossless"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("80")]
+        public double PNGQuality {
+            get {
+                return ((double)(this["PNGQuality"]));
+            }
+            set {
+                this["PNGQuality"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool Create_Temp {
+        public bool PNGRemoveAlpha {
             get {
-                return ((bool)(this["Create_Temp"]));
+                return ((bool)(this["PNGRemoveAlpha"]));
             }
             set {
-                this["Create_Temp"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(".image_temp")]
-        public string Temp_Location {
-            get {
-                return ((string)(this["Temp_Location"]));
-            }
-            set {
-                this["Temp_Location"] = value;
+                this["PNGRemoveAlpha"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool Images_Delete {
+        public bool VideoChangeSize {
             get {
-                return ((bool)(this["Images_Delete"]));
+                return ((bool)(this["VideoChangeSize"]));
             }
             set {
-                this["Images_Delete"] = value;
+                this["VideoChangeSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("800")]
+        public int VideoWidth {
+            get {
+                return ((int)(this["VideoWidth"]));
+            }
+            set {
+                this["VideoWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("450")]
+        public int VideoHeight {
+            get {
+                return ((int)(this["VideoHeight"]));
+            }
+            set {
+                this["VideoHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool VideoRemoveAudio {
+            get {
+                return ((bool)(this["VideoRemoveAudio"]));
+            }
+            set {
+                this["VideoRemoveAudio"] = value;
             }
         }
     }

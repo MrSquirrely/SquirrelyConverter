@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dragablz, Version=0.0.3.203, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dragablz.0.0.3.203\lib\net45\Dragablz.dll</HintPath>
+    </Reference>
     <Reference Include="Magick.NET-Q8-AnyCPU, Version=7.4.6.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
       <HintPath>..\packages\Magick.NET-Q8-AnyCPU.7.4.6\lib\net40\Magick.NET-Q8-AnyCPU.dll</HintPath>
     </Reference>
@@ -56,14 +59,21 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converter.cs" />
-    <Compile Include="Options.cs" />
-    <Compile Include="Utilities.cs" />
-    <Page Include="ImageView.xaml">
+    <Compile Include="Class\Converter.cs" />
+    <Compile Include="Class\Options.cs" />
+    <Compile Include="Class\Utilities.cs" />
+    <Page Include="View\ImageSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ImageView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="ImageView.xaml.cs">
+    <Compile Include="View\ImageSettingsView.xaml.cs">
+      <DependentUpon>ImageSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ImageView.xaml.cs">
       <DependentUpon>ImageView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
