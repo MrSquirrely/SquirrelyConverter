@@ -1,5 +1,8 @@
 # Squirrely Converters [![GitHub (pre-)release](https://img.shields.io/github/release/MrSquirrelyNet/SquirrelyConverter/all.svg?style=for-the-badge)](https://github.com/MrSquirrelyNet/SquirrelyConverter/releases) [![CodeFactor](https://www.codefactor.io/repository/github/mrsquirrelynet/squirrelyconverter/badge?longCache=true&style=for-the-badge)](https://www.codefactor.io/repository/github/mrsquirrelynet/squirrelyconverter?longCache=true&style=for-the-badge)
 
+### Follow my twitter for news on future updates [![Twitter Follow](https://img.shields.io/twitter/follow/TheMrSquirrely.svg?style=for-the-badge&label=Follow)](https://twitter.com/TheMrSquirrely)
+
+
 ##### Simple Converters for Everyone
 Free and easy converters that anyone can use. Currently supports images and videos. Audio, office, and zip support is coming soon.
 
@@ -28,7 +31,7 @@ The version scheme is Main.Feature.bug
 ## News
 I will be removing costura fody in the next update, it's still there in the repo, but with the newest update the whole goal is to make it as lite as possible. We are doing this by not needing all the dlls for every converter that you don't want. With costura fody it loads all the dlls into the program so it is no longer needed. I'm also going to work on a website for this so I can post updates when I have them.
 
-- V 1.1
+- V 2.0 "The modular update"
   - Modulation
     - Now you only see what you want
   - Recreate the image converter
