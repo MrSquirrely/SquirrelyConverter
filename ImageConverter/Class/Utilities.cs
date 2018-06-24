@@ -11,7 +11,7 @@ namespace ImageConverter.Class {
         public static List<string> DroppedFiles = new List<string>();
         public static List<string> Files = new List<string>();
         public static List<string> Directories = new List<string>();
-        public static ObservableCollection<NewFile> Images = new ObservableCollection<NewFile>();
+        public static ObservableCollection<NewFile> ImagesCollection = new ObservableCollection<NewFile>();
         public static ListView ImageListView;
         public static ImageView ImageView;
         private const string Queued = "Queued";
@@ -30,7 +30,7 @@ namespace ImageConverter.Class {
                     GetImages(file, false);
                 }
             }
-            ImageListView.ItemsSource = Images;
+            ImageListView.ItemsSource = ImagesCollection;
         }
 
         internal static void Convert(int selectedIndex) {
@@ -52,58 +52,56 @@ namespace ImageConverter.Class {
         private static void StartConvertJpeg() => Converter.ConvertJpeg(Files);
 
         private static void ConvertWebP() {
-            NullCheck();
-            CUtilities.Converting = true;
-            Thread _ThreadEncode;
-            ThreadStart starter = StartConvertWebP;
-            starter += () => {
-                CUtilities.Converting  = false;
-            };
+            if (!NullCheck()) {
+                CUtilities.Converting = true;
+                ThreadStart starter = StartConvertWebP;
+                starter += () => {
+                    CUtilities.Converting  = false;
+                };
 
-            _ThreadEncode = new Thread(starter);
-            _ThreadEncode.SetApartmentState(ApartmentState.STA);
-            _ThreadEncode.IsBackground = true;
-            _ThreadEncode.Start();
+                Thread threadEncode = new Thread(starter);
+                threadEncode.SetApartmentState(ApartmentState.STA);
+                threadEncode.IsBackground = true;
+                threadEncode.Start();
+            }
         }
 
         private static void ConvertPng() {
-            NullCheck();
-            CUtilities.Converting  = true;
-            Thread _ThreadEncode;
-            ThreadStart starter = StartConvertPng;
-            starter += () => {
-                CUtilities.Converting  = false;
-            };
+            if (!NullCheck()) {
+                CUtilities.Converting  = true;
+                ThreadStart starter = StartConvertPng;
+                starter += () => {
+                    CUtilities.Converting  = false;
+                };
 
-            _ThreadEncode = new Thread(starter);
-            _ThreadEncode.SetApartmentState(ApartmentState.STA);
-            _ThreadEncode.IsBackground = true;
-            _ThreadEncode.Start();
+                Thread threadEncode = new Thread(starter);
+                threadEncode.SetApartmentState(ApartmentState.STA);
+                threadEncode.IsBackground = true;
+                threadEncode.Start();
+            }
         }
 
         private static void ConvertJpeg() {
-            NullCheck();
-            CUtilities.Converting  = true;
-            Thread _ThreadEncode;
-            ThreadStart starter = StartConvertJpeg;
-            starter += () => {
-                CUtilities.Converting  = false;
-            };
+            if (!NullCheck()) {
+                CUtilities.Converting  = true;
+                ThreadStart starter = StartConvertJpeg;
+                starter += () => {
+                    CUtilities.Converting  = false;
+                };
 
-            _ThreadEncode = new Thread(starter);
-            _ThreadEncode.SetApartmentState(ApartmentState.STA);
-            _ThreadEncode.IsBackground = true;
-            _ThreadEncode.Start();
-
+                Thread threadEncode = new Thread(starter);
+                threadEncode.SetApartmentState(ApartmentState.STA);
+                threadEncode.IsBackground = true;
+                threadEncode.Start();
+            }
         }
 
         public static bool NullCheck() {
             if (DroppedFiles == null || CUtilities.Converting) {
                 return true;
             }
-            else {
-                return false;
-            }
+
+            return false;
         }
 
         private static void GetImages(string file, bool scanDirectory) {
@@ -112,7 +110,7 @@ namespace ImageConverter.Class {
             string location = CUtilities.GetFileDirectory(file);
             FileAttributes attributes = File.GetAttributes(file);
             if (Enums.ImageFormats.Contains(type)) {
-                Images.Add(new NewFile { Name = name, Type = type, Converted = Queued, Location = location});
+                ImagesCollection.Add(new NewFile { Name = name, Type = type, Converted = Queued, Location = location});
                 Files.Add(file);
             }
             if (scanDirectory) {

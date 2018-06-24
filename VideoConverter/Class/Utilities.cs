@@ -10,7 +10,7 @@ namespace VideoConverter.Class {
     public class VideoUtilities {
         private static readonly List<string> FilesList = new List<string>();
         private static readonly List<string> DirectoriesList = new List<string>();
-        private static ObservableCollection<NewFile> VideosCollection = new ObservableCollection<NewFile>();
+        public static ObservableCollection<NewFile> VideosCollection = new ObservableCollection<NewFile>();
         public static ListView VideoListView;
         public static VideoView VideoView;
         private const string Queued = "Queued";
@@ -59,7 +59,7 @@ namespace VideoConverter.Class {
                 thread.Start();
             }
             else {
-                //Todo show a message that we are already converting
+                Toast.AlreadyConverting();
             }
         }
 
@@ -78,7 +78,7 @@ namespace VideoConverter.Class {
                 thread.Start();
             }
             else {
-                //Todo show a message that we are already converting
+                Toast.AlreadyConverting();
             }
         }
 
@@ -98,8 +98,11 @@ namespace VideoConverter.Class {
         }
 
         private static bool NullCheck() {
-            if (FilesList == null || CUtilities.Converting) return true;
-            else return false;
+            if (FilesList == null || CUtilities.Converting) {
+                return true;
+            }
+
+            return false;
         }
     }
 }

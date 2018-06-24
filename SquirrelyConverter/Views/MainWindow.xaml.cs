@@ -10,6 +10,8 @@ namespace Mr_Squirrely_Converters.Views {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow {
+        private bool _firstViewed = true;
+
         public MainWindow() {
             InitializeComponent();
             Logger.StartLogger();
@@ -22,25 +24,26 @@ namespace Mr_Squirrely_Converters.Views {
             CUtilities.Dispatcher = Application.Current.Dispatcher;
             CUtilities.SetWorkdingDir(Directory.GetCurrentDirectory());
             
-            Options.SetGeneralSettings();
+            Options.StartGeneralSettings();
 
 
             Logger.LogDebug($"{CUtilities.GetWorkdingDir()}");
 
             if (File.Exists($"{CUtilities.GetWorkdingDir()}\\ImageConverter.dll")) {
                 Utilities.AddImageTab();
-                Options.SetImageSettings();
+                Options.StartImageSettings();
                 CUtilities.IsImageLoaded = true;
             }
             
             if (File.Exists($"{CUtilities.GetWorkdingDir()}\\VideoConverter.dll")) {
                 Utilities.AddVideoTab();
-                Options.SetVideoSettings();
+                Options.StartVideoSettings();
                 CUtilities.IsVideoLoaded = true;
             }
 
             //CUtilities.CheckVersion(true,true,true); Todo do this better
 
+            Toast.PreviewRelease();
         }
 
         private SettingsWindow _settingsWindow;
@@ -56,6 +59,9 @@ namespace Mr_Squirrely_Converters.Views {
         private void ConverterTabs_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
             TabItem tabItem = Utilities.ConverterTabs.SelectedItem as TabItem;
             Title = $"Mr. Squirrely's {tabItem?.Header ?? "Converters"}";
+            if (Title == "Mr. Squirrely's Video Converter" && _firstViewed) {
+                Toast.VideoMessage();
+            }
         }
     }
 }

@@ -1,29 +1,21 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using VideoConverter.Class;
 
 namespace VideoConverter.View {
     /// <summary>
     /// Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class VideoView : UserControl {
+    public partial class VideoView {
         public VideoView() {
             InitializeComponent();
             VideoUtilities.VideoListView = VideoFiles;
             VideoUtilities.VideoView = this;
         }
 
-        private void VideoConvertButton_OnClick(object sender, RoutedEventArgs e) {
-            throw new NotImplementedException();
-        }
+        private void VideoConvertButton_OnClick(object sender, RoutedEventArgs e) => VideoUtilities.Convert(VideoFormatSelector.SelectedIndex);
 
-        private void MenuItem_OnClick(object sender, RoutedEventArgs e) {
-            throw new NotImplementedException();
-        }
+        private void VideoFiles_OnDrop(object sender, DragEventArgs e) => VideoUtilities.PopulateList(e.Data.GetData(DataFormats.FileDrop) as string[]);
 
-        private void VideoFiles_OnDrop(object sender, DragEventArgs e) {
-            throw new NotImplementedException();
-        }
+        private void ClearMenu_OnClick(object sender, RoutedEventArgs e) => VideoFiles.Items.Clear();
     }
 }

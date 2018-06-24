@@ -26,6 +26,14 @@ namespace VideoConverter.Class {
                     else {
                         engine.Convert(inputFile, outputFile);
                     }
+
+                    foreach (NewFile newFile in VideoUtilities.VideosCollection) {
+                        int index = VideoUtilities.VideosCollection.IndexOf(newFile);
+                        if (VideoUtilities.VideosCollection[index].Location == fileLocation) {
+                            VideoUtilities.VideosCollection[index].Converted = "Converted";
+                        }
+                    }
+                    engine.Dispose();
                     Copyfile(file);
                     DeleteFile(file);
                 }
@@ -52,6 +60,14 @@ namespace VideoConverter.Class {
                     else {
                         engine.Convert(inputFile, outputFile);
                     }
+
+                    foreach (NewFile newFile in VideoUtilities.VideosCollection) {
+                        int index = VideoUtilities.VideosCollection.IndexOf(newFile);
+                        if (VideoUtilities.VideosCollection[index].Location == fileLocation) {
+                            VideoUtilities.VideosCollection[index].Converted = "Converted";
+                        }
+                    }
+                    engine.Dispose();
                     Copyfile(file);
                     DeleteFile(file);
                 }

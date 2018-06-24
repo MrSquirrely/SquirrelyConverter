@@ -128,6 +128,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Class\Utilities.cs" />
+    <Compile Include="Bugs.cs" />
+    <Compile Include="Todo.cs" />
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>

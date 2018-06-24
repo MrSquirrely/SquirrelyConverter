@@ -60,7 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class\Converter.cs" />
-    <Compile Include="Class\Options.cs" />
     <Compile Include="Class\Utilities.cs" />
     <Page Include="View\ImageSettingsView.xaml">
       <SubType>Designer</SubType>

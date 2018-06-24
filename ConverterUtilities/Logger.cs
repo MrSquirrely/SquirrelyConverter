@@ -20,6 +20,7 @@ namespace ConverterUtilities {
 
         private static NLog.Logger GetLogger() => LogManager.GetLogger("Logger");
 
+        public static void LogError(string error) => GetLogger().Error(error);
         public static void LogError(Exception ex) => GetLogger().Error($"Source: {ex.Source} {Environment.NewLine} Message: {ex.Message}");
         public static void LogDebug(string debug) => GetLogger().Debug(debug);
         public static void LogDebug(Exception ex) => GetLogger().Debug($"Source: {ex.Source} {Environment.NewLine} Message: {ex.Message}");

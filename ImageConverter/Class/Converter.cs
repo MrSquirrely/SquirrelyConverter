@@ -15,9 +15,9 @@ namespace ImageConverter.Class {
                     if (CUtilities.GetFileType(file) != ".gif") {
                         MagickImage image = new MagickImage(file);
                         
-                        image.Settings.SetDefine(MagickFormat.WebP, "-lossless", Options.IsWebPLossless());
-                        image.Settings.SetDefine(MagickFormat.WebP, "-emulate-jpeg-size", Options.DoWebPEmulateJPEG());
-                        image.Settings.SetDefine(MagickFormat.WebP, "-alpha", Options.DoWebPRemoveAlpha());
+                        image.Settings.SetDefine(MagickFormat.WebP, "-lossless", Options.GetWebPLossless());
+                        image.Settings.SetDefine(MagickFormat.WebP, "-emulate-jpeg-size", Options.GetWebPEmulateJpeg());
+                        image.Settings.SetDefine(MagickFormat.WebP, "-alpha", Options.GetWebPRemoveAlpha());
                         image.Settings.SetDefine(MagickFormat.WebP, "-quality", Options.GetWebPQuality().ToString(CultureInfo.InvariantCulture));
                         image.Format = MagickFormat.WebP;
                         image.Write($"{CUtilities.GetFileDirectory(file)}\\{CUtilities.GetFileName(file, Enums.FileExtension.No)}.webp");
@@ -27,10 +27,10 @@ namespace ImageConverter.Class {
                     }
 
                     // I need help on this. There has to be a better way to do this?
-                    foreach (NewFile newFile in ImageUtilities.Images) {
-                        int index = ImageUtilities.Images.IndexOf(newFile);
-                        if (ImageUtilities.Images[index].Location == CUtilities.GetFileLocation(file)) {
-                            ImageUtilities.Images[index].Converted = "Converted";
+                    foreach (NewFile newFile in ImageUtilities.ImagesCollection) {
+                        int index = ImageUtilities.ImagesCollection.IndexOf(newFile);
+                        if (ImageUtilities.ImagesCollection[index].Location == CUtilities.GetFileLocation(file)) {
+                            ImageUtilities.ImagesCollection[index].Converted = "Converted";
                         }
                     }
                     Finish(file);
@@ -72,15 +72,15 @@ namespace ImageConverter.Class {
                         continue;
                     }
                     MagickImage image = new MagickImage(file);
-                    image.Settings.SetDefine(MagickFormat.Jpeg, "-quality", Options.GetJPEGQuality().ToString(CultureInfo.InvariantCulture));
+                    image.Settings.SetDefine(MagickFormat.Jpeg, "-quality", Options.GetJpegQuality().ToString(CultureInfo.InvariantCulture));
                     image.Format = MagickFormat.Jpeg;
                     image.Write($"{CUtilities.GetFileDirectory(file)}\\{CUtilities.GetFileName(file, Enums.FileExtension.No)}.jpeg");
 
                     // I need help on this. There has to be a better way to do this?
-                    foreach (NewFile newFile in ImageUtilities.Images) {
-                        int index = ImageUtilities.Images.IndexOf(newFile);
-                        if (ImageUtilities.Images[index].Location == CUtilities.GetFileLocation(file)) {
-                            ImageUtilities.Images[index].Converted = "Converted";
+                    foreach (NewFile newFile in ImageUtilities.ImagesCollection) {
+                        int index = ImageUtilities.ImagesCollection.IndexOf(newFile);
+                        if (ImageUtilities.ImagesCollection[index].Location == CUtilities.GetFileLocation(file)) {
+                            ImageUtilities.ImagesCollection[index].Converted = "Converted";
                         }
                     }
                     Finish(file);
@@ -100,17 +100,17 @@ namespace ImageConverter.Class {
                     }
 
                     MagickImage image = new MagickImage(file);
-                    image.Settings.SetDefine(MagickFormat.Png, "-lossless", Options.IsPNGLossless());
-                    image.Settings.SetDefine(MagickFormat.Png, "-alpha", Options.DoPNGRemoveAlpha());
-                    image.Settings.SetDefine(MagickFormat.Png, "-quality", Options.GetPNGQuality().ToString(CultureInfo.InvariantCulture));
+                    image.Settings.SetDefine(MagickFormat.Png, "-lossless", Options.GetPngLossless());
+                    image.Settings.SetDefine(MagickFormat.Png, "-alpha", Options.GetPngRemoveAlpha());
+                    image.Settings.SetDefine(MagickFormat.Png, "-quality", Options.GetPngQuality().ToString(CultureInfo.InvariantCulture));
                     image.Format = MagickFormat.Png;
                     image.Write($"{CUtilities.GetFileDirectory(file)}\\{CUtilities.GetFileName(file, Enums.FileExtension.No)}.png");
 
                     // I need help on this. There has to be a better way to do this?
-                    foreach (NewFile newFile in ImageUtilities.Images) {
-                        int index = ImageUtilities.Images.IndexOf(newFile);
-                        if (ImageUtilities.Images[index].Location == CUtilities.GetFileLocation(file)) {
-                            ImageUtilities.Images[index].Converted = "Converted";
+                    foreach (NewFile newFile in ImageUtilities.ImagesCollection) {
+                        int index = ImageUtilities.ImagesCollection.IndexOf(newFile);
+                        if (ImageUtilities.ImagesCollection[index].Location == CUtilities.GetFileLocation(file)) {
+                            ImageUtilities.ImagesCollection[index].Converted = "Converted";
                         }
                     }
                     Finish(file);
@@ -124,7 +124,7 @@ namespace ImageConverter.Class {
         private static void Finish(string file) {
             UpdateView();
             CopyFile(file);
-            DeleteFile(file);
+            DeleteFile();
         }
 
         private static void UpdateView() {
@@ -140,17 +140,17 @@ namespace ImageConverter.Class {
         }
 
         private static void CopyFile(string file) {
-            if (Options.DoCreateTemp()) {
-                if (!Directory.Exists($"{CUtilities.GetTempDir(Options.DoCreateTemp(), Options.WhereTempLocation())}")) {
-                    Directory.CreateDirectory($"{CUtilities.GetTempDir(Options.DoCreateTemp(), Options.WhereTempLocation())}");
+            if (Options.GetCreateTemp()) {
+                if (!Directory.Exists($"{CUtilities.GetTempDir(Options.GetCreateTemp(), Options.GetTempLocation())}")) {
+                    Directory.CreateDirectory($"{CUtilities.GetTempDir(Options.GetCreateTemp(), Options.GetTempLocation())}");
                 }
-                File.Copy(file, $"{CUtilities.GetTempDir(Options.DoCreateTemp(), Options.WhereTempLocation())}");
+                File.Copy(file, $"{CUtilities.GetTempDir(Options.GetCreateTemp(), Options.GetTempLocation())}");
             }
         }
 
-        private static void DeleteFile(string file) {
-            if (Options.DoDeleteTemp()) {
-                Directory.Delete(Options.WhereTempLocation());
+        private static void DeleteFile() {
+            if (Options.GetDeleteTemp()) {
+                Directory.Delete(Options.GetTempLocation());
             }
         }
 

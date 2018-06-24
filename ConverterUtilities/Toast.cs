@@ -29,12 +29,12 @@ namespace ConverterUtilities {
 
         public static void Update(string currentVersion, string updatedVersion) => _notifier.ShowInformation($"There is an update. Your version: {currentVersion} Updated version: {updatedVersion}"); //This message shows when there is an update
         public static void UpdateCheckFail() => _notifier.ShowWarning("Failed to check for update. Please try again."); //In case checking for the update fails
-        public static void BetaRelease() => _notifier.ShowInformation("This is a beta release so some things are not finished."); //Beta release notice
+        public static void PreviewRelease() => _notifier.ShowInformation("This is a preview release, some things might not work. Please use this with caution and report any bugs."); //Beta release notice
         public static void ConvertFinished() => _notifier.ShowInformation("Finished Converting"); //Finished message
         public static void AlreadyConverting() => _notifier.ShowWarning("Already Converting"); //Already converting message
         public static void SettingsSaved() => _notifier.ShowSuccess("Settings were saved!"); //Settings saved message
         public static void SettingsReset() => _notifier.ShowInformation("Settings reset, make sure you save them!"); //Reset message and a reminder to save them
-        public static void VideoMessage() => _notifier.ShowWarning("Video conversion can take a long time to finish. Currently I do not show progress. It is not recommended that you convert multiple videos at once."); //Message for video
+        public static void VideoMessage() => _notifier.ShowWarning("Video conversion can take a long time to finish. Currently progess isn't shown. It is not recommended that you convert multiple videos at once."); //Message for video and a warning not to convert multiple files
         #endregion
 
         public static void Dispose() => _notifier.Dispose();

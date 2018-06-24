@@ -1,6 +1,5 @@
 ﻿using System.Windows.Controls;
 using ConverterUtilities;
-using Mr_Squirrely_Converters.Views;
 using Dragablz;
 using ImageConverter.View;
 using VideoConverter.View;
@@ -8,7 +7,7 @@ using VideoConverter.View;
 namespace Mr_Squirrely_Converters.Class {
     internal static class Utilities {
 
-        private static int Tabs { get; set; } = 0;
+        private static int Tabs { get; set; }
         public static TabablzControl ConverterTabs { get; set; }
 
         public static void AddImageTab() {

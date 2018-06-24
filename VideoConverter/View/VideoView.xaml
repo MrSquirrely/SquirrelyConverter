@@ -9,7 +9,7 @@
         <ListView x:Name="VideoFiles" Drop="VideoFiles_OnDrop"  AllowDrop="True">
             <ListView.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Clear" Click="MenuItem_OnClick"/>
+                    <MenuItem Name="ClearMenu" Header="Clear" Click="ClearMenu_OnClick"/>
                 </ContextMenu>
             </ListView.ContextMenu>
             <ListView.View>

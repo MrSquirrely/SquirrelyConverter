@@ -11,6 +11,7 @@ namespace ConverterUtilities {
     /// Almost everything has to have an explanation, if it doesn't yell at me
     /// Everything needs to go into a region, I don't care if you like them or not
     /// Always be verbose, no 'var'
+    /// Todo comment everything
     /// </summary>
     public static class CUtilities {
 
@@ -26,8 +27,6 @@ namespace ConverterUtilities {
         #endregion
 
         #region Versions
-        public static StreamReader streamReader;
-
         /// <summary>
         /// Various variables for things
         /// *Version tags are the current version of said code
@@ -51,60 +50,78 @@ namespace ConverterUtilities {
         /// <summary>
         /// This is just the webclient used to download things
         /// </summary>
-        private static WebClient webClient;
+        private static WebClient _webClient;
+        private static StreamReader _streamReader;
 
-        /// <summary>
-        /// Checks the version based on what you want
-        /// Todo: implement
-        /// </summary>
-        /// <param name="main">True if you want to check for update of the main program</param>
-        /// <param name="image">True if you want to check for update to the image conversion library</param>
-        /// <param name="video">True if you want to check for update to the video conversion library</param>
-        public static void CheckVersion(bool main, bool image, bool video) {
-            if (main) {
+        public static void CheckDefaultVersion() {
+            try {
                 File.Delete(MainVer);
-                webClient = new WebClient();
-                webClient.DownloadFile(MainUrl, MainVer);
-                streamReader = new StreamReader(MainVer);
-                MainUpdate = streamReader.ReadLine();
+                _webClient = new WebClient();
+                _webClient.DownloadFile(MainUrl, MainVer);
+                _streamReader = new StreamReader(MainVer);
+                MainUpdate = _streamReader.ReadLine();
                 if (MainVersion != MainUpdate) {
                     Toast.Update(MainVersion, MainUpdate);
                 }
                 else {
                     Toast.NoUpdate();
                 }
-                streamReader.Dispose();
-                webClient.Dispose();
+                _streamReader.Dispose();
+                _webClient.Dispose();
             }
-            if (image) {
+            catch (Exception ex) {
+                _streamReader.Dispose();
+                _webClient.Dispose();
+                Logger.LogError(ex);
+                Toast.UpdateCheckFail();
+            }
+        }
+
+        public static void CheckImageVersion() {
+            try {
                 File.Delete(ImageVer);
-                webClient = new WebClient();
-                webClient.DownloadFile(ImageUrl, ImageVer);
-                streamReader = new StreamReader(ImageVer);
-                ImageUpdate = streamReader.ReadLine();
+                _webClient = new WebClient();
+                _webClient.DownloadFile(ImageUrl, ImageVer);
+                _streamReader = new StreamReader(ImageVer);
+                ImageUpdate = _streamReader.ReadLine();
                 if (ImageVersion != ImageUpdate) {
                     Toast.Update(ImageVersion, ImageUpdate);
                 }
                 else {
                     Toast.NoUpdate();
                 }
-                streamReader.Dispose();
-                webClient.Dispose();
+                _streamReader.Dispose();
+                _webClient.Dispose();
             }
-            if (video) {
+            catch (Exception ex) {
+                _streamReader.Dispose();
+                _webClient.Dispose();
+                Logger.LogError(ex);
+                Toast.UpdateCheckFail();
+            }
+        }
+
+        public static void CheckVideoVersion() {
+            try {
                 File.Delete(VideoVer);
-                webClient = new WebClient();
-                webClient.DownloadFile(VideoUrl, VideoVer);
-                streamReader = new StreamReader(VideoVer);
-                VideoUpdate = streamReader.ReadLine();
+                _webClient = new WebClient();
+                _webClient.DownloadFile(VideoUrl, VideoVer);
+                _streamReader = new StreamReader(VideoVer);
+                VideoUpdate = _streamReader.ReadLine();
                 if (VideoVersion != VideoUpdate) {
                     Toast.Update(VideoVersion, VideoUpdate);
                 }
                 else {
                     Toast.NoUpdate();
                 }
-                streamReader.Dispose();
-                webClient.Dispose();
+                _streamReader.Dispose();
+                _webClient.Dispose();
+            }
+            catch (Exception ex) {
+                _streamReader.Dispose();
+                _webClient.Dispose();
+                Logger.LogError(ex);
+                Toast.UpdateCheckFail();
             }
         }
         #endregion
@@ -150,15 +167,17 @@ namespace ConverterUtilities {
             try {
                 Toast.Dispose();
             }
-            catch {
-
+            catch(Exception ex) {
+                Logger.LogError("Couldn't Stop Toast");
+                Logger.LogError(ex);
             }
 
             try {
             Logger.Dispose();
             }
-            catch {
-
+            catch(Exception ex) {
+                Logger.LogError("Couldn't Stop Logger");
+                Logger.LogError(ex);
             }
 
         }

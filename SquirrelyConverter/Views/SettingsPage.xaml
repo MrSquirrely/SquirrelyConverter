@@ -30,9 +30,9 @@
                     <Label Content="Temp Settings Coming Soon" HorizontalAlignment="Left" Margin="10,61,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Images">
+            <TabItem Header="ImagesCollection">
                 <Grid>
-                    <CheckBox Content="Delete Images After Conversion?" x:Name="DeleteImages" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+                    <CheckBox Content="Delete ImagesCollection After Conversion?" x:Name="DeleteImages" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
                     <CheckBox Content="Remove Alpha" x:Name="RemoveAlphaWebP" HorizontalAlignment="Left" Margin="87,106,0,0" VerticalAlignment="Top"/>
                     <CheckBox Content="Lossless" x:Name="LosslessWebP" HorizontalAlignment="Left" Margin="10,106,0,0" VerticalAlignment="Top"/>
                     <CheckBox Content="Emulate JPEG Size" x:Name="EmulateJPEGWebP" HorizontalAlignment="Left" Margin="206,106,0,0" VerticalAlignment="Top"/>
