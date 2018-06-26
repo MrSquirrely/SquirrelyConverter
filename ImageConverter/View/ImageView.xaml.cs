@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using ImageConverter.Class;
+using ConverterUtilities;
 
 namespace ImageConverter.View {
     /// <summary>
@@ -9,10 +10,9 @@ namespace ImageConverter.View {
         public ImageView() {
             InitializeComponent();
             ImageUtilities.ImageListView = ImageFiles;
+            CUtilities.ImageView = ImageFiles;
             ImageUtilities.ImageView = this;
         }
-
-        public void UpdateView() => ImageFiles.Items.Refresh();
 
         private void ImageConvertButton_Click(object sender, RoutedEventArgs e) => ImageUtilities.Convert(ImageFormatSelector.SelectedIndex);
 

@@ -28,9 +28,15 @@ namespace ImageConverter.Class {
 
                     // I need help on this. There has to be a better way to do this?
                     foreach (NewFile newFile in ImageUtilities.ImagesCollection) {
+                        
                         int index = ImageUtilities.ImagesCollection.IndexOf(newFile);
+                        Console.WriteLine(ImageUtilities.ImagesCollection[index].Location);
+                        Console.WriteLine(newFile.Location);
+
                         if (ImageUtilities.ImagesCollection[index].Location == CUtilities.GetFileLocation(file)) {
                             ImageUtilities.ImagesCollection[index].Converted = "Converted";
+                            Console.WriteLine(newFile.Converted);
+                            UpdateView();
                         }
                     }
                     Finish(file);
@@ -81,6 +87,7 @@ namespace ImageConverter.Class {
                         int index = ImageUtilities.ImagesCollection.IndexOf(newFile);
                         if (ImageUtilities.ImagesCollection[index].Location == CUtilities.GetFileLocation(file)) {
                             ImageUtilities.ImagesCollection[index].Converted = "Converted";
+                            UpdateView();
                         }
                     }
                     Finish(file);
@@ -111,6 +118,7 @@ namespace ImageConverter.Class {
                         int index = ImageUtilities.ImagesCollection.IndexOf(newFile);
                         if (ImageUtilities.ImagesCollection[index].Location == CUtilities.GetFileLocation(file)) {
                             ImageUtilities.ImagesCollection[index].Converted = "Converted";
+                            UpdateView();
                         }
                     }
                     Finish(file);
@@ -122,9 +130,8 @@ namespace ImageConverter.Class {
         }
         
         private static void Finish(string file) {
-            UpdateView();
             CopyFile(file);
-            DeleteFile();
+            DeleteFile(file);
         }
 
         private static void UpdateView() {
@@ -148,8 +155,10 @@ namespace ImageConverter.Class {
             }
         }
 
-        private static void DeleteFile() {
-            if (Options.GetDeleteTemp()) {
+        private static void DeleteFile(string file) {
+            File.Delete(file);
+
+            if (Options.GetDeleteTemp() && Directory.Exists(Options.GetTempLocation())) {
                 Directory.Delete(Options.GetTempLocation());
             }
         }

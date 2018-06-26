@@ -61,17 +61,10 @@
   <ItemGroup>
     <Compile Include="Class\Converter.cs" />
     <Compile Include="Class\Utilities.cs" />
-    <Page Include="View\ImageSettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\ImageView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="View\ImageSettingsView.xaml.cs">
-      <DependentUpon>ImageSettingsView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\ImageView.xaml.cs">
       <DependentUpon>ImageView.xaml</DependentUpon>
       <SubType>Code</SubType>

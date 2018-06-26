@@ -57,6 +57,7 @@ namespace ImageConverter.Class {
                 ThreadStart starter = StartConvertWebP;
                 starter += () => {
                     CUtilities.Converting  = false;
+                    Toast.ConvertFinished();
                 };
 
                 Thread threadEncode = new Thread(starter);
@@ -72,6 +73,7 @@ namespace ImageConverter.Class {
                 ThreadStart starter = StartConvertPng;
                 starter += () => {
                     CUtilities.Converting  = false;
+                    Toast.ConvertFinished();
                 };
 
                 Thread threadEncode = new Thread(starter);
@@ -87,6 +89,7 @@ namespace ImageConverter.Class {
                 ThreadStart starter = StartConvertJpeg;
                 starter += () => {
                     CUtilities.Converting  = false;
+                    Toast.ConvertFinished();
                 };
 
                 Thread threadEncode = new Thread(starter);
@@ -107,7 +110,7 @@ namespace ImageConverter.Class {
         private static void GetImages(string file, bool scanDirectory) {
             string name = CUtilities.GetFileName(file, Enums.FileExtension.Yes);
             string type = CUtilities.GetFileType(file);
-            string location = CUtilities.GetFileDirectory(file);
+            string location = CUtilities.GetFileLocation(file);
             FileAttributes attributes = File.GetAttributes(file);
             if (Enums.ImageFormats.Contains(type)) {
                 ImagesCollection.Add(new NewFile { Name = name, Type = type, Converted = Queued, Location = location});
@@ -118,6 +121,11 @@ namespace ImageConverter.Class {
                     Directories.Add($"{file}\\");
                 }
             }
+        }
+
+        public static void UpdateViews() {
+            ImageListView.Items.Refresh();
+
         }
     }
 }

@@ -6,6 +6,7 @@ using MahApps.Metro.Controls;
 using System.Net;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace ConverterUtilities {
     /// <summary>
@@ -153,6 +154,11 @@ namespace ConverterUtilities {
         /// Gets or sets the Main Window for other projects to update various items
         /// </summary>
         public static Window MainWindow { get; set; }
+        public static ListView ImageView {get; set; }
+        public static ListView VideoView { get; set; }
+
+        public static void UpdateImageView() => ImageView.Items.Refresh();
+        public static void UpdateVideoView() => VideoView.Items.Refresh();
         /// <summary>
         /// Gets or sets the dispatcher
         /// </summary>
