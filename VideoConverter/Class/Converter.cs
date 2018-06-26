@@ -8,18 +8,22 @@ using MediaToolkit.Options;
 
 namespace VideoConverter.Class {
     class Converter {
+
+        private static Engine engine;
+
         public static void ConvertMp4(List<string> files) {
             try {
                 foreach (string file in files) {
                     string fileName = CUtilities.GetFileName(file, Enums.FileExtension.No);
                     string fileLocation = CUtilities.GetFileLocation(file);
-                    Engine engine = new Engine();
+                    engine = new Engine();
+                    engine.ConversionCompleteEvent += EngineOnConversionCompleteEvent;
                     MediaFile inputFile = new MediaFile {Filename = file};
                     MediaFile outputFile = new MediaFile {Filename = $"{fileLocation}\\{fileName}.mp4"};
-                    if (Options.ChangeSize) {
+                    if (Options.GetVideoChangeSize()) {
                         ConversionOptions conversionOptions = new ConversionOptions {
-                            CustomWidth = Options.Width,
-                            CustomHeight = Options.Height
+                            CustomWidth = Options.GetVideoWidth(),
+                            CustomHeight = Options.GetVideoHeight()
                         };
                         engine.Convert(inputFile, outputFile, conversionOptions);
                     }
@@ -33,9 +37,8 @@ namespace VideoConverter.Class {
                             VideoUtilities.VideosCollection[index].Converted = "Converted";
                         }
                     }
-                    engine.Dispose();
                     Copyfile(file);
-                    DeleteFile(file);
+                    //DeleteFile(file);
                 }
             }
             catch (Exception ex) {
@@ -47,13 +50,14 @@ namespace VideoConverter.Class {
                 foreach (string file in files) {
                     string fileName = CUtilities.GetFileName(file, Enums.FileExtension.No);
                     string fileLocation = CUtilities.GetFileLocation(file);
-                    Engine engine = new Engine();
+                    engine = new Engine();
+                    engine.ConversionCompleteEvent += EngineOnConversionCompleteEvent;
                     MediaFile inputFile = new MediaFile {Filename = file};
                     MediaFile outputFile = new MediaFile {Filename = $"{fileLocation}\\{fileName}.webm"};
-                    if (Options.ChangeSize) {
+                    if (Options.GetVideoChangeSize()) {
                         ConversionOptions conversionOptions = new ConversionOptions {
-                            CustomWidth = Options.Width,
-                            CustomHeight = Options.Height
+                            CustomWidth = Options.GetVideoWidth(),
+                            CustomHeight = Options.GetVideoHeight()
                         };
                         engine.Convert(inputFile, outputFile, conversionOptions);
                     }
@@ -67,9 +71,8 @@ namespace VideoConverter.Class {
                             VideoUtilities.VideosCollection[index].Converted = "Converted";
                         }
                     }
-                    engine.Dispose();
                     Copyfile(file);
-                    DeleteFile(file);
+                    //DeleteFile(file);
                 }
             }
             catch (Exception ex) {
@@ -77,17 +80,21 @@ namespace VideoConverter.Class {
             }
         }
 
+        private static void EngineOnConversionCompleteEvent(object sender, ConversionCompleteEventArgs e) {
+            engine.Dispose();
+        }
+
         private static void Copyfile(string file) {
-            if (Options.CreateTemp) {
-                if (!Directory.Exists($"{CUtilities.GetTempDir(Options.CreateTemp, Options.TempLocation)}")) {
-                    Directory.CreateDirectory($"{CUtilities.GetTempDir(Options.CreateTemp, Options.TempLocation)}");
+            if (Options.GetCreateTemp()) {
+                if (!Directory.Exists($"{CUtilities.GetTempDir(Options.GetCreateTemp(), Options.GetTempLocation())}")) {
+                    Directory.CreateDirectory($"{CUtilities.GetTempDir(Options.GetCreateTemp(), Options.GetTempLocation())}");
                 }
-                File.Copy(file, $"{CUtilities.GetTempDir(Options.CreateTemp, Options.TempLocation)}");
+                File.Copy(file, $"{CUtilities.GetTempDir(Options.GetCreateTemp(), Options.GetTempLocation())}");
             }
         }
 
         private static void DeleteFile(string file) {
-            if (Options.DeleteFile) {
+            if (Options.GetDeleteTemp()) {
                 File.Delete(file);
             }
         }

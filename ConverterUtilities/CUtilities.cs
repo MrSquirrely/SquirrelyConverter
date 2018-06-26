@@ -5,6 +5,7 @@ using static ConverterUtilities.Enums;
 using MahApps.Metro.Controls;
 using System.Net;
 using System.Diagnostics;
+using System.Windows;
 
 namespace ConverterUtilities {
     /// <summary>
@@ -20,6 +21,7 @@ namespace ConverterUtilities {
         /// The url for the issues page
         /// </summary>
         private static readonly string Github = "https://github.com/MrSquirrelyNet/SquirrelyConverter/issues";
+
         /// <summary>
         /// Opens the browser to the issues page on github.com
         /// </summary>
@@ -150,7 +152,7 @@ namespace ConverterUtilities {
         /// <summary>
         /// Gets or sets the Main Window for other projects to update various items
         /// </summary>
-        public static MetroWindow MainWindow { get; set; }
+        public static Window MainWindow { get; set; }
         /// <summary>
         /// Gets or sets the dispatcher
         /// </summary>

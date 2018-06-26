@@ -6,7 +6,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="TempLocation" Type="System.String" Scope="User">
-      <Value Profile="(Default)">.\converter_temp</Value>
+      <Value Profile="(Default)">./converter_temp</Value>
     </Setting>
     <Setting Name="DeleteTemp" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

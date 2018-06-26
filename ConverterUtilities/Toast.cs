@@ -10,7 +10,8 @@ namespace ConverterUtilities {
 
         public static void CreateNotifier() {
             _notifier = new Notifier(cfg => {
-                cfg.PositionProvider = new PrimaryScreenPositionProvider( corner: Corner.BottomRight, offsetX: 10, offsetY: 10);
+                //cfg.PositionProvider = new PrimaryScreenPositionProvider( corner: Corner.BottomRight, offsetX: 10, offsetY: 10);
+                cfg.PositionProvider = new WindowPositionProvider(parentWindow: CUtilities.MainWindow, corner:Corner.BottomRight, offsetX:10, offsetY:10);
                 cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(notificationLifetime: TimeSpan.FromSeconds(5), maximumNotificationCount: MaximumNotificationCount.FromCount(5));
                 cfg.Dispatcher = CUtilities.Dispatcher;
             });
@@ -38,5 +39,6 @@ namespace ConverterUtilities {
         #endregion
 
         public static void Dispose() => _notifier.Dispose();
+
     }
 }

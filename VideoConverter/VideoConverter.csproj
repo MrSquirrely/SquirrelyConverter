@@ -55,20 +55,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="View\VideoSettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\VideoView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Class\Converter.cs" />
-    <Compile Include="Class\Options.cs" />
     <Compile Include="Class\Utilities.cs" />
-    <Compile Include="View\VideoSettingsView.xaml.cs">
-      <DependentUpon>VideoSettingsView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\VideoView.xaml.cs">
       <DependentUpon>VideoView.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -104,6 +96,11 @@
       <Project>{6e3df504-fd4e-4520-b104-241b995f8976}</Project>
       <Name>ConverterUtilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ffmpeg.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -12,7 +12,7 @@
                    TextElement.FontWeight="Medium"
                    TextElement.FontSize="14"
                    FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-        Title="Mr. Squirrely's Image Converter" Height="720" Width="1280" Closed="MetroWindow_Closed" MinWidth="1000" MinHeight="600">
+        Title="Mr. Squirrely's Image Converter" Height="720" Width="1280" Closed="MetroWindow_Closed" MinWidth="1000" MinHeight="600" Loaded="MainWindow_OnLoaded">
     <metro:MetroWindow.RightWindowCommands>
         <metro:WindowCommands>
             <Button Name="RightWindowSettings" ToolTip="Settings" Click="RightWindowSettings_Click">

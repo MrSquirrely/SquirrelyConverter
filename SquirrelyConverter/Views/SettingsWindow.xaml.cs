@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ConverterUtilities;
 
 namespace Mr_Squirrely_Converters.Views {
     /// <summary>
@@ -19,6 +20,10 @@ namespace Mr_Squirrely_Converters.Views {
     public partial class SettingsWindow  {
         public SettingsWindow() {
             InitializeComponent();
+        }
+
+        private void SettingsWindow_OnClosed(object sender, EventArgs e) {
+            CUtilities.MainWindow.IsEnabled = true;
         }
     }
 }

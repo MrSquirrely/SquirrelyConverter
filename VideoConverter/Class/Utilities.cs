@@ -33,10 +33,10 @@ namespace VideoConverter.Class {
         internal static void Convert(int selectedIndex) {
             switch (selectedIndex) {
                     case 0:
-                        ConvertMp4();
+                        ConvertWebM();
                         break;
                     case 1:
-                        ConvertWebM();
+                        ConvertMp4();
                         break;
             }
         }

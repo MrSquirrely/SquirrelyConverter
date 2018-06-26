@@ -37,7 +37,7 @@ namespace ConverterUtilities.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(".\\converter_temp")]
+        [global::System.Configuration.DefaultSettingValueAttribute("./converter_temp")]
         public string TempLocation {
             get {
                 return ((string)(this["TempLocation"]));

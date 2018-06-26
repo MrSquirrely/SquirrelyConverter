@@ -20,12 +20,11 @@ namespace Mr_Squirrely_Converters.Views {
             Logger.LogDebug("Toast Notifier Created");
             
             Utilities.ConverterTabs = ConverterTabs;
-            CUtilities.MainWindow = this;
+            CUtilities.MainWindow = Application.Current.MainWindow;
             CUtilities.Dispatcher = Application.Current.Dispatcher;
             CUtilities.SetWorkdingDir(Directory.GetCurrentDirectory());
             
             Options.StartGeneralSettings();
-
 
             Logger.LogDebug($"{CUtilities.GetWorkdingDir()}");
 
@@ -43,13 +42,17 @@ namespace Mr_Squirrely_Converters.Views {
 
             //CUtilities.CheckVersion(true,true,true); Todo do this better
 
-            Toast.PreviewRelease();
+            //Toast.PreviewRelease();
         }
 
         private SettingsWindow _settingsWindow;
+        private SettingsPage _settingsPage;
 
         private void RightWindowSettings_Click(object sender, RoutedEventArgs e) {
-            _settingsWindow = new SettingsWindow { Content = new SettingsPage() };
+            CUtilities.MainWindow.IsEnabled = false;
+            _settingsPage = new SettingsPage();
+            _settingsWindow = new SettingsWindow { Content = _settingsPage };
+            _settingsPage.SetParent(_settingsWindow);
             _settingsWindow.Show();
         }
 
@@ -62,6 +65,10 @@ namespace Mr_Squirrely_Converters.Views {
             if (Title == "Mr. Squirrely's Video Converter" && _firstViewed) {
                 Toast.VideoMessage();
             }
+        }
+
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e) {
+            Toast.PreviewRelease();
         }
     }
 }
