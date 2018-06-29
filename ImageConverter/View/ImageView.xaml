@@ -14,7 +14,7 @@
             </ListView.ContextMenu>
             <ListView.View>
                 <GridView x:Name="ImageFilesList">
-                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" Width="400"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Type}" Header="Type"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Converted}" Header="Converted"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Location}" Header="Location"/>
@@ -22,7 +22,7 @@
             </ListView.View>
         </ListView>
         <Button Content="Convert" x:Name="ImageConvertButton" Height="Auto" Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="ImageConvertButton_Click"/>
-        <ComboBox x:Name="ImageFormatSelector" Margin="0,0,97,10" VerticalAlignment="Bottom" Width="55" HorizontalAlignment="Right" SelectedIndex="0">
+        <ComboBox x:Name="ImageFormatSelector" Margin="0,0,97,10" VerticalAlignment="Bottom" Width="64" HorizontalAlignment="Right" SelectedIndex="0">
             <ComboBoxItem Content="WebP"/>
             <ComboBoxItem Content="PNG"/>
             <ComboBoxItem Content="JPEG"/>

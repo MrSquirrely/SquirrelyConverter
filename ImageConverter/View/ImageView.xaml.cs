@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using ImageConverter.Class;
-using ConverterUtilities;
 
 namespace ImageConverter.View {
     /// <summary>
@@ -10,13 +9,11 @@ namespace ImageConverter.View {
         public ImageView() {
             InitializeComponent();
             ImageUtilities.ImageListView = ImageFiles;
-            CUtilities.ImageView = ImageFiles;
             ImageUtilities.ImageView = this;
         }
 
         private void ImageConvertButton_Click(object sender, RoutedEventArgs e) => ImageUtilities.Convert(ImageFormatSelector.SelectedIndex);
-
-        private void ClearMenu_Click(object sender, RoutedEventArgs e) => ImageFiles.Items.Clear();
+        private void ClearMenu_Click(object sender, RoutedEventArgs e) => ImageUtilities.Clear();
         private void ImageFiles_Drop(object sender, DragEventArgs e) => ImageUtilities.PopulateList(e.Data.GetData(DataFormats.FileDrop) as string[]);
     }
 }

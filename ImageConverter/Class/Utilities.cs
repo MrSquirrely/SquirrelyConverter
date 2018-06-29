@@ -123,9 +123,12 @@ namespace ImageConverter.Class {
             }
         }
 
-        public static void UpdateViews() {
+        public static void Clear() {
             ImageListView.Items.Refresh();
-
+            DroppedFiles.Clear();
+            Files.Clear();
+            Directories.Clear();
+            ImagesCollection.Clear();
         }
     }
 }

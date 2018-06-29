@@ -130,8 +130,17 @@ namespace ImageConverter.Class {
         }
         
         private static void Finish(string file) {
-            CopyFile(file);
-            DeleteFile(file);
+            if (Options.GetCreateTemp()) {
+                if (!Directory.Exists($"{CUtilities.GetTempDir(Options.GetCreateTemp(), Options.GetTempLocation())}")) {
+                    Directory.CreateDirectory($"{CUtilities.GetTempDir(Options.GetCreateTemp(), Options.GetTempLocation())}");
+                }
+                File.Copy(file, $"{CUtilities.GetTempDir(Options.GetCreateTemp(), Options.GetTempLocation())}");
+            }
+            File.Delete(file);
+
+            if (Options.GetDeleteTemp() && Directory.Exists(Options.GetTempLocation())) {
+                Directory.Delete(Options.GetTempLocation());
+            }
         }
 
         private static void UpdateView() {
@@ -143,23 +152,6 @@ namespace ImageConverter.Class {
             }
             catch (Exception ex) {
                 Logger.LogDebug(ex);
-            }
-        }
-
-        private static void CopyFile(string file) {
-            if (Options.GetCreateTemp()) {
-                if (!Directory.Exists($"{CUtilities.GetTempDir(Options.GetCreateTemp(), Options.GetTempLocation())}")) {
-                    Directory.CreateDirectory($"{CUtilities.GetTempDir(Options.GetCreateTemp(), Options.GetTempLocation())}");
-                }
-                File.Copy(file, $"{CUtilities.GetTempDir(Options.GetCreateTemp(), Options.GetTempLocation())}");
-            }
-        }
-
-        private static void DeleteFile(string file) {
-            File.Delete(file);
-
-            if (Options.GetDeleteTemp() && Directory.Exists(Options.GetTempLocation())) {
-                Directory.Delete(Options.GetTempLocation());
             }
         }
 

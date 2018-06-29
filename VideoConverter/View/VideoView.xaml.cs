@@ -13,9 +13,7 @@ namespace VideoConverter.View {
         }
 
         private void VideoConvertButton_OnClick(object sender, RoutedEventArgs e) => VideoUtilities.Convert(VideoFormatSelector.SelectedIndex);
-
         private void VideoFiles_OnDrop(object sender, DragEventArgs e) => VideoUtilities.PopulateList(e.Data.GetData(DataFormats.FileDrop) as string[]);
-
-        private void ClearMenu_OnClick(object sender, RoutedEventArgs e) => VideoFiles.Items.Clear();
+        private void ClearMenu_OnClick(object sender, RoutedEventArgs e) => VideoUtilities.Clear();
     }
 }

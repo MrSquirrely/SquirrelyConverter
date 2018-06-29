@@ -19,7 +19,7 @@
                 <materialDesign:PackIcon Kind="Settings" />
             </Button>
             <Button Name="RightWindowGithub" ToolTip="Report Bugs and Request Features" Click="RightWindowGithub_Click">
-                <materialDesign:PackIcon Kind="GithubFace" />
+                <materialDesign:PackIcon Kind="Bug" />
             </Button>
         </metro:WindowCommands>
     </metro:MetroWindow.RightWindowCommands>

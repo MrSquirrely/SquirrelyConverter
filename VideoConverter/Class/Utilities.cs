@@ -104,5 +104,12 @@ namespace VideoConverter.Class {
 
             return false;
         }
+
+        public static void Clear() {
+                VideoListView.Items.Refresh();
+                FilesList.Clear();
+                DirectoriesList.Clear();
+                VideosCollection.Clear();
+        }
     }
 }

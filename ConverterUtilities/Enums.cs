@@ -14,7 +14,8 @@ namespace ConverterUtilities {
             ".jfif",
             ".jfi",
             ".tiff",
-            ".tif"
+            ".tif",
+            ".webp"
         };
 
         public static readonly List<string> VideoFormats = new List<string>{

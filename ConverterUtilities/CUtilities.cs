@@ -2,7 +2,6 @@
 using System.IO;
 using System.Windows.Threading;
 using static ConverterUtilities.Enums;
-using MahApps.Metro.Controls;
 using System.Net;
 using System.Diagnostics;
 using System.Windows;

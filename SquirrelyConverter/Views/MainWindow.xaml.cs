@@ -28,6 +28,13 @@ namespace Mr_Squirrely_Converters.Views {
 
             Logger.LogDebug($"{CUtilities.GetWorkdingDir()}");
 
+            //CUtilities.CheckVersion(true,true,true); Todo do this better
+        }
+
+        private SettingsWindow _settingsWindow;
+        private SettingsPage _settingsPage;
+
+        private void LoadViews() {
             if (File.Exists($"{CUtilities.GetWorkdingDir()}\\ImageConverter.dll")) {
                 Utilities.AddImageTab();
                 Options.StartImageSettings();
@@ -39,14 +46,7 @@ namespace Mr_Squirrely_Converters.Views {
                 Options.StartVideoSettings();
                 CUtilities.IsVideoLoaded = true;
             }
-
-            //CUtilities.CheckVersion(true,true,true); Todo do this better
-
-            //Toast.PreviewRelease();
         }
-
-        private SettingsWindow _settingsWindow;
-        private SettingsPage _settingsPage;
 
         private void RightWindowSettings_Click(object sender, RoutedEventArgs e) {
             CUtilities.MainWindow.IsEnabled = false;
@@ -68,6 +68,7 @@ namespace Mr_Squirrely_Converters.Views {
         }
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e) {
+            LoadViews();
             Toast.PreviewRelease();
         }
     }
