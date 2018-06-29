@@ -12,6 +12,14 @@ Coming Soon!
 ## Change Log
 The version scheme is Main.Feature.bug
 
+- V 2.0 "The modular update"
+  - Modulation
+    - Now you only see what you want
+  - Recreate the image converter
+  - Recreate the video converter
+  - Move all the util code
+  - Create better logging
+
 - V 1.0
   - Removed about page
   - Added video conversion
@@ -28,16 +36,6 @@ The version scheme is Main.Feature.bug
   - Cleaned code to look just better   
 
 ## ToDo
-## News
-I will be removing costura fody in the next update, it's still there in the repo, but with the newest update the whole goal is to make it as lite as possible. We are doing this by not needing all the dlls for every converter that you don't want. With costura fody it loads all the dlls into the program so it is no longer needed. I'm also going to work on a website for this so I can post updates when I have them.
-
-- V 2.0 "The modular update"
-  - Modulation
-    - Now you only see what you want
-  - Recreate the image converter
-  - Recreate the video converter
-  - Move all the util code
-  - Create better logging
 
 - V2.2
   - Add audio conversion
@@ -52,8 +50,6 @@ I will be removing costura fody in the next update, it's still there in the repo
 
 ## Libraries Used
  - [ControlzEx](https://github.com/ControlzEx/ControlzEx)
- - [Fody](https://github.com/Fody/Fody)
- - [Costura Fody](https://github.com/Fody/Costura)
  - [Dragablz](https://github.com/ButchersBoy/Dragablz)
  - [MahApps Metro](https://github.com/MahApps/MahApps.Metro)
  - [Material Design in XAML](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit)
