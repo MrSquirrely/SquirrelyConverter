@@ -9,6 +9,9 @@ Free and easy converters that anyone can use. Currently supports images and vide
 ## Images
 Coming Soon!
 
+## News
+I am using 2.1 as an inbetween I want to get some more bugs removed before I start creating other converters. I decided against adding zip support.
+
 ## Change Log
 The version scheme is Main.Feature.bug
 
@@ -45,10 +48,7 @@ The version scheme is Main.Feature.bug
     - Text
     - Spreadsheet
 
-- V2.4
-  - Add zip support
-
-## Libraries Used
+## Libraries Used (This isn't fully updated.)
  - [ControlzEx](https://github.com/ControlzEx/ControlzEx)
  - [Dragablz](https://github.com/ButchersBoy/Dragablz)
  - [MahApps Metro](https://github.com/MahApps/MahApps.Metro)
