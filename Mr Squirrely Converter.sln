@@ -12,6 +12,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConverterUtilities", "ConverterUtilities\ConverterUtilities.csproj", "{6E3DF504-FD4E-4520-B104-241B995F8976}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Installer", "Installer\Installer.csproj", "{A3593527-4EC1-4C60-8AF1-E9FEC9FECD15}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6E3DF504-FD4E-4520-B104-241B995F8976} = {6E3DF504-FD4E-4520-B104-241B995F8976}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uninstall", "Uninstall\Uninstall.csproj", "{684CF948-2390-4E77-974A-E8F91B63703F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +44,10 @@ Global
 		{A3593527-4EC1-4C60-8AF1-E9FEC9FECD15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3593527-4EC1-4C60-8AF1-E9FEC9FECD15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3593527-4EC1-4C60-8AF1-E9FEC9FECD15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{684CF948-2390-4E77-974A-E8F91B63703F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{684CF948-2390-4E77-974A-E8F91B63703F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{684CF948-2390-4E77-974A-E8F91B63703F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{684CF948-2390-4E77-974A-E8F91B63703F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

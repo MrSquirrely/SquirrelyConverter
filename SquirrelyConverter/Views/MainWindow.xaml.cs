@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Effects;
 using ConverterUtilities;
 using Mr_Squirrely_Converters.Class;
 
@@ -20,28 +21,29 @@ namespace Mr_Squirrely_Converters.Views {
             Logger.LogDebug("Toast Notifier Created");
             
             Utilities.ConverterTabs = ConverterTabs;
-            CUtilities.MainWindow = Application.Current.MainWindow;
+            CUtilities.MainWindow = this;
+            CUtilities.DownloadButton = RightWindowDownload;
             CUtilities.Dispatcher = Application.Current.Dispatcher;
-            CUtilities.SetWorkdingDir(Directory.GetCurrentDirectory());
+            CUtilities.SetWorkingDir(Directory.GetCurrentDirectory());
             
             Options.StartGeneralSettings();
 
-            Logger.LogDebug($"{CUtilities.GetWorkdingDir()}");
+            Logger.LogDebug($"{CUtilities.GetWorkingDir()}");
 
-            //CUtilities.CheckVersion(true,true,true); Todo do this better
+            CUtilities.GetVersionJson();
         }
 
         private SettingsWindow _settingsWindow;
         private SettingsPage _settingsPage;
 
         private void LoadViews() {
-            if (File.Exists($"{CUtilities.GetWorkdingDir()}\\ImageConverter.dll")) {
+            if (File.Exists($"{CUtilities.GetWorkingDir()}\\ImageConverter.dll")) {
                 Utilities.AddImageTab();
                 Options.StartImageSettings();
                 CUtilities.IsImageLoaded = true;
             }
             
-            if (File.Exists($"{CUtilities.GetWorkdingDir()}\\VideoConverter.dll")) {
+            if (File.Exists($"{CUtilities.GetWorkingDir()}\\VideoConverter.dll")) {
                 Utilities.AddVideoTab();
                 Options.StartVideoSettings();
                 CUtilities.IsVideoLoaded = true;
@@ -50,13 +52,19 @@ namespace Mr_Squirrely_Converters.Views {
 
         private void RightWindowSettings_Click(object sender, RoutedEventArgs e) {
             CUtilities.MainWindow.IsEnabled = false;
+            BlurEffect myBlur = new BlurEffect {
+                Radius = 5
+            };
+            Effect = myBlur;
             _settingsPage = new SettingsPage();
-            _settingsWindow = new SettingsWindow { Content = _settingsPage };
+            _settingsWindow = new SettingsWindow { Content = _settingsPage, Owner = this};
             _settingsPage.SetParent(_settingsWindow);
             _settingsWindow.Show();
         }
 
-        private void RightWindowGithub_Click(object sender, RoutedEventArgs e) => CUtilities.OpenGithub();
+        private void RightWindowUpdate_OnClick(object sender, RoutedEventArgs e) => CUtilities.CheckUpdate();
+        private void RightWindowGithub_OnClick(object sender, RoutedEventArgs e) => CUtilities.OpenGithub();
+        private void RightWindowDownload_OnClick(object sender, RoutedEventArgs e) => CUtilities.OpenDownload();
         private void MetroWindow_Closed(object sender, EventArgs e) => CUtilities.Dispose();
 
         private void ConverterTabs_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -68,8 +76,11 @@ namespace Mr_Squirrely_Converters.Views {
         }
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e) {
+            //CUtilities.CheckUpdate();
             LoadViews();
             Toast.PreviewRelease();
+            ConverterTabs.SelectedIndex = 0;
         }
+
     }
 }

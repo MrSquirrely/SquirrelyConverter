@@ -4,8 +4,14 @@ using System.Windows.Threading;
 using static ConverterUtilities.Enums;
 using System.Net;
 using System.Diagnostics;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using ExtraTools;
+using Newtonsoft.Json;
+using Exception = System.Exception;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace ConverterUtilities {
     /// <summary>
@@ -26,111 +32,140 @@ namespace ConverterUtilities {
         /// Opens the browser to the issues page on github.com
         /// </summary>
         public static void OpenGithub() => Process.Start(Github);
+
+        private static readonly string Download = "https://github.com/MrSquirrelyNet/SquirrelyConverter/releases";
+        public static void OpenDownload() => Process.Start(Download);
         #endregion
 
         #region Versions
-        /// <summary>
-        /// Various variables for things
-        /// *Version tags are the current version of said code
-        /// *Ver tags are the file names of the download version 
-        /// *Update tags are the download version
-        /// *URL tags are the urls for the *Ver file
-        /// </summary>
-        private const string MainVersion = "1.0";
-        private const  string MainVer = "main.ver";
-        private static string MainUpdate { get; set; }
-        private const string MainUrl = "https://gist.githubusercontent.com/MrSquirrely/bff5b9882c96d41e522963dff089d918/raw/d211cf300bfcfc608b98e9519a9a7ebac3e22da5/main.ver";
-        private const string ImageVersion = "1.0";
-        private const string ImageVer = "image.ver";
-        private static string ImageUpdate { get; set; }
-        private const string ImageUrl = "https://gist.githubusercontent.com/MrSquirrely/011d504b44da238b95a8c831d9936215/raw/fd059936794116ea37089a4de36b6e77f902fa01/image.ver";
-        private const string VideoVersion = "1.0";
-        private const string VideoVer = "video.ver";
-        private static string VideoUpdate { get; set; }
-        private const  string VideoUrl = "https://gist.githubusercontent.com/MrSquirrely/593bbe37c01fb30a8888870637aeae4c/raw/dd5d1755940fd1f7baa636e36b29c1e3e301e838/video.ver";
+        private const string VersionUrl = "https://raw.githubusercontent.com/MrSquirrelyNet/SquirrelyConverter/master/version.json";
+        private const string VersionName = "version.json";
+        private const string CurrentName = "current.json";
+        public static string MainUrl { get; set; }
+        public static string ImageUrl { get; set; }
+        public static string VideoUrl {get; set; }
+        public const string MainName = "Squirrelys_Converters_Main.DontDownload.zip";
+        public const string ImageName = "Squirrelys_Converters_Image.DontDownload.zip";
+        public const string VideoName = "Squirrelys_Converters_Video.DontDownload.zip";
+        public const string DefaultInstall = "C:\\Program Files\\MrSquirrelyNet\\SquirrelyConverters";
 
         /// <summary>
-        /// This is just the webclient used to download things
+        /// This is just the WebClient used to download things
         /// </summary>
         private static WebClient _webClient;
-        private static StreamReader _streamReader;
 
-        public static void CheckDefaultVersion() {
+        private static Update _currentVersion;
+        private static Update _updateVersion;
+
+        public static void GetVersionJson() {
+            if (File.Exists(VersionName)) {
+                File.Delete(VersionName);
+            }
+
+            _webClient = new WebClient();
+            _webClient.DownloadFile(VersionUrl, VersionName);
+
+            StreamReader updateReader = new StreamReader($"{GetWorkingDir()}\\{VersionName}");
+            StreamReader currentReader = new StreamReader($"{GetWorkingDir()}\\{CurrentName}");
+
+            JsonSerializer jsonSerializer = new JsonSerializer();
+
+            _currentVersion = (Update) jsonSerializer.Deserialize(currentReader, typeof(Update));
+            _updateVersion = (Update) jsonSerializer.Deserialize(updateReader, typeof(Update));
+
+            MainUrl = _updateVersion.MainVersionURL;
+            ImageUrl = _updateVersion.ImageVersionURL;
+            VideoUrl = _updateVersion.VideoVersionURL;
+        }
+
+        public static void GetMainVersion() => _webClient.DownloadFile(_updateVersion.MainVersionURL, MainName);
+        public static void DeleteMainVersion() => File.Delete(MainName);
+        public static void GetImageVersion() => _webClient.DownloadFile(_updateVersion.ImageVersionURL, MainName);
+        public static void DeleteImageVersion() => File.Delete(ImageName);
+        public static void GetVideoVersion() => _webClient.DownloadFile(_updateVersion.VideoVersionURL, MainName);
+        public static void DeleteVideoVersion() => File.Delete(VideoName);
+
+        /// <summary>
+        /// Checks if you have the current version...
+        /// We then need to download them if they say yes.
+        /// Todo implement dialog
+        /// </summary>
+        public static void CheckUpdate() {
             try {
-                File.Delete(MainVer);
-                _webClient = new WebClient();
-                _webClient.DownloadFile(MainUrl, MainVer);
-                _streamReader = new StreamReader(MainVer);
-                MainUpdate = _streamReader.ReadLine();
-                if (MainVersion != MainUpdate) {
-                    Toast.Update(MainVersion, MainUpdate);
+                if (_currentVersion.MainVersion < _updateVersion.MainVersion) {
+                    Toast.Update("Main Program", _currentVersion.MainVersion, _updateVersion.MainVersion);
+                    DownloadButton.IsEnabled = true;
+                    //switch (UpdateResult("Main Program", _versionUpdate.MainVersion, _updateUpdate.MainVersion)) {
+                    //    case DialogBox.ResultEnum.LeftButtonClicked:
+                    //        Console.WriteLine("Left Clicked");
+                    //        break;
+                    //    case DialogBox.ResultEnum.RightButtonClicked:
+                    //        Console.WriteLine("Right Clicked");
+                    //        break;
+                    //    default:
+                    //        throw new ArgumentOutOfRangeException();
+                    //}
                 }
-                else {
-                    Toast.NoUpdate();
+
+                if (_imageLoaded) {
+                    if (_currentVersion.ImageVersion < _updateVersion.ImageVersion) {
+                        Toast.Update("Image Converter", _currentVersion.ImageVersion, _updateVersion.ImageVersion);
+                        DownloadButton.IsEnabled = true;
+                        //switch (UpdateResult("Iamge Converter", _versionUpdate.ImageVersion, _updateUpdate.ImageVersion)) {
+                        //    case DialogBox.ResultEnum.LeftButtonClicked:
+                        //        Console.WriteLine("Left Clicked");
+                        //        break;
+                        //    case DialogBox.ResultEnum.RightButtonClicked:
+                        //        Console.WriteLine("Right Clicked");
+                        //        break;
+                        //    default:
+                        //        throw new ArgumentOutOfRangeException();
+                        //}
+                    }
                 }
-                _streamReader.Dispose();
-                _webClient.Dispose();
+
+                if (_videoLoaded) {
+                    //!(_updateUpdate.VideoVersion >= _versionUpdate.VideoVersion)
+                    if (_currentVersion.VideoVersion < _updateVersion.VideoVersion) {
+                        Toast.Update("Video Converter", _currentVersion.VideoVersion, _updateVersion.VideoVersion);
+                        DownloadButton.IsEnabled = true;
+                        //switch (UpdateResult("Video Converter", _versionUpdate.VideoVersion, _updateUpdate.VideoVersion)) {
+                        //    case DialogBox.ResultEnum.LeftButtonClicked:
+                        //        Console.WriteLine("Left Clicked");
+                        //        break;
+                        //    case DialogBox.ResultEnum.RightButtonClicked:
+                        //        Console.WriteLine("Right Clicked");
+                        //        break;
+                        //    default:
+                        //        throw new ArgumentOutOfRangeException();
+                        //}
+                    }
+                }
             }
             catch (Exception ex) {
-                _streamReader.Dispose();
-                _webClient.Dispose();
-                Logger.LogError(ex);
                 Toast.UpdateCheckFail();
+                Logger.LogError("Update check  failed");
+                Logger.LogError(ex);
             }
         }
 
-        public static void CheckImageVersion() {
-            try {
-                File.Delete(ImageVer);
-                _webClient = new WebClient();
-                _webClient.DownloadFile(ImageUrl, ImageVer);
-                _streamReader = new StreamReader(ImageVer);
-                ImageUpdate = _streamReader.ReadLine();
-                if (ImageVersion != ImageUpdate) {
-                    Toast.Update(ImageVersion, ImageUpdate);
-                }
-                else {
-                    Toast.NoUpdate();
-                }
-                _streamReader.Dispose();
-                _webClient.Dispose();
-            }
-            catch (Exception ex) {
-                _streamReader.Dispose();
-                _webClient.Dispose();
-                Logger.LogError(ex);
-                Toast.UpdateCheckFail();
-            }
-        }
-
-        public static void CheckVideoVersion() {
-            try {
-                File.Delete(VideoVer);
-                _webClient = new WebClient();
-                _webClient.DownloadFile(VideoUrl, VideoVer);
-                _streamReader = new StreamReader(VideoVer);
-                VideoUpdate = _streamReader.ReadLine();
-                if (VideoVersion != VideoUpdate) {
-                    Toast.Update(VideoVersion, VideoUpdate);
-                }
-                else {
-                    Toast.NoUpdate();
-                }
-                _streamReader.Dispose();
-                _webClient.Dispose();
-            }
-            catch (Exception ex) {
-                _streamReader.Dispose();
-                _webClient.Dispose();
-                Logger.LogError(ex);
-                Toast.UpdateCheckFail();
-            }
-        }
+        // todo Implement a dialog to show
+        //private static DialogBox.ResultEnum UpdateResult(string versionName, double currentVersion, double updateVersion) {
+        //    DialogBox.ResultEnum result = DialogBox.Show(
+        //        $"{versionName}\b Has an update", 
+        //        $"There is an update to {versionName}, Your version is {currentVersion} and the update version is {updateVersion}" +
+        //        $" Do you want to download the update? This will close the program and re-open once installed.", 
+        //        "Yes", 
+        //        "No");
+        //    //MessageDialogResult result = await MainWindow.ShowMessageAsync($"{versionName} Has an update", $"There is an update to {versionName}, Your version is {currentVersion} and the update version is {updateVersion}" +
+        //    //                                                                                               $"Do you want to download the update? This will close the program and reopen once installed.");
+        //    return result;
+        //}
         #endregion
 
         #region Window Things
         /// <summary>
-        /// Gets or sets wether we are currently converting something
+        /// Gets or sets weather we are currently converting something
         /// </summary>
         public static bool Converting { get; set; }
         /// <summary>
@@ -152,7 +187,8 @@ namespace ConverterUtilities {
         /// <summary>
         /// Gets or sets the Main Window for other projects to update various items
         /// </summary>
-        public static Window MainWindow { get; set; }
+        public static MetroWindow MainWindow { get; set; }
+        public static Button DownloadButton { get; set; }
         public static ListView ImageView {get; set; }
         public static ListView VideoView { get; set; }
 
@@ -230,23 +266,23 @@ namespace ConverterUtilities {
         #endregion
 
         #region Directory Info
-        private static string _workdingDir;
+        private static string _workingDir;
         /// <summary>
         /// Gets the working directory
         /// </summary>
-        public static string GetWorkdingDir() => _workdingDir ?? throw new Exception("No directory specified");
+        public static string GetWorkingDir() => _workingDir ?? throw new Exception("No directory specified");
         /// <summary>
-        /// Sets the working directry
+        /// Sets the working directory
         /// </summary>
         /// <param name="value">The directory to set it to</param>
-        public static void SetWorkdingDir(string value) => _workdingDir = value;
+        public static void SetWorkingDir(string value) => _workingDir = value;
         /// <summary>
         /// Gets the temp directory to store temp files
         /// </summary>
-        /// <param name="createTemp">Wethere or not we are creating a custom temp directory</param>
+        /// <param name="createTemp">Weather or not we are creating a custom temp directory</param>
         /// <param name="tempLocation">The name of the custom temp directory</param>
         /// <returns></returns>
-        public static string GetTempDir(bool createTemp, string tempLocation) => $"{_workdingDir}\\{(createTemp ? $"{tempLocation}" : "converter_temp")}";
+        public static string GetTempDir(bool createTemp, string tempLocation) => $"{_workingDir}\\{(createTemp ? $"{tempLocation}" : "converter_temp")}";
         #endregion
     }
 }

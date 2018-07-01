@@ -1,2 +1,2 @@
 ﻿// This is just a list of things that need to be done
-// Nothing
+// Todo refactor all code so it is up to standards

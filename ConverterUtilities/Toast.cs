@@ -27,7 +27,7 @@ namespace ConverterUtilities {
             }
         }
 
-        public static void Update(string currentVersion, string updatedVersion) => _notifier.ShowInformation($"There is an update. Your version: {currentVersion} Updated version: {updatedVersion}"); //This message shows when there is an update
+        public static void Update(string type, double currentVersion, double updatedVersion) => _notifier.ShowInformation($"There is an update for {type}. \nYour version is: {currentVersion} \nThe updated version is: {updatedVersion}"); //This message shows when there is an update
         public static void UpdateCheckFail() => _notifier.ShowWarning("Failed to check for update. Please try again."); //In case checking for the update fails
         public static void PreviewRelease() => _notifier.ShowInformation("This is a preview release, some things might not work. Please use this with caution and report any bugs."); //Beta release notice
         public static void ConvertFinished() => _notifier.ShowInformation("Finished Converting"); //Finished message
