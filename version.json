@@ -1,8 +1,8 @@
 {
-  "MainVersion":2.0,
-  "MainVersionUrl":"https://github.com/MrSquirrelyNet/SquirrelyConverter/releases/download/v2.0/Squirrelys_Converters_Image.DontDownload.zip",
   "ImageVersion":2.0,
-  "ImageVersionUrl":"https://github.com/MrSquirrelyNet/SquirrelyConverter/releases/download/v2.0/Squirrelys_Converters_Main.DontDownload.zip",
+  "ImageVersionUrl":"https://github.com/MrSquirrelyNet/SquirrelyConverter/releases/download/v2.0/Squirrelys_Converters_Image.DontDownload.zip",
+  "MainVersion":2.0,
+  "MainVersionUrl":"https://github.com/MrSquirrelyNet/SquirrelyConverter/releases/download/v2.0/Squirrelys_Converters_Main.DontDownload.zip",
   "VideoVersion":2.0,
   "VideoVersionUrl":"https://github.com/MrSquirrelyNet/SquirrelyConverter/releases/download/v2.0/Squirrelys_Converters_Video.DontDownload.zip"
 }
