@@ -10,7 +10,7 @@ Free and easy converters that anyone can use. Currently supports images and vide
 Coming Soon!
 
 ## News
-I am using 2.1 as an inbetween I want to get some more bugs removed before I start creating other converters. I decided against adding zip support.
+I am using 2.1 as an in-between I want to get some more bugs removed before I start creating other converters. I decided against adding zip support. I am also adding Localization to the mix so I can get some other languages involved here!
 
 ## Change Log
 The version scheme is Main.Feature.bug
@@ -32,18 +32,21 @@ The version scheme is Main.Feature.bug
 - V 2018.1b:A Total recode.
   - Added Image conversion
     - Can convert to:
-	  - WebP
+      - WebP
       - JPEG
       - PNG
   - Added about page
   - Cleaned code to look just better   
 
 ## ToDo
+- V2.1
+  - Bug squashing (so mean to those poor little things ;( )
+  - Localization!
 
 - V2.2
   - Add audio conversion
 
-- V2.3
+- V2.?
   - Add office conversion
     - Text
     - Spreadsheet
@@ -75,5 +78,4 @@ Copyright (C) 2018  James Ferguson<MrSquirrely.net>
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
