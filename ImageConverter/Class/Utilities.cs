@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading;
@@ -13,7 +14,7 @@ namespace ImageConverter.Class {
         public static List<string> Directories = new List<string>();
         public static ObservableCollection<NewFile> ImagesCollection = new ObservableCollection<NewFile>();
         public static ListView ImageListView;
-        public static ImageView ImageView;
+        public static MainView ImageView;
         private const string Queued = "Queued";
 
         public static void PopulateList(string[] droppedFiles) {
@@ -34,17 +35,25 @@ namespace ImageConverter.Class {
         }
 
         internal static void Convert(int selectedIndex) {
-            switch (selectedIndex) {
-                case 0:
-                    ConvertWebP();
-                    break;
-                case 1:
-                    ConvertPng();
-                    break;
-                case 2:
-                    ConvertJpeg();
-                    break;
+            if (DroppedFiles.Count < 1) {
+                Toast.NothingToConvert();
             }
+            else {
+                switch (selectedIndex) {
+                    case 0:
+                        ConvertWebP();
+                        break;
+                    case 1:
+                        ConvertPng();
+                        break;
+                    case 2:
+                        ConvertJpeg();
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+            
         }
 
         private static void StartConvertWebP() => Converter.ConvertWebP(Files);

@@ -37,10 +37,10 @@ namespace Mr_Squirrely_Converters.Views {
 
             #region Image
             //WebP
-            WebPLossess.IsChecked = Options.GetWebPLossless();
+            WebPLossless.IsChecked = Options.GetWebPLossless();
             WebPRemoveAlpha.IsChecked = Options.GetWebPRemoveAlpha();
             WebPEmulateJpeg.IsChecked = Options.GetWebPEmulateJpeg();
-            WebpQualtiy.Value = Options.GetWebPQuality();
+            WebpQuality.Value = Options.GetWebPQuality();
 
             //Jpeg
             JpegQuality.Value = Options.GetJpegQuality();
@@ -83,9 +83,9 @@ namespace Mr_Squirrely_Converters.Views {
 
             //Image
             //WebP
-            Options.SetWebPQuality(resetValues ? 80 : WebpQualtiy.Value);
+            Options.SetWebPQuality(resetValues ? 80 : WebpQuality.Value);
             Options.SetWebPEmulateJpeg(resetValues ? false : WebPEmulateJpeg.IsChecked.Value);
-            Options.SetWebPLossless(resetValues ? true : WebPLossess.IsChecked.Value);
+            Options.SetWebPLossless(resetValues ? true : WebPLossless.IsChecked.Value);
             Options.SetWebPRemoveAlpha(resetValues ? false : WebPRemoveAlpha.IsChecked.Value);
             //Jpeg
             Options.SetJpegQuality(resetValues ? 80 : JpegQuality.Value);
@@ -109,7 +109,7 @@ namespace Mr_Squirrely_Converters.Views {
 
         public void SetParent(SettingsWindow value) => _parentWindow = value;
 
-        private void PreviewTextInput(object sender, TextCompositionEventArgs e) {
+        private new void PreviewTextInput(object sender, TextCompositionEventArgs e) {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }

@@ -27,6 +27,7 @@ namespace ConverterUtilities {
             }
         }
 
+        public static void NothingToConvert() => _notifier.ShowWarning("There isn't anything to convert.");
         public static void Update(string type, double currentVersion, double updatedVersion) => _notifier.ShowInformation($"There is an update for {type}. \nYour version is: {currentVersion} \nThe updated version is: {updatedVersion}"); //This message shows when there is an update
         public static void UpdateCheckFail() => _notifier.ShowWarning("Failed to check for update. Please try again."); //In case checking for the update fails
         public static void PreviewRelease() => _notifier.ShowInformation("This is a preview release, some things might not work. Please use this with caution and report any bugs."); //Beta release notice
@@ -34,7 +35,7 @@ namespace ConverterUtilities {
         public static void AlreadyConverting() => _notifier.ShowWarning("Already Converting"); //Already converting message
         public static void SettingsSaved() => _notifier.ShowSuccess("Settings were saved!"); //Settings saved message
         public static void SettingsReset() => _notifier.ShowInformation("Settings reset, make sure you save them!"); //Reset message and a reminder to save them
-        public static void VideoMessage() => _notifier.ShowWarning("Video conversion can take a long time to finish. Currently progess isn't shown. It is not recommended that you convert multiple videos at once."); //Message for video and a warning not to convert multiple files
+        public static void VideoMessage() => _notifier.ShowWarning("Video conversion can take a long time to finish. Currently progress isn't shown. It is not recommended that you convert multiple videos at once."); //Message for video and a warning not to convert multiple files
         #endregion
 
         public static void Dispose() => _notifier.Dispose();

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading;
@@ -12,7 +13,7 @@ namespace VideoConverter.Class {
         private static readonly List<string> DirectoriesList = new List<string>();
         public static ObservableCollection<NewFile> VideosCollection = new ObservableCollection<NewFile>();
         public static ListView VideoListView;
-        public static VideoView VideoView;
+        public static MainView VideoView;
         private const string Queued = "Queued";
 
         public static void PopulateList(string[] droppedFiles) {
@@ -32,12 +33,14 @@ namespace VideoConverter.Class {
 
         internal static void Convert(int selectedIndex) {
             switch (selectedIndex) {
-                    case 0:
-                        ConvertWebM();
-                        break;
-                    case 1:
-                        ConvertMp4();
-                        break;
+                case 0:
+                    ConvertWebM();
+                    break;
+                case 1:
+                    ConvertMp4();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 

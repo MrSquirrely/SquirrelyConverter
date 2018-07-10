@@ -117,16 +117,136 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ReightWindowGithubToolTip" xml:space="preserve">
-    <value>Report Bugs and Request Features</value>
+  <data name="Close" xml:space="preserve">
+    <value>Schließen</value>
   </data>
-  <data name="ReightWindowSettingsToolTip" xml:space="preserve">
-    <value>Settings</value>
+  <data name="ConvertButton" xml:space="preserve">
+    <value>Konvertieren</value>
   </data>
-  <data name="ReightWindowUpdateToolTip" xml:space="preserve">
-    <value>Check for updates</value>
+  <data name="Converted" xml:space="preserve">
+    <value>Umgewandelt</value>
+  </data>
+  <data name="ImageHeader" xml:space="preserve">
+    <value>Bildkonverter</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Ort</value>
+  </data>
+  <data name="Maximize" xml:space="preserve">
+    <value>Maximieren</value>
+  </data>
+  <data name="MenuClear" xml:space="preserve">
+    <value>klar</value>
+  </data>
+  <data name="Minimize" xml:space="preserve">
+    <value>Minimieren</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Restore" xml:space="preserve">
+    <value>Wiederherstellen</value>
   </data>
   <data name="RightWindowDownloadToolTip" xml:space="preserve">
-    <value>There are updates. Click here to go to the download page.</value>
+    <value>Es gibt Updates. Klicken Sie hier, um zur Download-Seite zu gelangen.</value>
+  </data>
+  <data name="RightWindowGithubToolTip" xml:space="preserve">
+    <value>Fehler melden und Funktionen anfordern</value>
+  </data>
+  <data name="RightWindowSettingsToolTip" xml:space="preserve">
+    <value>die Einstellungen</value>
+  </data>
+  <data name="RightWindowUpdateToolTip" xml:space="preserve">
+    <value>Auf Updates prüfen</value>
+  </data>
+  <data name="SettingsCancel" xml:space="preserve">
+    <value>Stornieren</value>
+  </data>
+  <data name="SettingsCreatTemp" xml:space="preserve">
+    <value>Sicherungs-Dateien</value>
+  </data>
+  <data name="SettingsDeleteTemp" xml:space="preserve">
+    <value>Löschen Sie die Sicherung nach der Konvertierung</value>
+  </data>
+  <data name="SettingsImageHeader" xml:space="preserve">
+    <value>Bilder</value>
+  </data>
+  <data name="SettingsJpegQualityLabel" xml:space="preserve">
+    <value>Qualität:</value>
+  </data>
+  <data name="SettingsPngLossless" xml:space="preserve">
+    <value>Verlustfrei</value>
+  </data>
+  <data name="SettingsPngQualityLabel" xml:space="preserve">
+    <value>Qualität:</value>
+  </data>
+  <data name="SettingsPngRemoveAlpha" xml:space="preserve">
+    <value>Entferne Alpha</value>
+  </data>
+  <data name="SettingsReset" xml:space="preserve">
+    <value>Zurücksetzen</value>
+  </data>
+  <data name="SettingsSave" xml:space="preserve">
+    <value>sparen</value>
+  </data>
+  <data name="SettingsVideoHeader" xml:space="preserve">
+    <value>Videos</value>
+  </data>
+  <data name="SettingsVideoHeight" xml:space="preserve">
+    <value>Videohöhe:</value>
+  </data>
+  <data name="SettingsVideoSize" xml:space="preserve">
+    <value>Ändern Sie die Videoweite und die Videohöhe des Videos</value>
+  </data>
+  <data name="SettingsVideoWidth" xml:space="preserve">
+    <value>Videobreite:</value>
+  </data>
+  <data name="SettingsWebPEmulateJpeg" xml:space="preserve">
+    <value>JPEG-Größe emulieren</value>
+  </data>
+  <data name="SettingsWebPLossless" xml:space="preserve">
+    <value>Verlustfrei</value>
+  </data>
+  <data name="SettingsWebPQualityLabel" xml:space="preserve">
+    <value>Qualität:</value>
+  </data>
+  <data name="SettingsWebPRemoveAlpha" xml:space="preserve">
+    <value>Entferne Alpha</value>
+  </data>
+  <data name="ToastAlreadyConverting" xml:space="preserve">
+    <value>Bereits konvertieren</value>
+  </data>
+  <data name="ToastConvertFinished" xml:space="preserve">
+    <value>Abgeschlossenes Konvertieren</value>
+  </data>
+  <data name="ToastPreviewRelease" xml:space="preserve">
+    <value>Dies ist eine Vorschauversion, einige Dinge könnten nicht funktionieren. Bitte verwenden Sie dies mit Vorsicht und melden Sie Fehler.</value>
+  </data>
+  <data name="ToastSettingsReset" xml:space="preserve">
+    <value>Einstellungen zurückgesetzt, stellen Sie sicher, dass Sie sie speichern!</value>
+  </data>
+  <data name="ToastSettingsSaved" xml:space="preserve">
+    <value>Einstellungen wurden gespeichert!</value>
+  </data>
+  <data name="ToastUpdateCheckFail" xml:space="preserve">
+    <value>Fehler beim Überprüfen auf Aktualisierung. Bitte versuche es erneut.</value>
+  </data>
+  <data name="ToastUpdatePart1" xml:space="preserve">
+    <value>Es gibt ein Update für</value>
+  </data>
+  <data name="ToastUpdatePart2" xml:space="preserve">
+    <value>Ihre Version ist:</value>
+  </data>
+  <data name="ToastUpdatePart3" xml:space="preserve">
+    <value>Die aktualisierte Version ist:</value>
+  </data>
+  <data name="ToastVideoMessage" xml:space="preserve">
+    <value>Die Videokonvertierung kann lange dauern. Momentan wird der Fortschritt nicht angezeigt. Es wird nicht empfohlen, mehrere Videos gleichzeitig zu konvertieren.</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Art</value>
+  </data>
+  <data name="VideoHeader" xml:space="preserve">
+    <value>Video Konverter</value>
   </data>
 </root>

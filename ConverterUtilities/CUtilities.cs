@@ -1,17 +1,17 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Threading;
 using static ConverterUtilities.Enums;
 using System.Net;
 using System.Diagnostics;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using ExtraTools;
+using System.Windows.Media;
 using Newtonsoft.Json;
 using Exception = System.Exception;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
+using MaterialDesignThemes.Wpf;
 
 namespace ConverterUtilities {
     /// <summary>
@@ -33,26 +33,28 @@ namespace ConverterUtilities {
         /// </summary>
         public static void OpenGithub() => Process.Start(Github);
 
-        private static readonly string Download = "https://github.com/MrSquirrelyNet/SquirrelyConverter/releases";
-        public static void OpenDownload() => Process.Start(Download);
+        private const string Download = "https://github.com/MrSquirrelyNet/SquirrelyConverter/releases";
+        private static void OpenDownload(object sender, RoutedEventArgs e) => Process.Start(Download);
         #endregion
 
         #region Versions
         private const string VersionUrl = "https://raw.githubusercontent.com/MrSquirrelyNet/SquirrelyConverter/master/version.json";
         private const string VersionName = "version.json";
         private const string CurrentName = "current.json";
-        public static string MainUrl { get; set; }
-        public static string ImageUrl { get; set; }
-        public static string VideoUrl {get; set; }
+        public static string MainUrl { get; private set; }
+        public static string ImageUrl { get; private set; }
+        public static string VideoUrl {get; private set; }
         public const string MainName = "Squirrelys_Converters_Main.DontDownload.zip";
         public const string ImageName = "Squirrelys_Converters_Image.DontDownload.zip";
         public const string VideoName = "Squirrelys_Converters_Video.DontDownload.zip";
-        public const string DefaultInstall = "C:\\Program Files\\MrSquirrelyNet\\SquirrelyConverters";
+        public static readonly string DefaultInstall = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\MrSquirrelyNet\\SquirrelyConverters";
 
         /// <summary>
         /// This is just the WebClient used to download things
         /// </summary>
         private static WebClient _webClient;
+
+        public static void StartWebClient() => _webClient = new WebClient();
 
         private static Update _currentVersion;
         private static Update _updateVersion;
@@ -73,17 +75,27 @@ namespace ConverterUtilities {
             _currentVersion = (Update) jsonSerializer.Deserialize(currentReader, typeof(Update));
             _updateVersion = (Update) jsonSerializer.Deserialize(updateReader, typeof(Update));
 
-            MainUrl = _updateVersion.MainVersionURL;
-            ImageUrl = _updateVersion.ImageVersionURL;
-            VideoUrl = _updateVersion.VideoVersionURL;
+            MainUrl = _updateVersion.MainVersionUrl;
+            ImageUrl = _updateVersion.ImageVersionUrl;
+            VideoUrl = _updateVersion.VideoVersionUrl;
         }
 
-        public static void GetMainVersion() => _webClient.DownloadFile(_updateVersion.MainVersionURL, MainName);
+        public static void GetMainVersion() => _webClient.DownloadFile(_updateVersion.MainVersionUrl, MainName);
         public static void DeleteMainVersion() => File.Delete(MainName);
-        public static void GetImageVersion() => _webClient.DownloadFile(_updateVersion.ImageVersionURL, MainName);
+        public static void GetImageVersion() => _webClient.DownloadFile(_updateVersion.ImageVersionUrl, MainName);
         public static void DeleteImageVersion() => File.Delete(ImageName);
-        public static void GetVideoVersion() => _webClient.DownloadFile(_updateVersion.VideoVersionURL, MainName);
+        public static void GetVideoVersion() => _webClient.DownloadFile(_updateVersion.VideoVersionUrl, MainName);
         public static void DeleteVideoVersion() => File.Delete(VideoName);
+
+        private static Button ButtonDownload() {
+            Button button = new Button() {
+                Name = "RightWindowDownload",
+                ToolTip = "There are updates. Click here to go to download page",
+                Content = new PackIcon() { Kind = PackIconKind.Download, Foreground = Brushes.LimeGreen }
+            };
+            button.Click += OpenDownload;
+            return button;
+        }
 
         /// <summary>
         /// Checks if you have the current version...
@@ -94,7 +106,9 @@ namespace ConverterUtilities {
             try {
                 if (_currentVersion.MainVersion < _updateVersion.MainVersion) {
                     Toast.Update("Main Program", _currentVersion.MainVersion, _updateVersion.MainVersion);
-                    DownloadButton.IsEnabled = true;
+                    MainWindow.RightWindowCommands.Items.Add(ButtonDownload());
+                    //DownloadButton.IsEnabled = true;
+                    //DownloadButton.Visibility = Visibility.Visible;
                     //switch (UpdateResult("Main Program", _versionUpdate.MainVersion, _updateUpdate.MainVersion)) {
                     //    case DialogBox.ResultEnum.LeftButtonClicked:
                     //        Console.WriteLine("Left Clicked");
@@ -107,10 +121,8 @@ namespace ConverterUtilities {
                     //}
                 }
 
-                if (_imageLoaded) {
-                    if (_currentVersion.ImageVersion < _updateVersion.ImageVersion) {
+                if (_imageLoaded &&_currentVersion.ImageVersion < _updateVersion.ImageVersion ) {
                         Toast.Update("Image Converter", _currentVersion.ImageVersion, _updateVersion.ImageVersion);
-                        DownloadButton.IsEnabled = true;
                         //switch (UpdateResult("Iamge Converter", _versionUpdate.ImageVersion, _updateUpdate.ImageVersion)) {
                         //    case DialogBox.ResultEnum.LeftButtonClicked:
                         //        Console.WriteLine("Left Clicked");
@@ -121,14 +133,10 @@ namespace ConverterUtilities {
                         //    default:
                         //        throw new ArgumentOutOfRangeException();
                         //}
-                    }
                 }
 
-                if (_videoLoaded) {
-                    //!(_updateUpdate.VideoVersion >= _versionUpdate.VideoVersion)
-                    if (_currentVersion.VideoVersion < _updateVersion.VideoVersion) {
+                if (_videoLoaded && _currentVersion.VideoVersion < _updateVersion.VideoVersion) {
                         Toast.Update("Video Converter", _currentVersion.VideoVersion, _updateVersion.VideoVersion);
-                        DownloadButton.IsEnabled = true;
                         //switch (UpdateResult("Video Converter", _versionUpdate.VideoVersion, _updateUpdate.VideoVersion)) {
                         //    case DialogBox.ResultEnum.LeftButtonClicked:
                         //        Console.WriteLine("Left Clicked");
@@ -139,7 +147,6 @@ namespace ConverterUtilities {
                         //    default:
                         //        throw new ArgumentOutOfRangeException();
                         //}
-                    }
                 }
             }
             catch (Exception ex) {
@@ -188,21 +195,10 @@ namespace ConverterUtilities {
         /// Gets or sets the Main Window for other projects to update various items
         /// </summary>
         public static MetroWindow MainWindow { get; set; }
-        public static Button DownloadButton { get; set; }
-        public static ListView ImageView {get; set; }
-        public static ListView VideoView { get; set; }
-
-        public static void UpdateImageView() => ImageView.Items.Refresh();
-        public static void UpdateVideoView() => VideoView.Items.Refresh();
         /// <summary>
         /// Gets or sets the dispatcher
         /// </summary>
         public static Dispatcher Dispatcher { get; set; }
-        /// <summary>
-        /// Updates the title of the Main Window
-        /// </summary>
-        /// <param name="title">Title to update window to</param>
-        public static void UpdateTitle(string title) => MainWindow.Title = title;
         /// <summary>
         /// Disposes of things during shutdown
         /// </summary>
@@ -283,6 +279,8 @@ namespace ConverterUtilities {
         /// <param name="tempLocation">The name of the custom temp directory</param>
         /// <returns></returns>
         public static string GetTempDir(bool createTemp, string tempLocation) => $"{_workingDir}\\{(createTemp ? $"{tempLocation}" : "converter_temp")}";
+        public static ObservableCollection<Object> Views = new ObservableCollection<Object>();
+        public static void AddView(Object view) => Views.Add(view);
         #endregion
     }
 }

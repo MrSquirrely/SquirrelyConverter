@@ -8,6 +8,7 @@
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz" 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
+        xmlns:properties="clr-namespace:ConverterUtilities.Properties;assembly=ConverterUtilities"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
@@ -18,27 +19,31 @@
         Title="Mr. Squirrely's Image Converter" 
         Height="720" Width="1280" MinWidth="1000" MinHeight="600"
         Closed="MetroWindow_Closed" Loaded="MainWindow_OnLoaded">
+    <metro:MetroWindow.WindowButtonCommands>
+        <metro:WindowButtonCommands
+            Minimize="{x:Static properties:Resources.Minimize}"
+            Maximize="{x:Static properties:Resources.Maximize}"
+            Restore="{x:Static properties:Resources.Restore}"
+            Close="{x:Static properties:Resources.Close}"/>
+    </metro:MetroWindow.WindowButtonCommands>
     <metro:MetroWindow.RightWindowCommands>
         <metro:WindowCommands>
-            <Button Name="RightWindowSettings" ToolTip="Settings" Click="RightWindowSettings_Click">
+            <Button Name="RightWindowSettings" ToolTip="{x:Static properties:Resources.RightWindowSettingsToolTip}" Click="RightWindowSettings_Click">
                 <materialDesign:PackIcon Kind="Settings" />
             </Button>
-            <Button Name="RightWindowGithub" ToolTip="Report Bugs and Request Features" Click="RightWindowGithub_OnClick">
+            <Button Name="RightWindowGithub" ToolTip="{x:Static properties:Resources.RightWindowGithubToolTip}" Click="RightWindowGithub_OnClick">
                 <materialDesign:PackIcon Kind="Bug" />
             </Button>
-            <Button Name="RightWindowUpdate" ToolTip="Check for updates" Click="RightWindowUpdate_OnClick">
+            <Button Name="RightWindowUpdate" ToolTip="{x:Static properties:Resources.RightWindowUpdateToolTip}" Click="RightWindowUpdate_OnClick">
                 <materialDesign:PackIcon Kind="ArrowDownBold"/>
             </Button>
-            <Button Name="RightWindowDownload" ToolTip="There are updates. Click here to go to download page." Click="RightWindowDownload_OnClick" IsEnabled="False">
+            <!--<Button Name="RightWindowDownload" ToolTip="There are updates. Click here to go to download page." Click="RightWindowDownload_OnClick" Visibility="Hidden" IsEnabled="False">
                 <materialDesign:PackIcon Kind="Download"/>
-            </Button>
+            </Button>-->
         </metro:WindowCommands>
     </metro:MetroWindow.RightWindowCommands>
     <Grid>
-        <dragablz:TabablzControl x:Name="ConverterTabs" SelectionChanged="ConverterTabs_OnSelectionChanged">
-            <dragablz:TabablzControl.InterTabController>
-                <dragablz:InterTabController />
-            </dragablz:TabablzControl.InterTabController>
-        </dragablz:TabablzControl>
+        <dragablz:TabablzControl x:Name="ConverterTabs" SelectionChanged="ConverterTabs_OnSelectionChanged"/>
     </Grid>
 </metro:MetroWindow>
+

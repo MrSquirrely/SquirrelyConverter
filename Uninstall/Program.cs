@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Mime;
 
 namespace Uninstall {
-    class Program {
-        static void Main(string[] args) {
+    internal static class Program {
+        internal static void Main() {
             List<string> files = new List<string>() {
                 "ControlzEx.dll",
                 "ConverterUtilities.dll",
@@ -39,7 +37,7 @@ namespace Uninstall {
                 "VideoConverter.dll",
                 "VideoConverter.dll.config"
             };
-
+            
             foreach (string file in files) {
                 File.Delete($"{Directory.GetCurrentDirectory()}\\{file}");
                 Console.WriteLine($"Deleted: {file}");
@@ -47,6 +45,13 @@ namespace Uninstall {
 
             string desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             File.Delete($"{desktop}\\Squirrely Converters.lnk");
+            
+            ProcessStartInfo startInfo = new ProcessStartInfo("cmd.exe", "/C ping 1.1.1.1 -n 1 -w 1000 > Nul & Del " + $"{Directory.GetCurrentDirectory()}\\Uninstall.exe");
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.CreateNoWindow = true;
+            Process.Start(startInfo);
+            
+            Environment.Exit(0);
 #if (DEBUG)
             Console.ReadKey();
 #endif
