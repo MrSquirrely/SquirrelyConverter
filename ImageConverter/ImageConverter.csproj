@@ -41,8 +41,9 @@
       <HintPath>..\packages\Dragablz.0.0.3.203\lib\net45\Dragablz.dll</HintPath>
     </Reference>
     <Reference Include="Magick.NET-Q8-AnyCPU, Version=7.5.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
-      <HintPath>..\packages\Magick.NET-Q8-AnyCPU.7.5.0\lib\net40\Magick.NET-Q8-AnyCPU.dll</HintPath>
+      <HintPath>..\packages\Magick.NET-Q8-AnyCPU.7.5.0.1\lib\net40\Magick.NET-Q8-AnyCPU.dll</HintPath>
     </Reference>
+    <Reference Include="MahApps.Metro, Version=1.6.5.1, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -66,16 +67,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class\Converter.cs" />
-    <Compile Include="Class\Ident.cs" />
+    <Compile Include="Class\Converters\JpegConverter.cs" />
+    <Compile Include="Class\Converters\PngConverter.cs" />
     <Compile Include="Class\Utilities.cs" />
+    <Compile Include="View\SettingView.xaml.cs">
+      <DependentUpon>SettingView.xaml</DependentUpon>
+    </Compile>
     <Page Include="View\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Class\Converters\WebPConverter.cs" />
+    <Compile Include="Class\Converters\WebPGifConverter.cs" />
     <Compile Include="View\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\SettingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

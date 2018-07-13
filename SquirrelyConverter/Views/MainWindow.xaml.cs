@@ -10,13 +10,15 @@ using Mr_Squirrely_Converters.Class;
 
 namespace Mr_Squirrely_Converters.Views {
     public partial class MainWindow {
+
         private bool _firstViewed = true;
+        private SettingsWindow _settingsWindow;
 
         public MainWindow() {
             //There is german translation in here but it will not be included in the release,
             //This is because I used Google translate to translate them. That is not the way you should do it
             //and I only did it that way to test responsiveness and how to do localization
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("de-DE"); //This is here for testing only, don't use this.
+            //Thread.CurrentThread.CurrentUICulture = new CultureInfo("de-DE"); //This is here for testing only, don't use this.
             InitializeComponent();
             Logger.StartLogger();
             Logger.LogDebug("Logger Started");
@@ -36,24 +38,13 @@ namespace Mr_Squirrely_Converters.Views {
             CUtilities.GetVersionJson();
         }
 
-        private SettingsWindow _settingsWindow;
-        private SettingsPage _settingsPage;
+        
 
         private void LoadViews() {
             CUtilities.IsVideoLoaded = false;
             CUtilities.IsImageLoaded = false;
+            Utilities.LoadAssemblies();
             Utilities.AddViews();
-            //if (File.Exists($"{CUtilities.GetWorkingDir()}\\ImageConverter.dll")) {
-            //    Utilities.AddImageTab();
-            //    Options.StartImageSettings();
-            //    CUtilities.IsImageLoaded = true;
-            //}
-            
-            //if (File.Exists($"{CUtilities.GetWorkingDir()}\\VideoConverter.dll")) {
-            //    Utilities.AddVideoTab();
-            //    Options.StartVideoSettings();
-            //    CUtilities.IsVideoLoaded = true;
-            //}
         }
 
         private void RightWindowSettings_Click(object sender, RoutedEventArgs e) {
@@ -62,9 +53,14 @@ namespace Mr_Squirrely_Converters.Views {
                 Radius = 5
             };
             Effect = myBlur;
-            _settingsPage = new SettingsPage();
-            _settingsWindow = new SettingsWindow { Content = _settingsPage, Owner = this};
-            _settingsPage.SetParent(_settingsWindow);
+            _settingsWindow = new SettingsWindow();
+
+            CUtilities.SettingsWindow = _settingsWindow;
+            Utilities.SettingsTabs = _settingsWindow.SettingsTab;
+            Utilities.AddSettingViews();
+
+            _settingsWindow.Owner = this;
+            _settingsWindow.ParentWindow = this;
             _settingsWindow.Show();
         }
 
@@ -87,7 +83,7 @@ namespace Mr_Squirrely_Converters.Views {
             LoadViews();
             Toast.PreviewRelease();
             for (int i = 0; i < 2; i++) {
-            ConverterTabs.SelectedIndex = 0;
+                ConverterTabs.SelectedIndex = 0;
             }
         }
         

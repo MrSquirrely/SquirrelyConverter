@@ -9,21 +9,22 @@ using ConverterUtilities.Properties;
 using Dragablz;
 using Humanizer;
 
-//using ImageConverter.View;
-//using VideoConverter.View;
-
 namespace Mr_Squirrely_Converters.Class {
     internal static class Utilities {
 
-        private static int _tabs;
+        private static int _converterTabs;
+        private static int _settingsTabs;
         public static TabablzControl ConverterTabs { get; set; }
+        public static TabablzControl SettingsTabs { get; set; }
         private static readonly List<Assembly> Assemblies = new List<Assembly>();
 
-        public static void AddViews() {
-
+        public static void LoadAssemblies() {
             foreach (string assembly in Directory.GetFiles($"{Directory.GetCurrentDirectory()}\\Converters", "*.dll")) {
                 Assemblies.Add(Assembly.LoadFile(assembly));
             }
+        }
+
+        public static void AddViews() {
 
             foreach (Assembly assembly in Assemblies) {
                 string name = assembly.GetName().Name;
@@ -31,62 +32,38 @@ namespace Mr_Squirrely_Converters.Class {
                 object activator = Activator.CreateInstance(startupType);
                 AddTab(activator, name);
             }
+        }
 
+        public static void AddSettingViews() {
+
+            foreach (Assembly assembly in Assemblies) {
+                string name = assembly.GetName().Name;
+                Type settingsType = assembly.GetType($"{name}.View.SettingView");
+                object settingsActivator = Activator.CreateInstance(settingsType);
+                AddSettingsTab(settingsActivator, name);
+            }
         }
 
         private static void AddTab(object view, string header) {
-            _tabs = ConverterTabs.Items.Count;
+            _converterTabs = ConverterTabs.Items.Count;
 
-            Logger.LogDebug("Adding View");
+            Logger.LogDebug("Adding View To Converter Tabs");
             TabItem tab = new TabItem() {
                 Content = view,
                 Header = header.Humanize()
             };
-            ConverterTabs.Items.Insert(_tabs, tab);
+            ConverterTabs.Items.Insert(_converterTabs, tab);
         }
 
-        public static void AddImageTab() {
-            try {
-                Logger.LogDebug("Adding Image Tab");
-                _tabs = ConverterTabs.Items.Count;
+        private static void AddSettingsTab(object view, string header) {
+            _settingsTabs = SettingsTabs.Items.Count;
 
-                const string nameOfNamespace = "ImageConverter";
-
-                Assembly assembly = Assembly.LoadFrom($"{nameOfNamespace}.dll");
-                Type imageViewType = assembly.GetType($"{nameOfNamespace}.View.MainView");
-                object instanceOfImageViewType = Activator.CreateInstance(imageViewType);
-
-                TabItem imageTab = new TabItem {
-                    Content = instanceOfImageViewType,
-                    Header = Resources.ImageHeader
-                };
-                ConverterTabs.Items.Insert(_tabs, imageTab);
-            }
-            catch (Exception ex) {
-                Logger.LogError(ex);
-            }
-            
-        }
-
-        public static void AddVideoTab() {
-            try {
-                Logger.LogDebug("Adding Video Tab");
-                _tabs = ConverterTabs.Items.Count;
-
-                Assembly assembly = Assembly.LoadFrom("VideoConverter.dll");
-                Type videoViewType = assembly.GetType("VideoConverter.View.VideoView");
-                object typeOfVideoView = Activator.CreateInstance(videoViewType);
-                
-                TabItem videoTab = new TabItem {
-                    Content = typeOfVideoView,
-                    Header = Resources.VideoHeader
-                };
-                ConverterTabs.Items.Insert(_tabs, videoTab);
-            }
-            catch (Exception ex) {
-                Logger.LogError(ex);
-            }
-            
+            Logger.LogDebug("Adding View To Settings Tabs");
+            TabItem tab = new TabItem() {
+                Content = view,
+                Header = header.Humanize()
+            };
+            SettingsTabs.Items.Insert(_settingsTabs, tab);
         }
     }
 }

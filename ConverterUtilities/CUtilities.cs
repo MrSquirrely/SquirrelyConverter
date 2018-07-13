@@ -5,8 +5,10 @@ using System.Windows.Threading;
 using static ConverterUtilities.Enums;
 using System.Net;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using Newtonsoft.Json;
 using Exception = System.Exception;
@@ -21,6 +23,10 @@ namespace ConverterUtilities {
     /// Todo comment everything
     /// </summary>
     public static class CUtilities {
+
+        public static int Threads;
+
+        
 
         #region Open Webpages
         /// <summary>
@@ -195,6 +201,7 @@ namespace ConverterUtilities {
         /// Gets or sets the Main Window for other projects to update various items
         /// </summary>
         public static MetroWindow MainWindow { get; set; }
+        public static Window SettingsWindow { get; set; }
         /// <summary>
         /// Gets or sets the dispatcher
         /// </summary>
@@ -219,6 +226,9 @@ namespace ConverterUtilities {
                 Logger.LogError(ex);
             }
 
+            if (SettingsWindow.IsLoaded) {
+                SettingsWindow.Close();
+            }
         }
         #endregion
 

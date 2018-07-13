@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Threading;
 using System.Windows.Controls;
 using ConverterUtilities;
+using ImageConverter.Class.Converters;
 using ImageConverter.View;
 
 namespace ImageConverter.Class {
@@ -37,8 +37,7 @@ namespace ImageConverter.Class {
         internal static void Convert(int selectedIndex) {
             if (DroppedFiles.Count < 1) {
                 Toast.NothingToConvert();
-            }
-            else {
+            } else {
                 switch (selectedIndex) {
                     case 0:
                         ConvertWebP();
@@ -53,58 +52,98 @@ namespace ImageConverter.Class {
                         throw new ArgumentOutOfRangeException();
                 }
             }
-            
+
         }
 
-        private static void StartConvertWebP() => Converter.ConvertWebP(Files);
-        private static void StartConvertPng() => Converter.ConvertPng(Files);
-        private static void StartConvertJpeg() => Converter.ConvertJpeg(Files);
+        //This is old code that will be removed in the final update
+        //Todo: Remove code
+        //private static void StartConvertWebP() => Converter.ConvertWebP(Files);
+        //private static void StartConvertPng() => Converter.ConvertPng(Files);
+        //private static void StartConvertJpeg() => Converter.ConvertJpeg(Files);
 
         private static void ConvertWebP() {
             if (!NullCheck()) {
-                CUtilities.Converting = true;
-                ThreadStart starter = StartConvertWebP;
-                starter += () => {
-                    CUtilities.Converting  = false;
-                    Toast.ConvertFinished();
-                };
+                //CUtilities.Converting = true;
+                //ThreadStart starter = StartConvertWebP;
+                //starter += () => {
+                //    CUtilities.Converting  = false;
+                //    Toast.ConvertFinished();
+                //};
 
-                Thread threadEncode = new Thread(starter);
-                threadEncode.SetApartmentState(ApartmentState.STA);
-                threadEncode.IsBackground = true;
-                threadEncode.Start();
+                //Thread threadEncode = new Thread(starter);
+                //threadEncode.SetApartmentState(ApartmentState.STA);
+                //threadEncode.IsBackground = true;
+                //threadEncode.Start();
+
+                CUtilities.Converting = true;
+                foreach (string file in Files) {
+                    if (file != null) {
+                        if (CUtilities.GetFileType(file) == ".webp") {
+                            continue;
+                        }
+                        if (CUtilities.GetFileType(file) != ".gif") {
+                            WebPConverter converter = new WebPConverter() { Image = file };
+                            CUtilities.Threads++;
+                            converter.StartConvert();
+                        } else {
+                            WebPGifConverter gifConverter = new WebPGifConverter() { Image = file };
+                            CUtilities.Threads++;
+                            gifConverter.StartConvert();
+                        }
+                    }
+                }
             }
         }
 
         private static void ConvertPng() {
             if (!NullCheck()) {
-                CUtilities.Converting  = true;
-                ThreadStart starter = StartConvertPng;
-                starter += () => {
-                    CUtilities.Converting  = false;
-                    Toast.ConvertFinished();
-                };
+                //CUtilities.Converting = true;
+                //ThreadStart starter = StartConvertPng;
+                //starter += () => {
+                //    CUtilities.Converting = false;
+                //    Toast.ConvertFinished();
+                //};
 
-                Thread threadEncode = new Thread(starter);
-                threadEncode.SetApartmentState(ApartmentState.STA);
-                threadEncode.IsBackground = true;
-                threadEncode.Start();
+                //Thread threadEncode = new Thread(starter);
+                //threadEncode.SetApartmentState(ApartmentState.STA);
+                //threadEncode.IsBackground = true;
+                //threadEncode.Start();
+
+                CUtilities.Converting = true;
+                foreach (string file in Files) {
+                    if (CUtilities.GetFileType(file) == ".gif" || CUtilities.GetFileType(file) == ".png") {
+                        continue;
+                    }
+                    PngConverter converter = new PngConverter(){ Image = file};
+                    CUtilities.Threads++;
+                    converter.StartConvert();
+                }
             }
         }
 
         private static void ConvertJpeg() {
             if (!NullCheck()) {
-                CUtilities.Converting  = true;
-                ThreadStart starter = StartConvertJpeg;
-                starter += () => {
-                    CUtilities.Converting  = false;
-                    Toast.ConvertFinished();
-                };
+                //CUtilities.Converting = true;
+                //ThreadStart starter = StartConvertJpeg;
+                //starter += () => {
+                //    CUtilities.Converting = false;
+                //    Toast.ConvertFinished();
+                //};
 
-                Thread threadEncode = new Thread(starter);
-                threadEncode.SetApartmentState(ApartmentState.STA);
-                threadEncode.IsBackground = true;
-                threadEncode.Start();
+                //Thread threadEncode = new Thread(starter);
+                //threadEncode.SetApartmentState(ApartmentState.STA);
+                //threadEncode.IsBackground = true;
+                //threadEncode.Start();
+
+                CUtilities.Converting = true;
+                foreach (string file in Files) {
+                    if (CUtilities.GetFileType(file) == ".gif" || CUtilities.GetFileType(file) == ".jpg" || CUtilities.GetFileType(file) == ".jpeg") {
+                        continue;
+                    }
+                    JpegConverter converter = new JpegConverter(){ Image = file};
+                    CUtilities.Threads++;
+                    converter.StartConvert();
+                }
             }
         }
 
@@ -122,7 +161,7 @@ namespace ImageConverter.Class {
             string location = CUtilities.GetFileLocation(file);
             FileAttributes attributes = File.GetAttributes(file);
             if (Enums.ImageFormats.Contains(type)) {
-                ImagesCollection.Add(new NewFile { Name = name, Type = type, Converted = Queued, Location = location});
+                ImagesCollection.Add(new NewFile { Name = name, Type = type, Converted = Queued, Location = location });
                 Files.Add(file);
             }
             if (scanDirectory) {
