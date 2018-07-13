@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Threading;
@@ -24,10 +25,8 @@ namespace ConverterUtilities {
     /// </summary>
     public static class CUtilities {
 
-        public static int Threads;
-
         
-
+        
         #region Open Webpages
         /// <summary>
         /// The url for the issues page
@@ -44,6 +43,7 @@ namespace ConverterUtilities {
         #endregion
 
         #region Versions
+        
         private const string VersionUrl = "https://raw.githubusercontent.com/MrSquirrelyNet/SquirrelyConverter/master/version.json";
         private const string VersionName = "version.json";
         private const string CurrentName = "current.json";
@@ -73,8 +73,8 @@ namespace ConverterUtilities {
             _webClient = new WebClient();
             _webClient.DownloadFile(VersionUrl, VersionName);
 
-            StreamReader updateReader = new StreamReader($"{GetWorkingDir()}\\{VersionName}");
-            StreamReader currentReader = new StreamReader($"{GetWorkingDir()}\\{CurrentName}");
+            StreamReader updateReader = new StreamReader($"{WorkingDir}\\{VersionName}");
+            StreamReader currentReader = new StreamReader($"{WorkingDir}\\{CurrentName}");
 
             JsonSerializer jsonSerializer = new JsonSerializer();
 
@@ -178,29 +178,24 @@ namespace ConverterUtilities {
 
         #region Window Things
         /// <summary>
+        /// Gets or sets the converters
+        /// </summary>
+        public static List<ConverterInfo> Converters { get; set; }
+        /// <summary>
+        /// Gets or sets the number of threads
+        /// </summary>
+        public static int Threads { get; set; }
+        /// <summary>
         /// Gets or sets weather we are currently converting something
         /// </summary>
         public static bool Converting { get; set; }
         /// <summary>
-        /// Is the image view loaded
-        /// </summary>
-        private static bool _imageLoaded;
-        /// <summary>
-        /// Is the video view loaded
-        /// </summary>
-        private static bool _videoLoaded;
-        /// <summary>
-        /// Returns if the image view is loaded or not
-        /// </summary>
-        public static bool IsImageLoaded { get => _imageLoaded; set => _imageLoaded = value; }
-        /// <summary>
-        /// Returns if the video view is loaded or not
-        /// </summary>
-        public static bool IsVideoLoaded { get => _videoLoaded; set => _videoLoaded = value; }
-        /// <summary>
-        /// Gets or sets the Main Window for other projects to update various items
+        /// Gets or sets the Main Window
         /// </summary>
         public static MetroWindow MainWindow { get; set; }
+        /// <summary>
+        /// Gets or sets the settings window
+        /// </summary>
         public static Window SettingsWindow { get; set; }
         /// <summary>
         /// Gets or sets the dispatcher
@@ -272,25 +267,17 @@ namespace ConverterUtilities {
         #endregion
 
         #region Directory Info
-        private static string _workingDir;
         /// <summary>
-        /// Gets the working directory
+        /// Gets or sets the working directory
         /// </summary>
-        public static string GetWorkingDir() => _workingDir ?? throw new Exception("No directory specified");
-        /// <summary>
-        /// Sets the working directory
-        /// </summary>
-        /// <param name="value">The directory to set it to</param>
-        public static void SetWorkingDir(string value) => _workingDir = value;
+        public static string WorkingDir { get; set; }
         /// <summary>
         /// Gets the temp directory to store temp files
         /// </summary>
         /// <param name="createTemp">Weather or not we are creating a custom temp directory</param>
         /// <param name="tempLocation">The name of the custom temp directory</param>
         /// <returns></returns>
-        public static string GetTempDir(bool createTemp, string tempLocation) => $"{_workingDir}\\{(createTemp ? $"{tempLocation}" : "converter_temp")}";
-        public static ObservableCollection<Object> Views = new ObservableCollection<Object>();
-        public static void AddView(Object view) => Views.Add(view);
+        public static string GetTempDir(bool createTemp, string tempLocation) => $"{WorkingDir}\\{(createTemp ? $"{tempLocation}" : "converter_temp")}";
         #endregion
     }
 }

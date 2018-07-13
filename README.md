@@ -1,3 +1,5 @@
+#I am taking a week long break from developing this! I will comeback so if you have come here while I'm away please do not worry!
+
 # Squirrely Converters [![GitHub (pre-)release](https://img.shields.io/github/release/MrSquirrelyNet/SquirrelyConverter/all.svg?style=for-the-badge)](https://github.com/MrSquirrelyNet/SquirrelyConverter/releases) [![CodeFactor](https://www.codefactor.io/repository/github/mrsquirrelynet/squirrelyconverter/badge?longCache=true&style=for-the-badge)](https://www.codefactor.io/repository/github/mrsquirrelynet/squirrelyconverter?longCache=true&style=for-the-badge)
 
 ### Follow my twitter for news on future updates [![Twitter Follow](https://img.shields.io/twitter/follow/TheMrSquirrely.svg?style=for-the-badge&label=Follow)](https://twitter.com/TheMrSquirrely)
@@ -10,7 +12,7 @@ Free and easy converters that anyone can use. Currently supports images and vide
 Coming Soon!
 
 ## News
-I am using 2.1 as an in-between I want to get some more bugs removed before I start creating other converters. I decided against adding zip support. I am also adding Localization to the mix so I can get some other languages involved here!
+woot. Alright so 2.1 is becoming massive code hull. I'm adding the ability to create your own converters to load into the program. This is something I have never done before and quite honestly is taxing me a bit. I don't want to get to the point to where I don't want to work on it again so I'm taking a week long break. It isn't only the extensibility, it's fixing code, optimizing code, and trying to fight things not working like they should.
 
 ## Change Log
 The version scheme is Main.Feature.bug

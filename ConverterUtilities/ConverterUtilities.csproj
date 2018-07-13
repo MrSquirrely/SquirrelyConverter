@@ -89,6 +89,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConverterInfo.cs" />
     <Compile Include="CUtilities.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Finish.cs" />

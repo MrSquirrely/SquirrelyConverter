@@ -108,6 +108,9 @@
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="converter.json" />
+    <None Include="image.converter">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

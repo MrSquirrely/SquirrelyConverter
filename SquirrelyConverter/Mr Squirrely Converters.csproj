@@ -132,7 +132,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Class\Utilities.cs" />
-    <Compile Include="Bugs.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Todo.cs" />
     <Compile Include="Views\SettingsWindow.xaml.cs">
