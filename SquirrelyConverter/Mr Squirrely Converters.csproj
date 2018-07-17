@@ -131,7 +131,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Class\Utilities.cs" />
+    <Compile Include="Class\MainUtilities.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Todo.cs" />
     <Compile Include="Views\SettingsWindow.xaml.cs">
@@ -207,14 +207,6 @@
     <ProjectReference Include="..\ConverterUtilities\ConverterUtilities.csproj">
       <Project>{6e3df504-fd4e-4520-b104-241b995f8976}</Project>
       <Name>ConverterUtilities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ImageConverter\ImageConverter.csproj">
-      <Project>{4abfb21b-9c79-4483-8d3d-a729292de628}</Project>
-      <Name>ImageConverter</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VideoConverter\VideoConverter.csproj">
-      <Project>{ac9886be-dadc-468a-9c00-2f28eb39f080}</Project>
-      <Name>VideoConverter</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

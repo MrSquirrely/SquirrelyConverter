@@ -89,15 +89,17 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConverterInfo.cs" />
+    <Compile Include="Configs\ConverterInfo.cs" />
     <Compile Include="CUtilities.cs" />
-    <Compile Include="Enums.cs" />
-    <Compile Include="Finish.cs" />
+    <Compile Include="Configs\Enums.cs" />
+    <Compile Include="CUtils\DirectoryInfo.cs" />
+    <Compile Include="CUtils\DontKeep.cs" />
+    <Compile Include="CUtils\Finish.cs" />
     <Compile Include="Interfaces\IConverter.cs" />
     <Compile Include="Interfaces\ISettings.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="NewFile.cs" />
-    <Compile Include="Options.cs" />
+    <Compile Include="CUtils\Logger.cs" />
+    <Compile Include="Configs\NewFile.cs" />
+    <Compile Include="CUtils\Options.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.de.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -119,8 +121,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Toast.cs" />
-    <Compile Include="Update.cs" />
+    <Compile Include="CUtils\Toast.cs" />
+    <Compile Include="Configs\Update.cs" />
+    <Compile Include="CUtils\FileInfo.cs" />
+    <Compile Include="CUtils\Utilities.cs" />
+    <Compile Include="CUtils\Downloader.cs" />
+    <Compile Include="CUtils\Webpages.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.de.resx">

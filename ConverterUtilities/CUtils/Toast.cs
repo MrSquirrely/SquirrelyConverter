@@ -1,26 +1,46 @@
 ﻿using System;
+using ConverterUtilities.Configs;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
 using ToastNotifications.Position;
 
-namespace ConverterUtilities {
+namespace ConverterUtilities.CUtils {
     public static class Toast {
         private static Notifier _notifier;
 
         public static void CreateNotifier() {
             _notifier = new Notifier(cfg => {
-                cfg.PositionProvider = new WindowPositionProvider(parentWindow: CUtilities.MainWindow, corner:Corner.BottomRight, offsetX:10, offsetY:10);
+                cfg.PositionProvider = new WindowPositionProvider(parentWindow:CUtilities.MainWindow, corner:Corner.BottomRight, offsetX:10, offsetY:10);
                 cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(notificationLifetime: TimeSpan.FromSeconds(5), maximumNotificationCount: MaximumNotificationCount.FromCount(5));
                 cfg.Dispatcher = CUtilities.Dispatcher;
             });
         }
 
         #region Messages
+
+        public static void CustomMessage(Enums.MessageType messageType, string message) {
+            switch (messageType) {
+                case Enums.MessageType.Error:
+                    _notifier.ShowError(message);
+                    break;
+                case Enums.MessageType.Info:
+                    _notifier.ShowInformation(message);
+                    break;
+                case Enums.MessageType.Success:
+                    _notifier.ShowSuccess(message);
+                    break;
+                case Enums.MessageType.Warning:
+                    _notifier.ShowWarning(message);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(messageType), messageType, null);
+            }
+        }
+
         public static void NoUpdate() {
             try {
                 _notifier.ShowSuccess("There is no update!"); // Shows if there is no update
-
             }
             catch (Exception ex) {
                 Logger.LogDebug(ex);

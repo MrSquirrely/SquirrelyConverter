@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using ConverterUtilities;
+using ConverterUtilities.CUtils;
 using ConverterUtilities.Interfaces;
 
 namespace Mr_Squirrely_Converters.Views {

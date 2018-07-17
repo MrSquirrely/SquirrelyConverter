@@ -1,7 +1,7 @@
 ﻿using System;
 using ConverterUtilities.Properties;
 
-namespace ConverterUtilities {
+namespace ConverterUtilities.CUtils {
     public static class Options {
 
         private static bool _imageStarted;

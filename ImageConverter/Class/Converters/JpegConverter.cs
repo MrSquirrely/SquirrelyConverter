@@ -2,6 +2,8 @@
 using System.Globalization;
 using System.Threading;
 using ConverterUtilities;
+using ConverterUtilities.Configs;
+using ConverterUtilities.CUtils;
 using ConverterUtilities.Interfaces;
 using ImageMagick;
 
@@ -42,7 +44,7 @@ namespace ImageConverter.Class.Converters {
             Finish();
         }
 
-        public void Finish() => ConverterUtilities.Finish.Clean(Image);
+        public void Finish() => ConverterUtilities.CUtils.Finish.Clean(Image);
 
         public void UpdateView() {
             try {

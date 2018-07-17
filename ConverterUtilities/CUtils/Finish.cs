@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.IO;
 
-namespace ConverterUtilities {
+namespace ConverterUtilities.CUtils {
     public class Finish {
         public static void Clean(string file) {
             if (Options.GetCreateTemp()) {

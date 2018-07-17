@@ -3,7 +3,7 @@ using NLog;
 using NLog.Config;
 using NLog.Targets;
 
-namespace ConverterUtilities {
+namespace ConverterUtilities.CUtils {
     public class Logger {
 
         public static void StartLogger() {

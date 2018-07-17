@@ -6,6 +6,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Effects;
 using ConverterUtilities;
+using ConverterUtilities.Configs;
+using ConverterUtilities.CUtils;
+using Humanizer;
+using MahApps.Metro.Controls;
 using Mr_Squirrely_Converters.Class;
 
 namespace Mr_Squirrely_Converters.Views {
@@ -20,31 +24,17 @@ namespace Mr_Squirrely_Converters.Views {
             //and I only did it that way to test responsiveness and how to do localization
             //Thread.CurrentThread.CurrentUICulture = new CultureInfo("de-DE"); //This is here for testing only, don't use this.
             InitializeComponent();
-            Logger.StartLogger();
-            Logger.LogDebug("Logger Started");
-            Toast.CreateNotifier();
-            Logger.LogDebug("Toast Notifier Created");
-            
-            Utilities.ConverterTabs = ConverterTabs;
-            CUtilities.MainWindow = this;
-            //CUtilities.DownloadButton = RightWindowDownload;
-            CUtilities.Dispatcher = Application.Current.Dispatcher;
-            CUtilities.SetWorkingDir(Directory.GetCurrentDirectory());
-            
+
+            Utilities.Startup(this, Application.Current.Dispatcher, Directory.GetCurrentDirectory());
+            MainUtilities.ConverterTabs = ConverterTabs;
             Options.StartGeneralSettings();
-
-            Logger.LogDebug($"{CUtilities.GetWorkingDir()}");
-
-            CUtilities.GetVersionJson();
         }
 
         
 
         private void LoadViews() {
-            CUtilities.IsVideoLoaded = false;
-            CUtilities.IsImageLoaded = false;
-            Utilities.LoadAssemblies();
-            Utilities.AddViews();
+            MainUtilities.LoadAssemblies();
+            MainUtilities.AddViews();
         }
 
         private void RightWindowSettings_Click(object sender, RoutedEventArgs e) {
@@ -56,8 +46,8 @@ namespace Mr_Squirrely_Converters.Views {
             _settingsWindow = new SettingsWindow();
 
             CUtilities.SettingsWindow = _settingsWindow;
-            Utilities.SettingsTabs = _settingsWindow.SettingsTab;
-            Utilities.AddSettingViews();
+            MainUtilities.SettingsTabs = _settingsWindow.SettingsTab;
+            MainUtilities.AddSettingViews();
 
             _settingsWindow.Owner = this;
             _settingsWindow.ParentWindow = this;
@@ -67,15 +57,20 @@ namespace Mr_Squirrely_Converters.Views {
         private void RightWindowUpdate_OnClick(object sender, RoutedEventArgs e) => CUtilities.CheckUpdate();
         private void RightWindowGithub_OnClick(object sender, RoutedEventArgs e) => CUtilities.OpenGithub();
         //private void RightWindowDownload_OnClick(object sender, RoutedEventArgs e) => CUtilities.OpenDownload();
-        private void MetroWindow_Closed(object sender, EventArgs e) => CUtilities.Dispose();
+        private void MetroWindow_Closed(object sender, EventArgs e) => Utilities.Dispose();
 
         private void ConverterTabs_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
-            TabItem tabItem = Utilities.ConverterTabs.SelectedItem as TabItem;
-            Title = $"Mr. Squirrely's {tabItem?.Header ?? "Converters"}";
-            if (Title == "Mr. Squirrely's Video Converter" && _firstViewed) {
-                Toast.VideoMessage();
-                _firstViewed = false;
+            TabItem tabItem = MainUtilities.ConverterTabs.SelectedItem as TabItem;
+            foreach (ConverterInfo converter in Utilities.GetConverterInfos()) {
+                if (tabItem?.Header != null && (string)tabItem?.Header == converter.ConverterName) {
+                    Title = $"{converter.Author.Humanize()}'s {converter.ConverterName.Humanize()}";
+                }
             }
+
+            //if (Title == "Mr. Squirrely's Video Converter" && _firstViewed) {
+            //    Toast.VideoMessage();
+            //    _firstViewed = false;
+            //} Todo: Implement a on viewed for the video converter
         }
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e) {

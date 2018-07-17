@@ -5,6 +5,8 @@ using System.IO;
 using System.Threading;
 using System.Windows.Controls;
 using ConverterUtilities;
+using ConverterUtilities.Configs;
+using ConverterUtilities.CUtils;
 using VideoConverter.View;
 
 namespace VideoConverter.Class {

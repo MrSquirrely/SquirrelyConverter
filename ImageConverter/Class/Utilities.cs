@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Controls;
 using ConverterUtilities;
+using ConverterUtilities.Configs;
+using ConverterUtilities.CUtils;
 using ImageConverter.Class.Converters;
 using ImageConverter.View;
 

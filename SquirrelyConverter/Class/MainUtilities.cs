@@ -5,12 +5,13 @@ using System.Reflection;
 using System.Resources;
 using System.Windows.Controls;
 using ConverterUtilities;
+using ConverterUtilities.CUtils;
 using ConverterUtilities.Properties;
 using Dragablz;
 using Humanizer;
 
 namespace Mr_Squirrely_Converters.Class {
-    internal static class Utilities {
+    internal static class MainUtilities {
 
         private static int _converterTabs;
         private static int _settingsTabs;

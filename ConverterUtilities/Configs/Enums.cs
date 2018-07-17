@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace ConverterUtilities {
+namespace ConverterUtilities.Configs {
     public class Enums {
-        public enum FileExtension { Yes, No }
-
+        public enum FileExtension { Yes, No } //Todo: Remove
+        public enum Webpage { Github, Download }
+        public enum MessageType { Error, Info, Success, Warning }
+        
         public static readonly List<string> ImageFormats = new List<string>{
             ".gif",
             ".png",

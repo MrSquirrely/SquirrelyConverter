@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using ConverterUtilities;
+using ConverterUtilities.Configs;
+using ConverterUtilities.CUtils;
 using MediaToolkit;
 using MediaToolkit.Model;
 using MediaToolkit.Options;
