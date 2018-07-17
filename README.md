@@ -66,9 +66,10 @@ The version scheme is Main.Feature.bug
  - [Squirrel.Windows]
 
 ## Credits
-| Resharper |
-|:---------:|
-|![alt text][ReshparperLogo]|
+| [Resharper](https://www.jetbrains.com/resharper/)         | [ControlzEx](https://github.com/ControlzEx/ControlzEx)                                | [Magick.Net](https://github.com/dlemstra/Magick.NET)               | [NLog](https://github.com/NLog/NLog)                             |
+|-----------------------------------------------------------|---------------------------------------------------------------------------------------|--------------------------------------------------------------------|------------------------------------------------------------------|
+| ![alt text][ReshparperLogo]                               | [Dragablz](https://github.com/ButchersBoy/Dragablz)                                   | [MediaToolkit](https://github.com/AydinAdn/MediaToolkit)           | [Squirrel.Windows](https://github.com/Squirrel/Squirrel.Windows) |
+| [MahApps Metro](https://github.com/MahApps/MahApps.Metro) | [Material Design in XAML](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit) | [ToastNotifications](https://github.com/raflop/ToastNotifications) | [Humanizer](https://github.com/Humanizr/Humanizer)               |
 
 
 [ReshparperLogo]: https://raw.githubusercontent.com/MrSquirrelyNet/SquirrelyConverter/master/ResharperLogo.png "Resharper Logo"
