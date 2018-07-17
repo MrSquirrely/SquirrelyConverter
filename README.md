@@ -66,6 +66,7 @@ The version scheme is Main.Feature.bug
  - [Squirrel.Windows]
 
 ## Credits
+| | | |
 |---------------------------------------------------|--------------------------------------------------------|------------------------------------------------------|
 | [Resharper](https://www.jetbrains.com/resharper/) | [ControlzEx](https://github.com/ControlzEx/ControlzEx) | [Magick.Net](https://github.com/dlemstra/Magick.NET) |
 | [Humanizer](https://github.com/Humanizr/Humanizer) | [Dragablz](https://github.com/ButchersBoy/Dragablz) | [MediaToolkit](https://github.com/AydinAdn/MediaToolkit) |
