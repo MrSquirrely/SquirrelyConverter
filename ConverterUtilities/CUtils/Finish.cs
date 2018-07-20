@@ -4,10 +4,10 @@ namespace ConverterUtilities.CUtils {
     public class Finish {
         public static void Clean(string file) {
             if (Options.GetCreateTemp()) {
-                if (!Directory.Exists(CUtilities.GetTempDir(Options.GetCreateTemp(), Options.GetTempLocation()))) {
-                    Directory.CreateDirectory(CUtilities.GetTempDir(Options.GetCreateTemp(), Options.GetTempLocation()));
+                if (!Directory.Exists(DirectoryInfos.GetTempDir(Options.GetCreateTemp(), Options.GetTempLocation()))) {
+                    Directory.CreateDirectory(DirectoryInfos.GetTempDir(Options.GetCreateTemp(), Options.GetTempLocation()));
                 }
-                File.Copy(file, CUtilities.GetTempDir(Options.GetCreateTemp(), Options.GetTempLocation()));
+                File.Copy(file, DirectoryInfos.GetTempDir(Options.GetCreateTemp(), Options.GetTempLocation()));
 
             }
             File.Delete(file);

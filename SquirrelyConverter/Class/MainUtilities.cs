@@ -5,44 +5,53 @@ using System.Reflection;
 using System.Resources;
 using System.Windows.Controls;
 using ConverterUtilities;
+using ConverterUtilities.Configs;
 using ConverterUtilities.CUtils;
 using ConverterUtilities.Properties;
 using Dragablz;
 using Humanizer;
+using Newtonsoft.Json;
 
 namespace Mr_Squirrely_Converters.Class {
-    internal static class MainUtilities {
 
+    internal static class MainUtilities {
         private static int _converterTabs;
         private static int _settingsTabs;
         public static TabablzControl ConverterTabs { get; set; }
         public static TabablzControl SettingsTabs { get; set; }
         private static readonly List<Assembly> Assemblies = new List<Assembly>();
+        private static List<ConverterInfo> converters = new List<ConverterInfo>();
 
         public static void LoadAssemblies() {
-            foreach (string assembly in Directory.GetFiles($"{Directory.GetCurrentDirectory()}\\Converters", "*.dll")) {
-                Assemblies.Add(Assembly.LoadFile(assembly));
+
+            foreach (string directory in Directory.GetDirectories($"{Directory.GetCurrentDirectory()}\\Converters")) {
+                string[] converter = Directory.GetFiles(directory, "*.converter");
+                StreamReader reader = new StreamReader($"{converter[0]}");
+                JsonSerializer serializer = new JsonSerializer();
+                converters.Add((ConverterInfo) serializer.Deserialize(reader, typeof(ConverterInfo)));
             }
+
+            Utilities.SetConverterInfos(converters);
+            AddViews();
         }
 
         public static void AddViews() {
-
-            foreach (Assembly assembly in Assemblies) {
-                string name = assembly.GetName().Name;
-                Type startupType = assembly.GetType($"{name}.View.MainView");
-                object activator = Activator.CreateInstance(startupType);
-                AddTab(activator, name);
+            try {
+                foreach (ConverterInfo converterInfo in Utilities.GetConverterInfos()) {
+                    AssemblyName assemblyName = AssemblyName.GetAssemblyName($"{DirectoryInfos.WorkingDirectory}\\Converters\\{converterInfo.ConverterName}\\{converterInfo.AssemblyName}.dll");
+                    Assembly assembly = Assembly.Load(assemblyName);
+                    Type startType = assembly.GetType(converterInfo.ConverterView);
+                    //Type settingsType = assembly.GetType(converterInfo.SettingsView);
+                    object startInstance = Activator.CreateInstance(startType);
+                    //object settingsInstance = Activator.CreateInstance(settingsType);
+                    AddTab(startInstance, converterInfo.ConverterName);
+                    //AddSettingsTab(settingsInstance, converterInfo.ConverterName);
+                }
             }
-        }
-
-        public static void AddSettingViews() {
-
-            foreach (Assembly assembly in Assemblies) {
-                string name = assembly.GetName().Name;
-                Type settingsType = assembly.GetType($"{name}.View.SettingView");
-                object settingsActivator = Activator.CreateInstance(settingsType);
-                AddSettingsTab(settingsActivator, name);
+            catch (Exception ex) {
+                Logger.LogError(ex);
             }
+            
         }
 
         private static void AddTab(object view, string header) {

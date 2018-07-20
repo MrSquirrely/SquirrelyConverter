@@ -16,10 +16,10 @@ namespace ImageConverter.Class.Converters {
         public void StartConvert() {
             ThreadStart = Convert;
             ThreadStart += () => {
-                CUtilities.Threads--;
-                if (CUtilities.Threads == 0) {
+                Utilities.RemoveThread();
+                if (Utilities.GetThreads() == 0) {
                     Toast.ConvertFinished();
-                    CUtilities.Converting  = false;
+                    Utilities.SetConverting(false);
                 }
             };
             Thread = new Thread(ThreadStart);
@@ -27,6 +27,7 @@ namespace ImageConverter.Class.Converters {
         }
 
         public void Convert() {
+            FileInfos infos = new FileInfos(Image);
             Process process = new Process() {
                 StartInfo = {
                     FileName = "cmd.exe",
@@ -37,9 +38,20 @@ namespace ImageConverter.Class.Converters {
                 }
             };
 
+            Logger.LogError(" ");
+            Logger.LogError(" ");
+            Logger.LogError(" ");
+            Logger.LogError(" ");
+            Logger.LogError($"cd {DirectoryInfos.WorkingDirectory}\\Converters\\Image Converter");
+            Logger.LogError(" ");
+            Logger.LogError(" ");
+            Logger.LogError(" ");
+            Logger.LogError(" ");
+            Logger.LogError($"gif2webp.exe {Options.GetWebPQuality()} \"{Image}\" -o \"{infos.FileDirectory()}\\{infos.FileNameWithoutExtension()}.webp\"");
+
             process.Start();
-            process.StandardInput.WriteLine($"cd {Directory.GetCurrentDirectory()}");
-            process.StandardInput.WriteLine($"gif2webp {Options.GetWebPQuality()} \"{Image}\" -o \"{CUtilities.GetFileDirectory(Image)}\\{CUtilities.GetFileName(Image, Enums.FileExtension.No)}.webp\"");
+            process.StandardInput.WriteLine($"cd {DirectoryInfos.WorkingDirectory}\\Converters\\Image Converter");
+            process.StandardInput.WriteLine($"gif2webp.exe {Options.GetWebPQuality()} \"{Image}\" -o \"{infos.FileDirectory()}\\{infos.FileNameWithoutExtension()}.webp\"");
             process.StandardInput.Flush();
             process.StandardInput.Close();
             process.WaitForExit();
@@ -47,10 +59,8 @@ namespace ImageConverter.Class.Converters {
             foreach (NewFile newFile in ImageUtilities.ImagesCollection) {
                         
                 int index = ImageUtilities.ImagesCollection.IndexOf(newFile);
-                Console.WriteLine(ImageUtilities.ImagesCollection[index].Location);
-                Console.WriteLine(newFile.Location);
 
-                if (ImageUtilities.ImagesCollection[index].Location == CUtilities.GetFileLocation(Image)) {
+                if (ImageUtilities.ImagesCollection[index].Location == infos.FileDirectory()) {
                     ImageUtilities.ImagesCollection[index].Converted = "Converted";
                     Console.WriteLine(newFile.Converted);
                     UpdateView();

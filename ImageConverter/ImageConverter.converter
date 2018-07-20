@@ -1,0 +1,12 @@
+{
+    "Author":"Mr. Squirrely",
+    "AssemblyName":"ImageConverter", 
+    "ConverterName":"Image Converter",
+    "ConverterView":"ImageConverter.View.MainView",
+    "ConverterDescription": "Easy iamge converter that anyone can use.", 
+    "SettingsView":"ImageConverter.View.SettingView",
+    "ConverterVersion":"1.2",
+    "ConverterIconUrl":"",
+    "ConverterDownloadUrl":"",
+    "Tags":["Image","Converter"]
+}

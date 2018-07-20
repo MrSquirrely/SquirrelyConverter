@@ -3,7 +3,7 @@ using System.Diagnostics;
 using ConverterUtilities.Configs;
 
 namespace ConverterUtilities.CUtils {
-    class Webpages {
+    public class Webpages {
 
         private const string Github = "https://github.com/MrSquirrelyNet/SquirrelyConverter/issues";
         private const string Download = "https://github.com/MrSquirrelyNet/SquirrelyConverter/releases";

@@ -113,6 +113,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="SquirrelyConverters.pfx" />
+    <None Include="VideoConverter.converter">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConverterUtilities\ConverterUtilities.csproj">

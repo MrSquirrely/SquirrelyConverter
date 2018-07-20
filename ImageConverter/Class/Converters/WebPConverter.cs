@@ -18,10 +18,10 @@ namespace ImageConverter.Class.Converters {
         public void StartConvert() {
             ThreadStart = Convert;
             ThreadStart += () => {
-                CUtilities.Threads--;
-                if (CUtilities.Threads == 0) {
+                Utilities.RemoveThread();
+                if (Utilities.GetThreads() == 0) {
                     Toast.ConvertFinished();
-                    CUtilities.Converting  = false;
+                    Utilities.SetConverting(false);
                 }
             };
             Thread = new Thread(ThreadStart);
@@ -29,13 +29,14 @@ namespace ImageConverter.Class.Converters {
         }
 
         public void Convert() {
+            FileInfos infos = new FileInfos(Image);
             MagickImage = new MagickImage(Image);
             MagickImage.Settings.SetDefine(WebP, "-lossless", Options.GetWebPLossless());
             MagickImage.Settings.SetDefine(WebP, "-emulate-jpeg-size", Options.GetWebPEmulateJpeg());
             MagickImage.Settings.SetDefine(WebP, "-alpha", Options.GetWebPRemoveAlpha());
             MagickImage.Settings.SetDefine(WebP, "-quality", Options.GetWebPQuality().ToString(CultureInfo.InvariantCulture));
             MagickImage.Format = MagickFormat.WebP;
-            MagickImage.Write($"{CUtilities.GetFileDirectory(Image)}\\{CUtilities.GetFileName(Image, Enums.FileExtension.No)}.webp");
+            MagickImage.Write($"{infos.FileDirectory()}\\{infos.FileNameWithoutExtension()}.webp");
 
             foreach (NewFile newFile in ImageUtilities.ImagesCollection) {
                         
@@ -43,7 +44,7 @@ namespace ImageConverter.Class.Converters {
                 Console.WriteLine(ImageUtilities.ImagesCollection[index].Location);
                 Console.WriteLine(newFile.Location);
 
-                if (ImageUtilities.ImagesCollection[index].Location == CUtilities.GetFileLocation(Image)) {
+                if (ImageUtilities.ImagesCollection[index].Location == infos.FileDirectory()) {
                     ImageUtilities.ImagesCollection[index].Converted = "Converted";
                     Console.WriteLine(newFile.Converted);
                     UpdateView();

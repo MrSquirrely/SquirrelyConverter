@@ -12,10 +12,11 @@ namespace Mr_Squirrely_Converters.Views {
         public SettingsWindow() {
             InitializeComponent();
             StartValues();
+
         }
 
         private void SettingsWindow_OnClosed(object sender, EventArgs e) {
-            CUtilities.MainWindow.IsEnabled = true;
+            Utilities.GetMainWindow().IsEnabled = true;
             Owner.Effect = null;
         }
 

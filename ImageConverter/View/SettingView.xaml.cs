@@ -27,7 +27,7 @@ namespace ImageConverter.View {
         public SettingView() {
             InitializeComponent();
             StartValues();
-            ParentWindow = CUtilities.SettingsWindow;
+            ParentWindow = Utilities.GetSettingsWindow();
         }
 
         public void StartValues() {
@@ -60,7 +60,7 @@ namespace ImageConverter.View {
         }
 
         public void CloseWindow() {
-            CUtilities.MainWindow.IsEnabled = true;
+            Utilities.GetMainWindow().IsEnabled = true;
             ParentWindow.Close();
         }
 

@@ -8,12 +8,13 @@ using MahApps.Metro.Controls;
 namespace ConverterUtilities.CUtils {
     public class Utilities {
 
-        private static List<ConverterInfo> ConverterInfos { get; set; }
+        private static List<ConverterInfo> ConverterInfos;
         private static int Threads{ get; set; }
         private static bool Converting { get; set; }
         private static MetroWindow MainWindow { get; set; }
         private static Window SettingsWindow { get; set; }
         private static Dispatcher Dispatcher { get; set; }
+        private static ConverterList List { get; set; }
 
         public static void Startup(MetroWindow mainWindow, Dispatcher dispatcher, string workingDir) {
             Logger.StartLogger();
@@ -28,14 +29,17 @@ namespace ConverterUtilities.CUtils {
             SetDispatcher(dispatcher);
             Logger.LogDebug($"Dispatcher set to {dispatcher}");
 
-            DirectoryInfo.WorkingDirectory = workingDir;
+            DirectoryInfos.WorkingDirectory = workingDir;
             Logger.LogDebug($"Working Directoory set to {workingDir}");
         }
-
+    
         public static List<ConverterInfo> GetConverterInfos() => ConverterInfos;
+        public static void ClearConverterInfos() => ConverterInfos.Clear();
         public static void SetConverterInfos(List<ConverterInfo> value) => ConverterInfos = value;
 
         public static int GetThreads() => Threads;
+        public static void AddThread() => Threads++;
+        public static void RemoveThread() => Threads--;
 
         public static bool IsConverting() => Converting;
         public static void SetConverting(bool value) => Converting = value;
@@ -48,6 +52,9 @@ namespace ConverterUtilities.CUtils {
 
         public static Dispatcher GetDispatcher() => Dispatcher;
         public static void SetDispatcher(Dispatcher value) => Dispatcher = value;
+
+        public static ConverterList GetList() => List;
+        public static void SetList(ConverterList value) => List = value;
 
         public static void Dispose() {
             try {

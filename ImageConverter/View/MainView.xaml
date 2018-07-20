@@ -6,7 +6,7 @@
              xmlns:properties="clr-namespace:ConverterUtilities.Properties;assembly=ConverterUtilities"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" 
-             Loaded="MainView_OnLoaded">
+             Loaded="MainView_OnLoaded" GotFocus="MainView_OnGotFocus">
     <Grid>
         <ListView x:Name="ImageFiles" Drop="ImageFiles_Drop" AllowDrop="True">
             <ListView.ContextMenu>

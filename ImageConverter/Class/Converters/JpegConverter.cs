@@ -18,10 +18,10 @@ namespace ImageConverter.Class.Converters {
         public void StartConvert() {
             ThreadStart = Convert;
             ThreadStart += () => {
-                CUtilities.Threads--;
-                if (CUtilities.Threads == 0) {
+                Utilities.RemoveThread();
+                if (Utilities.GetThreads() == 0) {
                     Toast.ConvertFinished();
-                    CUtilities.Converting  = false;
+                    Utilities.SetConverting(false);
                 }
             };
             Thread = new Thread(ThreadStart);
@@ -29,14 +29,15 @@ namespace ImageConverter.Class.Converters {
         }
 
         public void Convert() {
+            FileInfos infos = new FileInfos(Image);
             MagickImage = new MagickImage(Image);
             MagickImage.Settings.SetDefine(Jpeg,"-quality", Options.GetJpegQuality().ToString(CultureInfo.InvariantCulture));
             MagickImage.Format = Jpeg;
-            MagickImage.Write($"{CUtilities.GetFileDirectory(Image)}\\{CUtilities.GetFileName(Image, Enums.FileExtension.No)}.jpeg");
+            MagickImage.Write($"{infos.FileDirectory()}\\{infos.FileNameWithoutExtension()}.jpeg");
 
             foreach (NewFile newFile in ImageUtilities.ImagesCollection) {
                 int index = ImageUtilities.ImagesCollection.IndexOf(newFile);
-                if (ImageUtilities.ImagesCollection[index].Location == CUtilities.GetFileLocation(Image)) {
+                if (ImageUtilities.ImagesCollection[index].Location == infos.FileDirectory()) {
                     ImageUtilities.ImagesCollection[index].Converted = "Converted";
                     UpdateView();
                 }

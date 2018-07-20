@@ -1,0 +1,27 @@
+﻿<Window x:Class="Mr_Squirrely_Converters.Views.ConverterDownload"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="ConverterDownload" Height="450" Width="800" Closed="ConverterDownload_OnClosed">
+    <Grid>
+        <ListView x:Name="ConverterList" Margin="12.887,10,229.113,10" SelectionChanged="ConverterList_OnSelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Grid HorizontalAlignment="Right" Margin="0,10,10,10">
+            <Separator Height="2.823" Margin="10,35.96,10,0" VerticalAlignment="Top"/>
+            <Label x:Name="ConverterInfoName" Content="Converter Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" d:LayoutOverrides="HorizontalAlignment"/>
+            <TextBlock x:Name="ConverterInfoDiscription" HorizontalAlignment="Left" Margin="10,43.783,0,130.532" TextWrapping="Wrap" Text="Converter Discription" Width="194.113" Height="230"/>
+            <Separator Height="2.823" Margin="10,0,10,117.394" VerticalAlignment="Bottom"/>
+            <Label x:Name="ConverterInfoAuthor" Content="Author" HorizontalAlignment="Left" Margin="10,0,0,86.434" VerticalAlignment="Bottom"/>
+            <Label x:Name="ConverterInfoVersion" Content="Version" HorizontalAlignment="Left" Margin="10,0,0,60.474" VerticalAlignment="Bottom"/>
+            <Button x:Name="ConverterInfoDownload" Content="Download" Style="{DynamicResource MaterialDesignToolButton}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75"/>
+        </Grid>
+
+    </Grid>
+</Window>

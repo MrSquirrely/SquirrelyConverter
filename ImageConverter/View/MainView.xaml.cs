@@ -3,6 +3,8 @@ using System.Threading;
 using System.Windows;
 using ImageConverter.Class;
 using ConverterUtilities;
+using ConverterUtilities.Configs;
+using ConverterUtilities.CUtils;
 
 namespace ImageConverter.View {
     public partial class MainView {
@@ -20,6 +22,10 @@ namespace ImageConverter.View {
         private void MainView_OnLoaded(object sender, RoutedEventArgs e) {
             // Some more code might go here. I still need to test things out.
             ImageFormatSelector.Margin = new Thickness(0, 0, ImageConvertButton.Margin.Right + ImageConvertButton.ActualWidth + 12 ,10);
+        }
+
+        private void MainView_OnGotFocus(object sender, RoutedEventArgs e) {
+            Toast.CustomMessage(Enums.MessageType.Info, "This is a custom message");
         }
     }
 }
