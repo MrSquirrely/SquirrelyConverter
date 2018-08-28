@@ -1,7 +1,5 @@
 # This project has been semi-retired.#
-I started this project wanting to challenge myself and I had done so. I really did so. While *this* project has been retired I am starting anew with [Squirrely Utils](https://github.com/SquirrelyUtils)
-I want to keep challenging myself but I have run into an issue that has kept me from finishing the update. I will not finish the update at all.
-I however want to continue with this project so in order to help myself I'm recoding this. This needed to be done as a lot of my code was everywhere I couldn't remember what anything did.
+Okay Okay, I'm not 100 on what I want to do. I started this to challenge myself and challenge I have. I am doing things I have never done before. I am taking a really long break from coding this. I will come back. I'm not sure when, but I know I will. Please give me some time.
 
 # Squirrely Converters [![GitHub (pre-)release](https://img.shields.io/github/release/MrSquirrelyNet/SquirrelyConverter/all.svg?style=for-the-badge)](https://github.com/MrSquirrelyNet/SquirrelyConverter/releases) [![CodeFactor](https://www.codefactor.io/repository/github/mrsquirrelynet/squirrelyconverter/badge?longCache=true&style=for-the-badge)](https://www.codefactor.io/repository/github/mrsquirrelynet/squirrelyconverter?longCache=true&style=for-the-badge)
 
