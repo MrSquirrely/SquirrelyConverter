@@ -24,6 +24,8 @@ namespace Image_Converter {
         private Thread UpdateThread { get; set; }
         private bool IsFinished = false;
 
+        
+
         private string SelectedType { get; set; }
 
         public MainWindow() {
@@ -31,10 +33,12 @@ namespace Image_Converter {
             //x Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("de");
             InitializeComponent();
             Utilities.ImageListView = ImageList;
+
         }
 
-        private void SettingsButton_Click(object sender, RoutedEventArgs e) => OpenFlyout(new SettingsContent(), "Settings");
-        private void AboutButton_Click(object sender, RoutedEventArgs e) => OpenFlyout(new AboutContent(), "About");
+        private void SettingsButton_Click(object sender, RoutedEventArgs e) => OpenFlyout(new SettingsContent(), Properties.Resources.Settings);
+        private void AboutButton_Click(object sender, RoutedEventArgs e) => OpenFlyout(new AboutContent(), Properties.Resources.About);
+        private void BugButton_Click(object sender, RoutedEventArgs e) => OpenFlyout(new BugContent(), "Bugs or Features");
 
         private void OpenFlyout(UserControl content, string header) {
             content.Width = FlyoutWidth;
@@ -68,13 +72,14 @@ namespace Image_Converter {
                 Utilities.ImageCollection.Clear();
                 foreach (string file in dialog.FileNames) {
                     FileInfo fileInfo = new FileInfo(file);
-                    Utilities.ImageCollection.Add(new ImageInfo() { 
-                        FileName = Path.GetFileNameWithoutExtension(file), 
-                        FileType = fileInfo.Extension, 
+                    Utilities.ImageCollection.Add(new ImageInfo() {
+                        FileName = Path.GetFileNameWithoutExtension(file),
+                        FileType = fileInfo.Extension,
                         FileSize = Utilities.SizeSuffix(fileInfo.Length),
                         FileIcon = PackIconKind.Close,
                         FileColor = Brushes.Red,
-                        FileLocation = fileInfo.DirectoryName });
+                        FileLocation = fileInfo.DirectoryName
+                    });
                 }
                 Utilities.ImageListView.ItemsSource = Utilities.ImageCollection;
             }
@@ -99,8 +104,7 @@ namespace Image_Converter {
         }
 
         private void Update() {
-            //Todo: Make sure this checks for the selected image file type. Right now it's set up for testing purposes
-            while (!IsFinished){
+            while (!IsFinished) {
                 foreach (ImageInfo info in Utilities.ImageCollection) {
                     if (File.Exists($"{info.FileLocation}\\{info.FileName}.{SelectedType}")) {
                         info.FileIcon = PackIconKind.Check;
@@ -111,9 +115,7 @@ namespace Image_Converter {
             }
         }
 
-        private void BugButton_Click(object sender, RoutedEventArgs e) {
-            Github.SubmitIssueAsync("Test", "This is just a test and can be ignored!");
-        }
+        
 
         private void ConvertButton_Click(object sender, RoutedEventArgs e) {
             IsFinished = false;

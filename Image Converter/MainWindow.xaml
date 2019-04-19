@@ -18,6 +18,10 @@
     WindowButtonCommandsOverlayBehavior="Never"
     
     Title="{x:Static loc:Resources.ImageConverter}" Height="720" Width="1280">
+
+    <metro:MetroWindow.WindowButtonCommands>
+        <metro:WindowButtonCommands Style="{DynamicResource MahApps.Metro.Styles.WindowButtonCommands.Win10}" />
+    </metro:MetroWindow.WindowButtonCommands>
     
     <metro:MetroWindow.RightWindowCommands>
         <metro:WindowCommands>
@@ -31,6 +35,7 @@
             <Button Name="AboutButton" Content="{materialDesign:PackIcon Kind=Help}" Click="AboutButton_Click"/>
         </metro:WindowCommands>
     </metro:MetroWindow.RightWindowCommands>
+    
     <metro:MetroWindow.LeftWindowCommands>
         <metro:WindowCommands>
             <Button Name="FileButton" Click="FileButton_Click" ToolTip="File" Content="{x:Static loc:Resources.File}">
@@ -52,6 +57,7 @@
     </metro:MetroWindow.Flyouts>
 
     <Grid>
+        
         <ListView Name="ImageList" Drop="ImageList_Drop" AllowDrop="True">
             <ListView.View>
                 <GridView>
