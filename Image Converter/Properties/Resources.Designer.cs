@@ -70,6 +70,78 @@ namespace Image_Converter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About the program.
+        /// </summary>
+        public static string AboutTooltip {
+            get {
+                return ResourceManager.GetString("AboutTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup.
+        /// </summary>
+        public static string Backup {
+            get {
+                return ResourceManager.GetString("Backup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse.
+        /// </summary>
+        public static string Browse {
+            get {
+                return ResourceManager.GetString("Browse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bug.
+        /// </summary>
+        public static string Bug {
+            get {
+                return ResourceManager.GetString("Bug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bug or Feature.
+        /// </summary>
+        public static string BugContent {
+            get {
+                return ResourceManager.GetString("BugContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bugs or Features.
+        /// </summary>
+        public static string BugsOrFeatures {
+            get {
+                return ResourceManager.GetString("BugsOrFeatures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report a Bug or request a feature.
+        /// </summary>
+        public static string BugsTooltip {
+            get {
+                return ResourceManager.GetString("BugsTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title:.
+        /// </summary>
+        public static string BugTitle {
+            get {
+                return ResourceManager.GetString("BugTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Convert.
         /// </summary>
         public static string Convert {
@@ -79,11 +151,47 @@ namespace Image_Converter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start the conversion.
+        /// </summary>
+        public static string ConvertTooltip {
+            get {
+                return ResourceManager.GetString("ConvertTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Emulate Size Of Jpeg.
+        /// </summary>
+        public static string EmulateJpeg {
+            get {
+                return ResourceManager.GetString("EmulateJpeg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exit.
         /// </summary>
         public static string ExitMenu {
             get {
                 return ResourceManager.GetString("ExitMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit the application.
+        /// </summary>
+        public static string ExitTooltip {
+            get {
+                return ResourceManager.GetString("ExitTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature.
+        /// </summary>
+        public static string Feature {
+            get {
+                return ResourceManager.GetString("Feature", resourceCulture);
             }
         }
         
@@ -142,11 +250,29 @@ namespace Image_Converter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Finished with conversion.
+        /// </summary>
+        public static string FinishedConversion {
+            get {
+                return ResourceManager.GetString("FinishedConversion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Image Converter.
         /// </summary>
         public static string ImageConverter {
             get {
                 return ResourceManager.GetString("ImageConverter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lossless.
+        /// </summary>
+        public static string Lossless {
+            get {
+                return ResourceManager.GetString("Lossless", resourceCulture);
             }
         }
         
@@ -160,6 +286,15 @@ namespace Image_Converter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select and image or images to use.
+        /// </summary>
+        public static string OpenFileTooltip {
+            get {
+                return ResourceManager.GetString("OpenFileTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open Folder.
         /// </summary>
         public static string OpenFolderMenu {
@@ -169,11 +304,119 @@ namespace Image_Converter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open a folder.
+        /// </summary>
+        public static string OpenFolderTooltip {
+            get {
+                return ResourceManager.GetString("OpenFolderTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play Sound When Finished.
+        /// </summary>
+        public static string PlaySound {
+            get {
+                return ResourceManager.GetString("PlaySound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quality:.
+        /// </summary>
+        public static string Quality {
+            get {
+                return ResourceManager.GetString("Quality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Alpha.
+        /// </summary>
+        public static string RemoveAlpha {
+            get {
+                return ResourceManager.GetString("RemoveAlpha", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string Reset {
+            get {
+                return ResourceManager.GetString("Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset the settings to default settings.
+        /// </summary>
+        public static string ResetTooltip {
+            get {
+                return ResourceManager.GetString("ResetTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save the settings.
+        /// </summary>
+        public static string SaveTooltip {
+            get {
+                return ResourceManager.GetString("SaveTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opens the settings.
+        /// </summary>
+        public static string SettingsTooltip {
+            get {
+                return ResourceManager.GetString("SettingsTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        public static string SubmitBug {
+            get {
+                return ResourceManager.GetString("SubmitBug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit the bug or feature request.
+        /// </summary>
+        public static string SubmitTooltip {
+            get {
+                return ResourceManager.GetString("SubmitTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use A Custom Folder.
+        /// </summary>
+        public static string UseCustomFolder {
+            get {
+                return ResourceManager.GetString("UseCustomFolder", resourceCulture);
             }
         }
     }

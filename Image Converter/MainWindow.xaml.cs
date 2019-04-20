@@ -30,11 +30,12 @@ namespace Image_Converter {
             InitializeComponent();
             Utilities.ImageListView = ImageList;
             Utilities.messageQueue = SnackbarToaster.MessageQueue;
+            Utilities.flyout = FlyoutControl;
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e) => OpenFlyout(new SettingsContent(), Properties.Resources.Settings);
         private void AboutButton_Click(object sender, RoutedEventArgs e) => OpenFlyout(new AboutContent(), Properties.Resources.About);
-        private void BugButton_Click(object sender, RoutedEventArgs e) => OpenFlyout(new BugContent(), "Bugs or Features");
+        private void BugButton_Click(object sender, RoutedEventArgs e) => OpenFlyout(new BugContent(), Properties.Resources.BugsOrFeatures);
 
         private void OpenFlyout(UserControl content, string header) {
             content.Width = FlyoutWidth;

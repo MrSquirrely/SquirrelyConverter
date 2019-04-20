@@ -116,11 +116,9 @@
   </resheader>
   <data name="File" xml:space="preserve">
     <value>File</value>
-    <comment>menu file name</comment>
   </data>
   <data name="ImageConverter" xml:space="preserve">
     <value>Image Converter</value>
-    <comment>Title name</comment>
   </data>
   <data name="FileName" xml:space="preserve">
     <value>File Name</value>
@@ -143,9 +141,6 @@
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="OpenFolderMenu" xml:space="preserve">
-    <value>Open Folder</value>
-  </data>
   <data name="OpenFileMenu" xml:space="preserve">
     <value>Open File</value>
   </data>
@@ -154,5 +149,89 @@
   </data>
   <data name="About" xml:space="preserve">
     <value>About</value>
+  </data>
+  <data name="OpenFolderMenu" xml:space="preserve">
+    <value>Open Folder</value>
+  </data>
+  <data name="BugsOrFeatures" xml:space="preserve">
+    <value>Bugs or Features</value>
+  </data>
+  <data name="SubmitBug" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="BugTitle" xml:space="preserve">
+    <value>Title:</value>
+  </data>
+  <data name="Bug" xml:space="preserve">
+    <value>Bug</value>
+  </data>
+  <data name="BugContent" xml:space="preserve">
+    <value>Bug or Feature</value>
+  </data>
+  <data name="Feature" xml:space="preserve">
+    <value>Feature</value>
+  </data>
+  <data name="Backup" xml:space="preserve">
+    <value>Backup</value>
+  </data>
+  <data name="UseCustomFolder" xml:space="preserve">
+    <value>Use A Custom Folder</value>
+  </data>
+  <data name="PlaySound" xml:space="preserve">
+    <value>Play Sound When Finished</value>
+  </data>
+  <data name="Browse" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="EmulateJpeg" xml:space="preserve">
+    <value>Emulate Size Of Jpeg</value>
+  </data>
+  <data name="Lossless" xml:space="preserve">
+    <value>Lossless</value>
+  </data>
+  <data name="RemoveAlpha" xml:space="preserve">
+    <value>Remove Alpha</value>
+  </data>
+  <data name="Quality" xml:space="preserve">
+    <value>Quality:</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="FinishedConversion" xml:space="preserve">
+    <value>Finished with conversion</value>
+  </data>
+  <data name="OpenFolderTooltip" xml:space="preserve">
+    <value>Open a folder</value>
+  </data>
+  <data name="OpenFileTooltip" xml:space="preserve">
+    <value>Select and image or images to use</value>
+  </data>
+  <data name="ExitTooltip" xml:space="preserve">
+    <value>Exit the application</value>
+  </data>
+  <data name="BugsTooltip" xml:space="preserve">
+    <value>Report a Bug or request a feature</value>
+  </data>
+  <data name="SettingsTooltip" xml:space="preserve">
+    <value>Opens the settings</value>
+  </data>
+  <data name="AboutTooltip" xml:space="preserve">
+    <value>About the program</value>
+  </data>
+  <data name="ConvertTooltip" xml:space="preserve">
+    <value>Start the conversion</value>
+  </data>
+  <data name="SubmitTooltip" xml:space="preserve">
+    <value>Submit the bug or feature request</value>
+  </data>
+  <data name="ResetTooltip" xml:space="preserve">
+    <value>Reset the settings to default settings</value>
+  </data>
+  <data name="SaveTooltip" xml:space="preserve">
+    <value>Save the settings</value>
   </data>
 </root>

@@ -1,4 +1,5 @@
-﻿using Microsoft.WindowsAPICodePack.Dialogs;
+﻿using Image_Converter.Code;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -57,6 +58,8 @@ namespace Image_Converter.Views {
             Properties.Settings.Default.Png_Quality = (int)PngQuality.Value;
             //! Save the settings
             Properties.Settings.Default.Save();
+
+            Utilities.flyout.IsOpen = false;
         }
 
         private void ResetButton_Click(object sender, RoutedEventArgs e) {

@@ -331,3 +331,4 @@ ASALocalRun/
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
 Image Converter/Code/Github.cs
+Image Converter/gif2webp.exe

@@ -8,6 +8,10 @@
              mc:Ignorable="d" 
              Width="390" Height="580">
     <Grid>
-        <FlowDocumentScrollViewer Name="AboutViewer"/>
+        <Label Content="Image Convert is an easy to use image conversion utility" Margin="10,10,10,0" VerticalAlignment="Top"/>
+        <Button Name="FinishedSoundButton" Content="Finished sound is CC0 by Kenny" Style="{DynamicResource MaterialDesignToolButton}" Margin="10,41,10,0" VerticalAlignment="Top" Click="FinishedSoundButton_Click"/>
+        <Image Height="220" Margin="10,78,10,0" VerticalAlignment="Top" Source="/Image Converter;component/icon.ico"/>
+        <Label Content="Icon is CC0 by Kenny" Margin="10,303,10,0" VerticalAlignment="Top"/>
+        <Button Name="KennyLinkButton" Content="Link to Kenny" HorizontalAlignment="Left" Margin="10,334,0,0" VerticalAlignment="Top" Width="140" Click="KennyLinkButton_Click"/>
     </Grid>
 </UserControl>

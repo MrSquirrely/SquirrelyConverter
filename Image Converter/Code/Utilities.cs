@@ -1,4 +1,5 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using MahApps.Metro.Controls;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,6 +18,7 @@ namespace Image_Converter.Code {
         static readonly string[] SizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
 
         public static SnackbarMessageQueue messageQueue { get; set; }
+        public static Flyout flyout { get; set; }
 
         public static string SizeSuffix(long value, int decimalPlaces = 1) {
             if (value < 0) {
@@ -64,7 +66,7 @@ namespace Image_Converter.Code {
             "“Begin with the end in mind.” – Steven Covey",
             "“Much of the stress that people feel doesn’t come from having too much to do. It comes from not finishing what they started.” – David Allen",
             "“It’s not enough to be busy, so are the ants. The question is, what are we busy about?” – Henry David Thoreau",
-            "“You’ve got to think about big things while you’re doing small things, so that all the small things go in the right direction.” – Alvin Toffler"
+            "“You’ve got to think about big things while you’re doing small things, so that all the small things go in the right direction.” – Alvin Toffler",
             "“In the long run, we shape our lives, and we shape ourselves. The process never ends until we die. And the choices we make are ultimately our own responsibility.” ― Eleanor Roosevelt"
             };
 

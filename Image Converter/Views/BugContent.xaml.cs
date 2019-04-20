@@ -24,7 +24,7 @@ namespace Image_Converter.Views {
                 Credentials credentials = new Credentials(Github.token);
                 client.Credentials = credentials;
 
-                NewIssue createIssue = new NewIssue(TitleContent.Text) { Body = BodyContent.Text };
+                NewIssue createIssue = new NewIssue(TitleContent.Text) { Body = $"{BodyContent.Text}\n\n-Submitted in the Image Converter application" };
                 ComboBoxItem selectedItem = (ComboBoxItem)IssueTypeBox.SelectedItem;
                 switch (selectedItem.Content) {
                     case "Bug":
@@ -40,6 +40,7 @@ namespace Image_Converter.Views {
             }else if (TitleContent.Text == "Example Bug Title") {
                 ShowError("You must change the body content.");
             }
+            Utilities.flyout.IsOpen = false;
         }
 
         private void ShowError(string message) {

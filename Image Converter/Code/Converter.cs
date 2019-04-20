@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -45,12 +46,27 @@ namespace Image_Converter.Code {
                         magickImage.Settings.SetDefine(WEBP, "-quality", $"{Properties.Settings.Default.WebP_Quality}");
                         magickImage.Format = WEBP;
                         magickImage.Write($"{image}.webp");
-
-                        RemoveImage($"{info.FileName}{info.FileType}", info.FileLocation);
                     }
                     else if (info.FileType != ".webp") {
-                        //Todo: add gif conversion
+                        Process gifProcess = new Process() {
+                            StartInfo = {
+                                FileName = "cmd.exe",
+                                RedirectStandardInput = true,
+                                RedirectStandardOutput = true,
+                                CreateNoWindow = true,
+                                UseShellExecute = false
+                            }
+                        };
+
+                        gifProcess.Start();
+                        gifProcess.StandardInput.WriteLine($"cd {Environment.CurrentDirectory}");
+                        //process.StandardInput.WriteLine($"gif2webp.exe {Options.GetWebPQuality()} \"{Image}\" -o \"{infos.FileDirectory()}\\{infos.FileNameWithoutExtension()}.webp\"");
+                        gifProcess.StandardInput.WriteLine($"gif2webp.exe {Properties.Settings.Default.WebP_Quality} \"{imageExt}\" -o \"{image}.webp\"");
+                        gifProcess.StandardInput.Flush();
+                        gifProcess.StandardInput.Close();
+                        gifProcess.WaitForExit();
                     }
+                    RemoveImage($"{info.FileName}{info.FileType}", info.FileLocation);
                 }
                 catch (Exception ex) {
                     Logger.Instance.LogError(ex);
@@ -63,7 +79,7 @@ namespace Image_Converter.Code {
                 string imageExt = $"{info.FileLocation}\\{info.FileName}{info.FileType}";
                 string image = $"{info.FileLocation}\\{info.FileName}";
 
-                try{
+                try {
                     if (info.FileType != ".jpg" && info.FileType != ".jpeg" && info.FileType != ".gif") {
                         MagickImage magickImage = new MagickImage(imageExt);
                         magickImage.Settings.SetDefine(JPEG, "-quality", $"{Properties.Settings.Default.Jpeg_Quality}");

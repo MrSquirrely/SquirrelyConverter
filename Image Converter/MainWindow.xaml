@@ -25,14 +25,14 @@
 
     <metro:MetroWindow.RightWindowCommands>
         <metro:WindowCommands>
-            <Button Name="BugButton" Content="{materialDesign:PackIcon Kind=BugReport}" Click="BugButton_Click"/>
-            <Button Name="SettingsButton" Click="SettingsButton_Click" ToolTip="Opens settings menu">
+            <Button Name="BugButton" Content="{materialDesign:PackIcon Kind=BugReport}" Click="BugButton_Click" ToolTip="{x:Static loc:Resources.BugsTooltip}"/>
+            <Button Name="SettingsButton" Click="SettingsButton_Click" ToolTip="{x:Static loc:Resources.SettingsTooltip}">
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Width="24" Height="24" Kind="Cog"/>
                     <TextBlock Margin="4 0 0 0" VerticalAlignment="Center" Text="{x:Static loc:Resources.Settings}" />
                 </StackPanel>
             </Button>
-            <Button Name="AboutButton" Content="{materialDesign:PackIcon Kind=Help}" Click="AboutButton_Click"/>
+            <Button Name="AboutButton" Content="{materialDesign:PackIcon Kind=Help}" Click="AboutButton_Click" ToolTip="{x:Static loc:Resources.AboutTooltip}"/>
         </metro:WindowCommands>
     </metro:MetroWindow.RightWindowCommands>
 
@@ -41,9 +41,9 @@
             <Button Name="FileButton" Click="FileButton_Click" ToolTip="File" Content="{x:Static loc:Resources.File}">
                 <Button.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Name="OpenFolderMenu" Header="{x:Static loc:Resources.OpenFolderMenu}" Click="OpenFolderMenu_Click"/>
-                        <MenuItem Name="OpenFileMenu" Header="{x:Static loc:Resources.OpenFileMenu}" Click="OpenFileMenu_Click"/>
-                        <MenuItem Name="ExitMenu" Header="{x:Static loc:Resources.ExitMenu}" Click="ExitMenu_Click"/>
+                        <MenuItem Name="OpenFolderMenu" Header="{x:Static loc:Resources.OpenFolderMenu}" ToolTip="{x:Static loc:Resources.OpenFolderTooltip}" Click="OpenFolderMenu_Click"/>
+                        <MenuItem Name="OpenFileMenu" Header="{x:Static loc:Resources.OpenFileMenu}" ToolTip="{x:Static loc:Resources.OpenFileTooltip}" Click="OpenFileMenu_Click"/>
+                        <MenuItem Name="ExitMenu" Header="{x:Static loc:Resources.ExitMenu}" ToolTip="{x:Static loc:Resources.ExitTooltip}" Click="ExitMenu_Click"/>
                     </ContextMenu>
                 </Button.ContextMenu>
             </Button>
@@ -79,7 +79,7 @@
             <ComboBoxItem Content="PNG"/>
             <ComboBoxItem Content="JPEG"/>
         </ComboBox>
-        <Button Name="ConvertButton" Content="{x:Static loc:Resources.Convert}" Height="Auto" Margin="0,0,10,10" Click="ConvertButton_Click"  HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+        <Button Name="ConvertButton" Content="{x:Static loc:Resources.Convert}" ToolTip="{x:Static loc:Resources.ConvertTooltip}" Height="Auto" Margin="0,0,10,10" Click="ConvertButton_Click"  HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
         <materialDesign:Snackbar MessageQueue="{materialDesign:MessageQueue}" x:Name="SnackbarToaster" />
     </Grid>
 </metro:MetroWindow>

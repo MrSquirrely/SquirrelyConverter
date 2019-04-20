@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Image_Converter.Views"
+    xmlns:loc="clr-namespace:Image_Converter.Properties"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     x:Class="Image_Converter.Views.SettingsContent"
              mc:Ignorable="d" Width="390" Height="580">
@@ -11,38 +12,38 @@
         <TabControl>
             <TabItem Header="General">
                 <Grid Background="#FFE5E5E5">
-                    <CheckBox Name="GeneralBackup" Content="Backup" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                    <CheckBox Name="GeneralUseCustomFolder" Content="Use Custom Folder" Margin="94,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                    <TextBox Name="GeneralCustomFolder" HorizontalAlignment="Left" Height="23" Margin="10,33,0,0" TextWrapping="Wrap" Text="BACKUP" VerticalAlignment="Top" Width="276"/>
-                    <Button Name="GernalBrowseButton" Content="Browse" Style="{DynamicResource MaterialDesignToolButton}" HorizontalAlignment="Left" Margin="291,33,0,0" VerticalAlignment="Top" Width="83" Height="23" Click="GernalBrowseButton_Click"/>
-                    <CheckBox Name="GeneralPlaySound" Content="Play Sound When Finished" HorizontalAlignment="Left" Margin="10,61,0,0" VerticalAlignment="Top"/>
+                    <CheckBox Name="GeneralBackup" Content="{x:Static loc:Resources.Backup}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                    <CheckBox Name="GeneralUseCustomFolder" Content="{x:Static loc:Resources.UseCustomFolder}" Margin="10,33,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <TextBox Name="GeneralCustomFolder" Height="23" Margin="10,79,10,0" TextWrapping="Wrap" Text="BACKUP" VerticalAlignment="Top"/>
+                    <Button Name="GernalBrowseButton" Content="{x:Static loc:Resources.Browse}" Style="{DynamicResource MaterialDesignToolButton}" HorizontalAlignment="Right" Margin="0,107,10,0" VerticalAlignment="Top" Width="83" Height="23" Click="GernalBrowseButton_Click"/>
+                    <CheckBox Name="GeneralPlaySound" Content="{x:Static loc:Resources.PlaySound}" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
             <TabItem Header="WebP">
                 <Grid Background="#FFE5E5E5">
-                    <CheckBox Name="WebPLosses" Content="Lossless" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="True"/>
-                    <CheckBox Name="WebPEmulateJpeg" Content="Emulate Size Of Jpeg" HorizontalAlignment="Left" Margin="105,10,0,0" VerticalAlignment="Top"/>
-                    <CheckBox Name="WebPRemoveAlpha" Content="Remove Alpha" HorizontalAlignment="Left" Margin="261,10,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Quality:" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top"/>
-                    <mah:NumericUpDown Name="WebPQuality" HorizontalAlignment="Left" Height="23" Margin="65,34,0,0" Minimum="1" Maximum="100" Value="80" VerticalAlignment="Top" Width="70"  />
+                    <CheckBox Name="WebPLosses" Content="{x:Static loc:Resources.Lossless}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="True"/>
+                    <CheckBox Name="WebPEmulateJpeg" Content="{x:Static loc:Resources.EmulateJpeg}" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top"/>
+                    <CheckBox Name="WebPRemoveAlpha" Content="{x:Static loc:Resources.RemoveAlpha}" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top"/>
+                    <Label Content="{x:Static loc:Resources.Quality}" HorizontalAlignment="Left" Margin="10,79,0,0" VerticalAlignment="Top"/>
+                    <mah:NumericUpDown Name="WebPQuality" HorizontalAlignment="Left" Height="23" Margin="65,79,0,0" Minimum="1" Maximum="100" Value="80" VerticalAlignment="Top" Width="70"  />
                 </Grid>
             </TabItem>
             <TabItem Header="Jpeg">
                 <Grid Background="#FFE5E5E5">
-                    <Label Content="Quality:" HorizontalAlignment="Left" Margin="10,9,0,0" VerticalAlignment="Top"/>
+                    <Label Content="{x:Static loc:Resources.Quality}" HorizontalAlignment="Left" Margin="10,9,0,0" VerticalAlignment="Top"/>
                     <mah:NumericUpDown Name="JpegQuality" HorizontalAlignment="Left" Height="23" Margin="65,10,0,0" Minimum="1" Maximum="100" Value="80" VerticalAlignment="Top" Width="70" />
                 </Grid>
             </TabItem>
             <TabItem Header="Png">
                 <Grid Background="#FFE5E5E5">
-                    <CheckBox Name="PngLossess" Content="Lossless" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="True"/>
-                    <CheckBox Name="PngRemoveAlpha" Content="Remove Alpha" HorizontalAlignment="Left" Margin="109,10,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Quality:" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top"/>
-                    <mah:NumericUpDown Name="PngQuality" HorizontalAlignment="Left" Height="23" Margin="65,34,0,0" Minimum="1" Maximum="100" Value="80" VerticalAlignment="Top" Width="70" />
+                    <CheckBox Name="PngLossess" Content="{x:Static loc:Resources.Lossless}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="True"/>
+                    <CheckBox Name="PngRemoveAlpha" Content="{x:Static loc:Resources.RemoveAlpha}" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top"/>
+                    <Label Content="{x:Static loc:Resources.Quality}" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top"/>
+                    <mah:NumericUpDown Name="PngQuality" HorizontalAlignment="Left" Height="23" Margin="65,56,0,0" Minimum="1" Maximum="100" Value="80" VerticalAlignment="Top" Width="70" />
                 </Grid>
             </TabItem>
         </TabControl>
-        <Button Name="SaveButton" Content="Save" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Click="SaveButton_Click"/>
-        <Button Name="ResetButton" Content="Reset" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" Click="ResetButton_Click"/>
+        <Button Name="SaveButton" Content="{x:Static loc:Resources.Save}" ToolTip="{x:Static loc:Resources.SaveTooltip}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Click="SaveButton_Click"/>
+        <Button Name="ResetButton" Content="{x:Static loc:Resources.Reset}" ToolTip="{x:Static loc:Resources.ResetTooltip}" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" Click="ResetButton_Click"/>
     </Grid>
 </UserControl>
