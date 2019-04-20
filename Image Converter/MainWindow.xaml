@@ -22,7 +22,7 @@
     <metro:MetroWindow.WindowButtonCommands>
         <metro:WindowButtonCommands Style="{DynamicResource MahApps.Metro.Styles.WindowButtonCommands.Win10}" />
     </metro:MetroWindow.WindowButtonCommands>
-    
+
     <metro:MetroWindow.RightWindowCommands>
         <metro:WindowCommands>
             <Button Name="BugButton" Content="{materialDesign:PackIcon Kind=BugReport}" Click="BugButton_Click"/>
@@ -35,7 +35,7 @@
             <Button Name="AboutButton" Content="{materialDesign:PackIcon Kind=Help}" Click="AboutButton_Click"/>
         </metro:WindowCommands>
     </metro:MetroWindow.RightWindowCommands>
-    
+
     <metro:MetroWindow.LeftWindowCommands>
         <metro:WindowCommands>
             <Button Name="FileButton" Click="FileButton_Click" ToolTip="File" Content="{x:Static loc:Resources.File}">
@@ -57,7 +57,6 @@
     </metro:MetroWindow.Flyouts>
 
     <Grid>
-        
         <ListView Name="ImageList" Drop="ImageList_Drop" AllowDrop="True">
             <ListView.View>
                 <GridView>
@@ -81,5 +80,6 @@
             <ComboBoxItem Content="JPEG"/>
         </ComboBox>
         <Button Name="ConvertButton" Content="{x:Static loc:Resources.Convert}" Height="Auto" Margin="0,0,10,10" Click="ConvertButton_Click"  HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+        <materialDesign:Snackbar MessageQueue="{materialDesign:MessageQueue}" x:Name="SnackbarToaster" />
     </Grid>
 </metro:MetroWindow>

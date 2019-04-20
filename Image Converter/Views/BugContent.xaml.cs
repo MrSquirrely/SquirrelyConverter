@@ -1,25 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Image_Converter.Code;
+using MaterialDesignThemes.Wpf;
+using Octokit;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Image_Converter.Views {
     /// <summary>
     /// Interaction logic for BugContent.xaml
     /// </summary>
     public partial class BugContent : UserControl {
+
+        private string QuoteToUse { get; set; }
+
         public BugContent() {
             InitializeComponent();
+            QuoteToUse = Utilities.GetQuote();
+            BodyContent.Text = QuoteToUse;
+        }
+
+        //! The token is located in a class called Github located in the folder "Code"
+        private async void SubmitButton_Click(object sender, RoutedEventArgs e) {
+
+            if (BodyContent.Text != QuoteToUse && TitleContent.Text != "Example Bug Title") {
+                GitHubClient client = new GitHubClient(new ProductHeaderValue("imageConverter"));
+                Credentials credentials = new Credentials(Github.token);
+                client.Credentials = credentials;
+
+                NewIssue createIssue = new NewIssue(TitleContent.Text) { Body = BodyContent.Text };
+                ComboBoxItem selectedItem = (ComboBoxItem)IssueTypeBox.SelectedItem;
+                switch (selectedItem.Content) {
+                    case "Bug":
+                        createIssue.Labels.Add("bug");
+                        break;
+                    default:
+                        createIssue.Labels.Add("enhancement");
+                        break;
+                }
+                Issue issue = await client.Issue.Create("MrSquirrelyNet", "SquirrelyConverter", createIssue);
+            }else if (BodyContent.Text == QuoteToUse) {
+                ShowError("You must change the title text.");
+            }else if (TitleContent.Text == "Example Bug Title") {
+                ShowError("You must change the body content.");
+            }
+        }
+
+        private void ShowError(string message) {
+            DialogButton.Content = "CLOSE";
+            DialogTitle.Text = "ERROR";
+            DialogMessage.Text = message;
+            DialogHost.IsOpen = true;
+        }
+
+        private void DialogButton_Click(object sender, RoutedEventArgs e) {
+            DialogHost.IsOpen = false;
         }
     }
 }

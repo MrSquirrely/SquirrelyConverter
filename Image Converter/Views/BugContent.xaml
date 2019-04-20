@@ -4,25 +4,55 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Image_Converter.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              Width="390" Height="580">
     <Grid>
+        <materialDesign:DialogHost Name="DialogHost" CloseOnClickAway="True" IsOpen="False">
+            <materialDesign:DialogHost.DialogContent>
+                <Grid>
+                    <!--<Border x:Name="Custom" Padding="20">
+                        <Frame x:Name="Frame" />
+                    </Border>-->
+                    <Border x:Name="Default" Padding="20">
+                        <StackPanel>
+                            <TextBlock x:Name="DialogTitle" Margin="10,10,10,0" MinWidth="300" MaxWidth="300"
+                                       FontSize="30" TextWrapping="Wrap" FontWeight="Bold">
+                                Why no possible timetable?
+                            </TextBlock>
+                            <TextBlock x:Name="DialogMessage" Margin="10" FontSize="20" MinWidth="300"
+                                       MaxWidth="300"
+                                       TextWrapping="Wrap">
+                                Please make sure you copied the correct content and is using Google Chrome
+                            </TextBlock>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button x:Name="DialogButton" materialDesign:ShadowAssist.ShadowDepth="Depth0"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        Margin="10,10,0,0" HorizontalAlignment="Center" FontSize="20" Height="40"
+                                        Click="DialogButton_Click">
+                                    Right
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
         <Label Content="Submit bug or Feature request" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <Label Content="Title:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
-        <TextBox Height="23" Margin="10,67,10,0" TextWrapping="Wrap" Text="Example Bug Title" VerticalAlignment="Top"/>
+        <TextBox Name="TitleContent" Height="23" Margin="10,67,10,0" TextWrapping="Wrap" Text="Example Bug Title" VerticalAlignment="Top"/>
         <Label Content="Bug or Feature:" HorizontalAlignment="Left" Margin="10,95,0,0" VerticalAlignment="Top"/>
-        <RichTextBox Margin="10,121,10,47" Background="Transparent">
+        <RichTextBox  Margin="10,121,10,47" Background="Transparent">
             <FlowDocument>
-                <Paragraph>
-                    <Run Text="Example Bug"/>
+                <Paragraph >
+                    <Run Name="BodyContent" Text="Example Bug"/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <Button Content="Submit" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="84"/>
-        <ComboBox Margin="10,0,99,10" VerticalAlignment="Bottom" Height="32" SelectedIndex="0">
+        <Button Name="SubmitButton" Content="Submit" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="84" Click="SubmitButton_Click"/>
+        <ComboBox Name="IssueTypeBox" Margin="10,0,99,10" VerticalAlignment="Bottom" Height="32" SelectedIndex="0">
             <ComboBoxItem Content="Bug"/>
             <ComboBoxItem Content="Feature"/>
         </ComboBox>
-
     </Grid>
 </UserControl>

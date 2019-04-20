@@ -3,7 +3,9 @@ using Image_Converter.Views;
 using MaterialDesignThemes.Wpf;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Media;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,23 +19,18 @@ namespace Image_Converter {
     public partial class MainWindow {
 
         private double FlyoutWidth => (Width / 3) + (Width / 6);
+        private bool IsFinished = false;
+        private string SelectedType { get; set; }
 
         private ThreadStart ConvertThreadStart { get; set; }
         private Thread ConvertThread { get; set; }
         private ThreadStart UpdateThreadStart { get; set; }
         private Thread UpdateThread { get; set; }
-        private bool IsFinished = false;
-
-        
-
-        private string SelectedType { get; set; }
 
         public MainWindow() {
-            //! This is only for testing, When 1.0 comes out I'll remove the German translation all together
-            //x Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("de");
             InitializeComponent();
             Utilities.ImageListView = ImageList;
-
+            Utilities.messageQueue = SnackbarToaster.MessageQueue;
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e) => OpenFlyout(new SettingsContent(), Properties.Resources.Settings);
@@ -57,7 +54,15 @@ namespace Image_Converter {
                 IsFolderPicker = true
             };
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok) {
-                //Todo: Add code to scan threw folder
+                List<string> files = new List<string>();
+                foreach (string type in Filters.ImageTypes) {
+                    IEnumerable<string> scannedFiles = Directory.EnumerateFiles(dialog.FileName, $"*{type}", SearchOption.TopDirectoryOnly);
+                    foreach (string file in scannedFiles) {
+                        files.Add(file);
+                    }
+                }
+                Utilities.PopulateList(files.ToArray());
+                Utilities.ImageListView.ItemsSource = Utilities.ImageCollection;
             }
         }
 
@@ -115,8 +120,6 @@ namespace Image_Converter {
             }
         }
 
-        
-
         private void ConvertButton_Click(object sender, RoutedEventArgs e) {
             IsFinished = false;
             ComboBoxItem selectedItem = (ComboBoxItem)TypeSelector.SelectedItem;
@@ -125,6 +128,11 @@ namespace Image_Converter {
             ConvertThreadStart = Converter.StartConvert;
             ConvertThreadStart += () => {
                 IsFinished = true;
+                Utilities.SendSnackbarMessage("Conversion Finished");
+                if (Properties.Settings.Default.General_PlaySound) {
+                    SoundPlayer player = new SoundPlayer("finished.wav");
+                    player.Play();
+                }
             };
             ConvertThread = new Thread(ConvertThreadStart);
             ConvertThread.Start();
