@@ -55,7 +55,6 @@ namespace Image_Converter.Code {
                 catch (Exception ex) {
                     Logger.Instance.LogError(ex);
                 }
-
             }
         }
 

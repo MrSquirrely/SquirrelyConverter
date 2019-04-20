@@ -15,7 +15,6 @@ namespace Image_Converter.Views {
             string content = File.ReadAllText("README.md");
             FlowDocument doc = MarkdownXaml.ToFlowDocument(content, new MarkdownPipelineBuilder().UseXamlSupportedExtensions().Build());
             AboutViewer.Document = doc;
-
         }
     }
 }

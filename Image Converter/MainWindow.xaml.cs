@@ -17,7 +17,6 @@ namespace Image_Converter {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow {
-
         private double FlyoutWidth => (Width / 3) + (Width / 6);
         private bool IsFinished = false;
         private string SelectedType { get; set; }
@@ -88,7 +87,6 @@ namespace Image_Converter {
                 }
                 Utilities.ImageListView.ItemsSource = Utilities.ImageCollection;
             }
-
         }
 
         private void ExitMenu_Click(object sender, RoutedEventArgs e) => Environment.Exit(0);

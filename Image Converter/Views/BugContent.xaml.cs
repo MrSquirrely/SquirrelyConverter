@@ -9,7 +9,6 @@ namespace Image_Converter.Views {
     /// Interaction logic for BugContent.xaml
     /// </summary>
     public partial class BugContent : UserControl {
-
         private string QuoteToUse { get; set; }
 
         public BugContent() {
@@ -20,7 +19,6 @@ namespace Image_Converter.Views {
 
         //! The token is located in a class called Github located in the folder "Code"
         private async void SubmitButton_Click(object sender, RoutedEventArgs e) {
-
             if (BodyContent.Text != QuoteToUse && TitleContent.Text != "Example Bug Title") {
                 GitHubClient client = new GitHubClient(new ProductHeaderValue("imageConverter"));
                 Credentials credentials = new Credentials(Github.token);
