@@ -1,6 +1,7 @@
-﻿using Image_Converter.Code;
+﻿using HandyControl.Controls;
+using Image_Converter.Code;
 using Image_Converter.Views;
-using MaterialDesignThemes.Wpf;
+using MahApps.Metro.IconPacks;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -17,36 +18,22 @@ namespace Image_Converter {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow {
-        private double FlyoutWidth => (Width / 3) + (Width / 6);
-        private bool IsFinished = false;
-        private string SelectedType { get; set; }
-
-        private ThreadStart ConvertThreadStart { get; set; }
-        private Thread ConvertThread { get; set; }
-        private ThreadStart UpdateThreadStart { get; set; }
-        private Thread UpdateThread { get; set; }
-
+        
         public MainWindow() {
             InitializeComponent();
-            Utilities.ImageListView = ImageList;
-            Utilities.messageQueue = SnackbarToaster.MessageQueue;
-            Utilities.flyout = FlyoutControl;
+            Content = new MainPage();
         }
 
-        private void SettingsButton_Click(object sender, RoutedEventArgs e) => OpenFlyout(new SettingsContent(), Properties.Resources.Settings);
-        private void AboutButton_Click(object sender, RoutedEventArgs e) => OpenFlyout(new AboutContent(), Properties.Resources.About);
-        private void BugButton_Click(object sender, RoutedEventArgs e) => OpenFlyout(new BugContent(), Properties.Resources.BugsOrFeatures);
+        private void SettingsButton_Click(object sender, RoutedEventArgs e) => OpenWindow(new SettingsContent(), Properties.Resources.Settings);
+        private void AboutButton_Click(object sender, RoutedEventArgs e) => OpenWindow(new AboutContent(), Properties.Resources.About);
+        private void BugButton_Click(object sender, RoutedEventArgs e) => OpenWindow(new BugContent(), Properties.Resources.BugsOrFeatures);
 
-        private void OpenFlyout(UserControl content, string header) {
-            content.Width = FlyoutWidth;
-            content.Height = FlyoutControl.Height;
-            FlyoutControl.Content = content;
-            FlyoutControl.Header = header;
-            FlyoutControl.Width = FlyoutWidth;
-            FlyoutControl.IsOpen = true;
+        private void OpenWindow(UserControl content, string title) {
+            BlurWindow window = new BlurWindow {
+                Title = title,
+                Content = content
+            };
         }
-
-        private void FileButton_Click(object sender, RoutedEventArgs e) => FileButton.ContextMenu.IsOpen = true;
 
         private void OpenFolderMenu_Click(object sender, RoutedEventArgs e) {
             CommonOpenFileDialog dialog = new CommonOpenFileDialog {
@@ -81,7 +68,7 @@ namespace Image_Converter {
                         FileName = Path.GetFileNameWithoutExtension(file),
                         FileType = fileInfo.Extension,
                         FileSize = Utilities.SizeSuffix(fileInfo.Length),
-                        FileIcon = PackIconKind.Close,
+                        FileIcon = new PackIconMaterial { Kind = PackIconMaterialKind.Close },
                         FileColor = Brushes.Red,
                         FileLocation = fileInfo.DirectoryName
                     });
@@ -93,52 +80,42 @@ namespace Image_Converter {
         private void ExitMenu_Click(object sender, RoutedEventArgs e) => Environment.Exit(0);
 
         private void ImageList_Drop(object sender, DragEventArgs e) {
-            Utilities.PopulateList(e.Data.GetData(DataFormats.FileDrop) as string[]);
-            Utilities.ImageListView.ItemsSource = Utilities.ImageCollection;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e) {
-            IsFinished = false;
-            ConvertThreadStart = Update;
-            ConvertThreadStart += () => {
-                IsFinished = true;
-            };
-            Thread thread = new Thread(ConvertThreadStart);
-            thread.Start();
+            //Utilities.PopulateList(e.Data.GetData(DataFormats.FileDrop) as string[]);
+            //Utilities.ImageListView.ItemsSource = Utilities.ImageCollection;
         }
 
         private void Update() {
-            while (!IsFinished) {
-                foreach (ImageInfo info in Utilities.ImageCollection) {
-                    if (File.Exists($"{info.FileLocation}\\{info.FileName}.{SelectedType}")) {
-                        info.FileIcon = PackIconKind.Check;
-                        info.FileColor = Brushes.Green;
-                        Utilities.ImageListView.Dispatcher.Invoke(() => { Utilities.ImageListView.Items.Refresh(); }, DispatcherPriority.Background);
-                    }
-                }
-            }
+            //while (!IsFinished) {
+            //    foreach (ImageInfo info in Utilities.ImageCollection) {
+            //        if (File.Exists($"{info.FileLocation}\\{info.FileName}.{SelectedType}")) {
+            //            info.FileIcon = PackIconKind.Check;
+            //            info.FileColor = Brushes.Green;
+            //            Utilities.ImageListView.Dispatcher.Invoke(() => { Utilities.ImageListView.Items.Refresh(); }, DispatcherPriority.Background);
+            //        }
+            //    }
+            //}
         }
 
         private void ConvertButton_Click(object sender, RoutedEventArgs e) {
-            IsFinished = false;
-            ComboBoxItem selectedItem = (ComboBoxItem)TypeSelector.SelectedItem;
-            SelectedType = selectedItem.Content.ToString().ToLower();
-            Converter.SelectedType = SelectedType;
-            ConvertThreadStart = Converter.StartConvert;
-            ConvertThreadStart += () => {
-                IsFinished = true;
-                Utilities.SendSnackbarMessage("Conversion Finished");
-                if (Properties.Settings.Default.General_PlaySound) {
-                    SoundPlayer player = new SoundPlayer("finished.wav");
-                    player.Play();
-                }
-            };
-            ConvertThread = new Thread(ConvertThreadStart);
-            ConvertThread.Start();
+            //IsFinished = false;
+            //ComboBoxItem selectedItem = (ComboBoxItem)TypeSelector.SelectedItem;
+            //SelectedType = selectedItem.Content.ToString().ToLower();
+            //Converter.SelectedType = SelectedType;
+            //ConvertThreadStart = Converter.StartConvert;
+            //ConvertThreadStart += () => {
+            //    IsFinished = true;
+            //    Utilities.SendSnackbarMessage("Conversion Finished");
+            //    if (Properties.Settings.Default.General_PlaySound) {
+            //        SoundPlayer player = new SoundPlayer("finished.wav");
+            //        player.Play();
+            //    }
+            //};
+            //ConvertThread = new Thread(ConvertThreadStart);
+            //ConvertThread.Start();
 
-            UpdateThreadStart = Update;
-            UpdateThread = new Thread(UpdateThreadStart);
-            UpdateThread.Start();
+            //UpdateThreadStart = Update;
+            //UpdateThread = new Thread(UpdateThreadStart);
+            //UpdateThread.Start();
         }
     }
 }

@@ -1,85 +1,39 @@
-﻿<metro:MetroWindow 
+﻿<handy:BlurWindow
     x:Class="Image_Converter.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:handy="clr-namespace:HandyControl.Controls;assembly=HandyControl"
     xmlns:loc="clr-namespace:Image_Converter.Properties"
-    GlowBrush="{DynamicResource AccentColorBrush}"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     BorderThickness="1"
     TextElement.FontWeight="Medium"
     TextElement.FontSize="14"
+    Style="{StaticResource WindowBlur}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-    mc:Ignorable="d"
-    
-    RightWindowCommandsOverlayBehavior="Never"
-    WindowButtonCommandsOverlayBehavior="Never"
-    
+    mc:Ignorable="d"    
     Title="{x:Static loc:Resources.ImageConverter}" Height="720" Width="1280">
 
-    <metro:MetroWindow.WindowButtonCommands>
-        <metro:WindowButtonCommands Style="{DynamicResource MahApps.Metro.Styles.WindowButtonCommands.Win10}" />
-    </metro:MetroWindow.WindowButtonCommands>
-
-    <metro:MetroWindow.RightWindowCommands>
-        <metro:WindowCommands>
-            <Button Name="BugButton" Content="{materialDesign:PackIcon Kind=BugReport}" Click="BugButton_Click" ToolTip="{x:Static loc:Resources.BugsTooltip}"/>
+    <handy:Window.NonClientAreaContent>
+        <StackPanel VerticalAlignment="Stretch" Orientation="Horizontal">
+            <Menu>
+                <MenuItem Name="OpenFolderMenu" Header="{x:Static loc:Resources.OpenFolderMenu}" ToolTip="{x:Static loc:Resources.OpenFolderTooltip}" Click="OpenFolderMenu_Click"/>
+                <MenuItem Name="OpenFileMenu" Header="{x:Static loc:Resources.OpenFileMenu}" ToolTip="{x:Static loc:Resources.OpenFileTooltip}" Click="OpenFileMenu_Click"/>
+                <MenuItem Name="ExitMenu" Header="{x:Static loc:Resources.ExitMenu}" ToolTip="{x:Static loc:Resources.ExitTooltip}" Click="ExitMenu_Click"/>
+            </Menu>
+            <Button Name="BugButton" Content="{iconPacks:Material Kind=BugReport}" Click="BugButton_Click" ToolTip="{x:Static loc:Resources.BugsTooltip}"/>
             <Button Name="SettingsButton" Click="SettingsButton_Click" ToolTip="{x:Static loc:Resources.SettingsTooltip}">
                 <StackPanel Orientation="Horizontal">
-                    <materialDesign:PackIcon Width="24" Height="24" Kind="Cog"/>
+                    <iconPacks:Material Width="24" Height="24" Kind="Settings"/>
                     <TextBlock Margin="4 0 0 0" VerticalAlignment="Center" Text="{x:Static loc:Resources.Settings}" />
                 </StackPanel>
             </Button>
-            <Button Name="AboutButton" Content="{materialDesign:PackIcon Kind=Help}" Click="AboutButton_Click" ToolTip="{x:Static loc:Resources.AboutTooltip}"/>
-        </metro:WindowCommands>
-    </metro:MetroWindow.RightWindowCommands>
-
-    <metro:MetroWindow.LeftWindowCommands>
-        <metro:WindowCommands>
-            <Button Name="FileButton" Click="FileButton_Click" ToolTip="File" Content="{x:Static loc:Resources.File}">
-                <Button.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Name="OpenFolderMenu" Header="{x:Static loc:Resources.OpenFolderMenu}" ToolTip="{x:Static loc:Resources.OpenFolderTooltip}" Click="OpenFolderMenu_Click"/>
-                        <MenuItem Name="OpenFileMenu" Header="{x:Static loc:Resources.OpenFileMenu}" ToolTip="{x:Static loc:Resources.OpenFileTooltip}" Click="OpenFileMenu_Click"/>
-                        <MenuItem Name="ExitMenu" Header="{x:Static loc:Resources.ExitMenu}" ToolTip="{x:Static loc:Resources.ExitTooltip}" Click="ExitMenu_Click"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
-            </Button>
-        </metro:WindowCommands>
-    </metro:MetroWindow.LeftWindowCommands>
-
-    <metro:MetroWindow.Flyouts>
-        <metro:FlyoutsControl>
-            <metro:Flyout x:Name="FlyoutControl" Header="{x:Static loc:Resources.Settings}" Position="Right" Width="200"/>
-        </metro:FlyoutsControl>
-    </metro:MetroWindow.Flyouts>
+            <Button Name="AboutButton" Content="{iconPacks:Material Kind=Help}" Click="AboutButton_Click" ToolTip="{x:Static loc:Resources.AboutTooltip}"/>
+        </StackPanel>
+    </handy:Window.NonClientAreaContent>
 
     <Grid>
-        <ListView Name="ImageList" Drop="ImageList_Drop" AllowDrop="True">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding FileName}" Header="{x:Static loc:Resources.FileName}" Width="500"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding FileType}" Header="{x:Static loc:Resources.FileType}" />
-                    <GridViewColumn DisplayMemberBinding="{Binding FileSize}" Header="{x:Static loc:Resources.FileSize}" />
-                    <GridViewColumn Header="{x:Static loc:Resources.FileConverted}">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <materialDesign:PackIcon Kind="{Binding FileIcon}" Foreground="{Binding FileColor}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding FileLocation}" Header="{x:Static loc:Resources.FileLocation}" Width="500"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <ComboBox Name="TypeSelector" Height="25" Width="120" Margin="0,0,97,10" HorizontalAlignment="Right" VerticalAlignment="Bottom" SelectedIndex="0">
-            <ComboBoxItem Content="WEBP"/>
-            <ComboBoxItem Content="PNG"/>
-            <ComboBoxItem Content="JPEG"/>
-        </ComboBox>
-        <Button Name="ConvertButton" Content="{x:Static loc:Resources.Convert}" ToolTip="{x:Static loc:Resources.ConvertTooltip}" Height="Auto" Margin="0,0,10,10" Click="ConvertButton_Click"  HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
-        <materialDesign:Snackbar MessageQueue="{materialDesign:MessageQueue}" x:Name="SnackbarToaster" />
+        
     </Grid>
-</metro:MetroWindow>
+</handy:BlurWindow>
