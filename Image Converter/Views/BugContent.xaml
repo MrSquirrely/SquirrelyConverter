@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              Width="390" Height="580">
     <Grid>
-        <materialDesign:DialogHost Name="DialogHost" CloseOnClickAway="True" IsOpen="False">
+        <!--<materialDesign:DialogHost Name="DialogHost" CloseOnClickAway="True" IsOpen="False">
             <materialDesign:DialogHost.DialogContent>
                 <Grid>
                     <Border x:Name="Default" Padding="20">
@@ -29,7 +29,7 @@
                     </Border>
                 </Grid>
             </materialDesign:DialogHost.DialogContent>
-        </materialDesign:DialogHost>
+        </materialDesign:DialogHost>-->
 
         <Label Content="{x:Static loc:Resources.SubmitBug}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <Label Content="{x:Static loc:Resources.BugTitle}" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>

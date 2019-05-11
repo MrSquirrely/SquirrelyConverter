@@ -25,13 +25,13 @@
                     <CheckBox Name="WebPEmulateJpeg" Content="{x:Static loc:Resources.EmulateJpeg}" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top"/>
                     <CheckBox Name="WebPRemoveAlpha" Content="{x:Static loc:Resources.RemoveAlpha}" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top"/>
                     <Label Content="{x:Static loc:Resources.Quality}" HorizontalAlignment="Left" Margin="10,79,0,0" VerticalAlignment="Top"/>
-                    <mah:NumericUpDown Name="WebPQuality" HorizontalAlignment="Left" Height="23" Margin="65,79,0,0" Minimum="1" Maximum="100" Value="80" VerticalAlignment="Top" Width="70"  />
+                    <!--<mah:NumericUpDown Name="WebPQuality" HorizontalAlignment="Left" Height="23" Margin="65,79,0,0" Minimum="1" Maximum="100" Value="80" VerticalAlignment="Top" Width="70"  />-->
                 </Grid>
             </TabItem>
             <TabItem Header="Jpeg">
                 <Grid Background="#FFE5E5E5">
                     <Label Content="{x:Static loc:Resources.Quality}" HorizontalAlignment="Left" Margin="10,9,0,0" VerticalAlignment="Top"/>
-                    <mah:NumericUpDown Name="JpegQuality" HorizontalAlignment="Left" Height="23" Margin="65,10,0,0" Minimum="1" Maximum="100" Value="80" VerticalAlignment="Top" Width="70" />
+                    <!--<mah:NumericUpDown Name="JpegQuality" HorizontalAlignment="Left" Height="23" Margin="65,10,0,0" Minimum="1" Maximum="100" Value="80" VerticalAlignment="Top" Width="70" />-->
                 </Grid>
             </TabItem>
             <TabItem Header="Png">
@@ -39,7 +39,7 @@
                     <CheckBox Name="PngLossess" Content="{x:Static loc:Resources.Lossless}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="True"/>
                     <CheckBox Name="PngRemoveAlpha" Content="{x:Static loc:Resources.RemoveAlpha}" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top"/>
                     <Label Content="{x:Static loc:Resources.Quality}" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top"/>
-                    <mah:NumericUpDown Name="PngQuality" HorizontalAlignment="Left" Height="23" Margin="65,56,0,0" Minimum="1" Maximum="100" Value="80" VerticalAlignment="Top" Width="70" />
+                    <!--<mah:NumericUpDown Name="PngQuality" HorizontalAlignment="Left" Height="23" Margin="65,56,0,0" Minimum="1" Maximum="100" Value="80" VerticalAlignment="Top" Width="70" />-->
                 </Grid>
             </TabItem>
         </TabControl>

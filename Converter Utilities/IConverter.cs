@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Converter_Utilities {
-    class GithubToken {
-       private static string token = "e0825c595b926f36def7456bae25463c56410af8";
+    public interface IConverter {
+        object MainPage { get; }
+        object SEttingsPage { get; }
+        //Info? Maybe do something here?
     }
 }

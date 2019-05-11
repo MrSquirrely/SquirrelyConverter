@@ -20,13 +20,13 @@ namespace Image_Converter.Views {
             WebPLosses.IsChecked = Properties.Settings.Default.WebP_Lossless;
             WebPEmulateJpeg.IsChecked = Properties.Settings.Default.WebP_EmulateJpeg;
             WebPRemoveAlpha.IsChecked = Properties.Settings.Default.WebP_RemoveAlpha;
-            WebPQuality.Value = Properties.Settings.Default.WebP_Quality;
+            //WebPQuality.Value = Properties.Settings.Default.WebP_Quality;
             //!Jpeg Settings
-            JpegQuality.Value = Properties.Settings.Default.Jpeg_Quality;
+            //JpegQuality.Value = Properties.Settings.Default.Jpeg_Quality;
             //!Png Settings
             PngLossess.IsChecked = Properties.Settings.Default.Png_Lossless;
             PngRemoveAlpha.IsChecked = Properties.Settings.Default.Png_RemoveAlpha;
-            PngQuality.Value = Properties.Settings.Default.Png_Quality;
+            //PngQuality.Value = Properties.Settings.Default.Png_Quality;
         }
 
         private void GernalBrowseButton_Click(object sender, RoutedEventArgs e) {
@@ -49,17 +49,17 @@ namespace Image_Converter.Views {
             Properties.Settings.Default.WebP_Lossless = WebPLosses.IsChecked.Value;
             Properties.Settings.Default.WebP_EmulateJpeg = WebPEmulateJpeg.IsChecked.Value;
             Properties.Settings.Default.WebP_RemoveAlpha = WebPRemoveAlpha.IsChecked.Value;
-            Properties.Settings.Default.WebP_Quality = (int)WebPQuality.Value;
+            //Properties.Settings.Default.WebP_Quality = (int)WebPQuality.Value;
             //! Jpeg Settings
-            Properties.Settings.Default.Jpeg_Quality = (int)JpegQuality.Value;
+            //Properties.Settings.Default.Jpeg_Quality = (int)JpegQuality.Value;
             //! Png Settings
             Properties.Settings.Default.Png_Lossless = PngLossess.IsChecked.Value;
             Properties.Settings.Default.Png_RemoveAlpha = PngRemoveAlpha.IsChecked.Value;
-            Properties.Settings.Default.Png_Quality = (int)PngQuality.Value;
+            //Properties.Settings.Default.Png_Quality = (int)PngQuality.Value;
             //! Save the settings
             Properties.Settings.Default.Save();
 
-            Utilities.flyout.IsOpen = false;
+            //Utilities.flyout.IsOpen = false;
         }
 
         private void ResetButton_Click(object sender, RoutedEventArgs e) {
@@ -71,13 +71,13 @@ namespace Image_Converter.Views {
             WebPLosses.IsChecked = true;
             WebPEmulateJpeg.IsChecked = false;
             WebPRemoveAlpha.IsChecked = false;
-            WebPQuality.Value = 80;
+            //WebPQuality.Value = 80;
             //!Jpeg Settings
-            JpegQuality.Value = 80;
+            //JpegQuality.Value = 80;
             //!Png Settings
             PngLossess.IsChecked = true;
             PngRemoveAlpha.IsChecked = false;
-            PngQuality.Value = 80;
+            //PngQuality.Value = 80;
         }
     }
 }

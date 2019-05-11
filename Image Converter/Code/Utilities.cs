@@ -1,5 +1,4 @@
-﻿using MahApps.Metro.Controls;
-using MaterialDesignThemes.Wpf;
+﻿using MahApps.Metro.IconPacks;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,8 +16,8 @@ namespace Image_Converter.Code {
 
         static readonly string[] SizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
 
-        public static SnackbarMessageQueue messageQueue { get; set; }
-        public static Flyout flyout { get; set; }
+        //public static SnackbarMessageQueue messageQueue { get; set; }
+        //public static Flyout flyout { get; set; }
 
         public static string SizeSuffix(long value, int decimalPlaces = 1) {
             if (value < 0) {
@@ -42,7 +41,7 @@ namespace Image_Converter.Code {
                         FileName = Path.GetFileNameWithoutExtension(file),
                         FileType = fileInfo.Extension,
                         FileSize = SizeSuffix(fileInfo.Length),
-                        FileIcon = PackIconKind.Close,
+                        FileIcon = PackIconMaterialKind.Close,
                         FileColor = Brushes.Red,
                         FileLocation = fileInfo.DirectoryName
                     });
@@ -50,7 +49,9 @@ namespace Image_Converter.Code {
             }
         }
 
-        public static void SendSnackbarMessage(string message) => Task.Factory.StartNew(() => messageQueue.Enqueue(message));
+        public static void SendSnackbarMessage(string message) {
+            //Task.Factory.StartNew(() => messageQueue.Enqueue(message));
+        }
 
         private static List<string> Quotes = new List<string>() {
             "“I recommend you take care of the minutes and the hours will take care of themselves.” – Earl of Chesterfield",
