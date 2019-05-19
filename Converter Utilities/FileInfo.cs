@@ -1,8 +1,8 @@
 ﻿using MahApps.Metro.IconPacks;
 using System.Windows.Media;
 
-namespace Image_Converter.Code {
-    public class ImageInfo {
+namespace Converter_Utilities {
+    public class FileInfo {
         public string FileName { get; set; }
         public string FileType { get; set; }
         public string FileSize { get; set; }

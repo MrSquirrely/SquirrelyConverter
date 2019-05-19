@@ -13,12 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Image_Converter.Views {
+namespace ImageConverter.Views {
     /// <summary>
-    /// Interaction logic for BugsPage.xaml
+    /// Interaction logic for ImagePage.xaml
     /// </summary>
-    public partial class BugsPage : Page {
-        public BugsPage() {
+    public partial class ImagePage : Page {
+        public ImagePage() {
             InitializeComponent();
         }
     }

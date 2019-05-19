@@ -1,5 +1,4 @@
 ﻿using Image_Converter.Code;
-using MaterialDesignThemes.Wpf;
 using Octokit;
 using System.Windows;
 using System.Windows.Controls;
@@ -40,18 +39,18 @@ namespace Image_Converter.Views {
             }else if (TitleContent.Text == "Example Bug Title") {
                 ShowError("You must change the body content.");
             }
-            Utilities.flyout.IsOpen = false;
+            //Utilities.flyout.IsOpen = false;
         }
 
         private void ShowError(string message) {
-            DialogButton.Content = "CLOSE";
-            DialogTitle.Text = "ERROR";
-            DialogMessage.Text = message;
-            DialogHost.IsOpen = true;
+            //DialogButton.Content = "CLOSE";
+            //DialogTitle.Text = "ERROR";
+            //DialogMessage.Text = message;
+            //DialogHost.IsOpen = true;
         }
 
         private void DialogButton_Click(object sender, RoutedEventArgs e) {
-            DialogHost.IsOpen = false;
+            //DialogHost.IsOpen = false;
         }
     }
 }

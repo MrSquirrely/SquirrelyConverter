@@ -13,7 +13,7 @@
     Style="{StaticResource WindowBlur}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
     mc:Ignorable="d"    
-    Title="{x:Static loc:Resources.ImageConverter}" Height="720" Width="1280">
+    Title="{x:Static loc:Resources.ImageConverter}" Height="720" Width="1280" Closed="BlurWindow_Closed">
 
     <handy:Window.NonClientAreaContent>
         <StackPanel VerticalAlignment="Stretch" Orientation="Horizontal">
@@ -22,10 +22,10 @@
                 <MenuItem Name="OpenFileMenu" Header="{x:Static loc:Resources.OpenFileMenu}" ToolTip="{x:Static loc:Resources.OpenFileTooltip}" Click="OpenFileMenu_Click"/>
                 <MenuItem Name="ExitMenu" Header="{x:Static loc:Resources.ExitMenu}" ToolTip="{x:Static loc:Resources.ExitTooltip}" Click="ExitMenu_Click"/>
             </Menu>
-            <Button Name="BugButton" Content="{iconPacks:Material Kind=BugReport}" Click="BugButton_Click" ToolTip="{x:Static loc:Resources.BugsTooltip}"/>
+            <Button Name="BugButton" Content="{iconPacks:Material Kind=Bug}" Click="BugButton_Click" ToolTip="{x:Static loc:Resources.BugsTooltip}"/>
             <Button Name="SettingsButton" Click="SettingsButton_Click" ToolTip="{x:Static loc:Resources.SettingsTooltip}">
                 <StackPanel Orientation="Horizontal">
-                    <iconPacks:Material Width="24" Height="24" Kind="Settings"/>
+                    <iconPacks:PackIconMaterial Width="24" Height="24" Kind="Settings"/>
                     <TextBlock Margin="4 0 0 0" VerticalAlignment="Center" Text="{x:Static loc:Resources.Settings}" />
                 </StackPanel>
             </Button>

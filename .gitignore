@@ -332,3 +332,4 @@ ASALocalRun/
 .mfractor/
 Image Converter/Code/Github.cs
 Image Converter/gif2webp.exe
+Converter Utilities/Token.cs

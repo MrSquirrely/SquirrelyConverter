@@ -60,7 +60,6 @@ namespace Image_Converter.Code {
 
                         gifProcess.Start();
                         gifProcess.StandardInput.WriteLine($"cd {Environment.CurrentDirectory}");
-                        //process.StandardInput.WriteLine($"gif2webp.exe {Options.GetWebPQuality()} \"{Image}\" -o \"{infos.FileDirectory()}\\{infos.FileNameWithoutExtension()}.webp\"");
                         gifProcess.StandardInput.WriteLine($"gif2webp.exe {Properties.Settings.Default.WebP_Quality} \"{imageExt}\" -o \"{image}.webp\"");
                         gifProcess.StandardInput.Flush();
                         gifProcess.StandardInput.Close();

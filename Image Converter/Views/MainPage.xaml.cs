@@ -1,5 +1,5 @@
 ﻿using Image_Converter.Code;
-using MaterialDesignThemes.Wpf;
+using MahApps.Metro.IconPacks;
 using System.IO;
 using System.Media;
 using System.Threading;
@@ -52,7 +52,7 @@ namespace Image_Converter.Views {
             while (!IsFinished) {
                 foreach (ImageInfo info in Utilities.ImageCollection) {
                     if (File.Exists($"{info.FileLocation}\\{info.FileName}.{SelectedType}")) {
-                        info.FileIcon = PackIconKind.Check;
+                        info.FileIcon = PackIconMaterialKind.Check;
                         info.FileColor = Brushes.Green;
                         Utilities.ImageListView.Dispatcher.Invoke(() => { Utilities.ImageListView.Items.Refresh(); }, DispatcherPriority.Background);
                     }

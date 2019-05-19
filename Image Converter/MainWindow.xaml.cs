@@ -68,7 +68,7 @@ namespace Image_Converter {
                         FileName = Path.GetFileNameWithoutExtension(file),
                         FileType = fileInfo.Extension,
                         FileSize = Utilities.SizeSuffix(fileInfo.Length),
-                        FileIcon = new PackIconMaterial { Kind = PackIconMaterialKind.Close },
+                        FileIcon = PackIconMaterialKind.Close,
                         FileColor = Brushes.Red,
                         FileLocation = fileInfo.DirectoryName
                     });
@@ -116,6 +116,10 @@ namespace Image_Converter {
             //UpdateThreadStart = Update;
             //UpdateThread = new Thread(UpdateThreadStart);
             //UpdateThread.Start();
+        }
+
+        private void BlurWindow_Closed(object sender, EventArgs e) {
+            Environment.Exit(0);
         }
     }
 }
