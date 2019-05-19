@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Converter_Utilities;
+using Converter_Utilities.Interface;
 
 namespace Squirrely_Converters {
     /// <summary>

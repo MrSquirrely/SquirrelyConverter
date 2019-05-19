@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Converter_Utilities {
+namespace Converter_Utilities.API {
     public class Quote {
         public static string GetQuote() {
             int random = new Random().Next(Quotes.Count);

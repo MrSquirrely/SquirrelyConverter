@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Converter_Utilities.API;
+using Converter_Utilities.Interface;
 using Octokit;
 
-namespace Converter_Utilities {
+namespace Converter_Utilities.Github {
     public class Github {
         internal static Github Instance(string headerValue) => new Github(headerValue);
         private GitHubClient client;

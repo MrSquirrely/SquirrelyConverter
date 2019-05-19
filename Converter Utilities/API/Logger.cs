@@ -1,13 +1,9 @@
-﻿using NLog;
+﻿using System;
+using NLog;
 using NLog.Config;
 using NLog.Targets;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Converter_Utilities {
+namespace Converter_Utilities.API {
     public class Logger {
         internal static Logger Instance(string loggerName) => new Logger(loggerName);
         private NLog.Logger logManager;

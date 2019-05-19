@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Converter_Utilities;
+using Converter_Utilities.Interface;
 
 namespace ImageConverter {
     public class Converter : IConverter {
