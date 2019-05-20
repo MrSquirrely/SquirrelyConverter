@@ -1,17 +1,16 @@
 ﻿using System;
 using Converter_Utilities.API;
-using Converter_Utilities.Interface;
 using Octokit;
 
 namespace Converter_Utilities.Github {
     public class Github {
-        internal static Github Instance(string headerValue) => new Github(headerValue);
-        private GitHubClient client;
-        private Credentials credentials = new Credentials(Token.token);
+        public static Github Instance(string headerValue) => new Github(headerValue);
+        private readonly GitHubClient _client;
+        private readonly Credentials _credentials = new Credentials(Token.GithubToken);
 
         private Github(string headerValue) {
             try {
-                client = new GitHubClient(new ProductHeaderValue(headerValue)) { Credentials = credentials };
+                _client = new GitHubClient(new ProductHeaderValue(headerValue)) { Credentials = _credentials };
             }
             catch (Exception ex) {
                 Logger logger = Logger.Instance("Github");
@@ -27,11 +26,14 @@ namespace Converter_Utilities.Github {
                 case Label.Enhancement:
                     issue.Labels.Add("enhancement");
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(label), label, null);
             }
-            Issue issueCreator = await client.Issue.Create(repoOwner, repo, issue);
+
+            _ = await _client.Issue.Create(repoOwner, repo, issue);
         }
 
-        public static NewIssue issue(string title, string body) => new NewIssue(title) { Body = body };
+        public static NewIssue Issue(string title, string body) => new NewIssue(title) { Body = body };
 
         public enum Label {
             Bug,

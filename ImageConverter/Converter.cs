@@ -10,6 +10,6 @@ namespace ImageConverter {
     public class Converter : IConverter {
         public object MainPage => new Views.ImagePage();
 
-        public object SEttingsPage => new Views.ImageSettingsPage();
+        public object SettingsPage => new Views.ImageSettingsPage();
     }
 }

@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mime;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Win32;
 
 namespace Converter_Utilities.API {
     public class AssociateFile {
-
         public static void SetAssociation(string applicaitonFilePath) => Associate(".cext", "CONVERTER_EXTENSION_FILE", applicaitonFilePath, "Conv");
-
         private static void Associate(string extension, string keyName, string openWith, string fileDescription) {
             try {
                 RegistryKey BaseKey;

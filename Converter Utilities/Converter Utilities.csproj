@@ -74,7 +74,8 @@
   <ItemGroup>
     <Compile Include="API\AssociateFile.cs" />
     <Compile Include="API\FileFilters.cs" />
-    <Compile Include="API\FileInfo.cs" />
+    <Compile Include="API\InfoFile.cs" />
+    <Compile Include="API\Snackbar.cs" />
     <Compile Include="Github\Github.cs" />
     <Compile Include="Interface\IConverter.cs" />
     <Compile Include="API\Logger.cs" />

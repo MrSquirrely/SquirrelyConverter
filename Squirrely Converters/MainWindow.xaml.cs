@@ -1,20 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.Policy;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Converter_Utilities;
+using Converter_Utilities.API;
 using Converter_Utilities.Interface;
 
 namespace Squirrely_Converters {
@@ -22,18 +12,15 @@ namespace Squirrely_Converters {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow  {
-
-        Type pluginType = typeof(IConverter);
-        string[] converterFileNames;
-        ICollection<Assembly> assemblies;
-        ICollection<Type> pluginTypes = new List<Type>();
-        List<IConverter> converters;
+        readonly Type _pluginType = typeof(IConverter);
+        readonly ICollection<Type> _pluginTypes = new List<Type>();
+        readonly List<IConverter> _converters;
 
         public MainWindow() {
             InitializeComponent();
             try {
-                converterFileNames = Directory.GetFiles(Environment.CurrentDirectory, "*.converter");
-                assemblies = new List<Assembly>(converterFileNames.Length);
+                string[] converterFileNames = Directory.GetFiles(Environment.CurrentDirectory, "*.converter");
+                ICollection<Assembly> assemblies = new List<Assembly>(converterFileNames.Length);
                 foreach (string converter in converterFileNames) {
                     AssemblyName name = AssemblyName.GetAssemblyName(converter);
                     Assembly assembly = Assembly.Load(name);
@@ -41,31 +28,26 @@ namespace Squirrely_Converters {
                 }
 
                 foreach (Assembly assembly1 in assemblies) {
-                    if (assembly1 != null) {
-                        Type[] types = assembly1.GetTypes();
-                        foreach (Type type in types) {
-                            if (type.IsInterface || type.IsAbstract) {
-                                continue;
-                            }
-                            else {
-                                if (type.GetInterface(pluginType.FullName) != null) {
-                                    pluginTypes.Add(type);
-                                }
-                            }
+                    if (assembly1 == null) continue;
+                    Type[] types = assembly1.GetTypes();
+                    foreach (Type type in types) {
+                        if (type.IsInterface && type.IsAbstract) continue;
+                        if (type.GetInterface(_pluginType.FullName) != null) {
+                            _pluginTypes.Add(type);
                         }
                     }
                 }
 
-                converters = new List<IConverter>(pluginTypes.Count);
-                foreach (Type type1 in pluginTypes) {
+                _converters = new List<IConverter>(_pluginTypes.Count);
+                foreach (Type type1 in _pluginTypes) {
                     IConverter converter = (IConverter)Activator.CreateInstance(type1);
-                    converters.Add(converter);
+                    _converters.Add(converter);
                 }
             }
             catch (Exception ex) {
-                //Todo: Logging
+                Logger.Instance("ConverterViewer").LogError(ex);
             }
-            Content = converters[0].MainPage;
+            Content = _converters[0].MainPage;
         }
     }
 }

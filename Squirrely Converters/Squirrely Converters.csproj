@@ -150,12 +150,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="AudioConverter\" />
-    <Folder Include="ImageConverter\" />
-    <Folder Include="Utilities\" />
-    <Folder Include="VideoConverter\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Converter Utilities\Converter Utilities.csproj">
       <Project>{0015ed8d-183d-4590-9466-5f45385657a6}</Project>

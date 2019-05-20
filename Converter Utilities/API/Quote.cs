@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Converter_Utilities.API {
     public class Quote {
@@ -11,7 +8,7 @@ namespace Converter_Utilities.API {
             return Quotes[random];
         }
 
-        private static List<string> Quotes = new List<string>() {
+        private static readonly List<string> Quotes = new List<string>() {
             "“You must be the change you wish to see in the world.” — Gandhi",
             "“Everybody is a genius. But if you judge a fish by its ability to climb a tree, it will live its whole life believing that it is stupid.” — Albert Einstein",
             "“A life spent making mistakes is not only more honorable, but more useful than a life spent doing nothing.” — George Bernhard Shaw",

@@ -20,6 +20,5 @@ namespace Converter_Utilities.API {
             }
             return $"{dValue:n}{decimalPlaces}{SizeSuffixes[i]}";
         }
-
     }
 }

@@ -4,12 +4,35 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ImageConverter.Views"
+      xmlns:loc="clr-namespace:ImageConverter.Properties"
+      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ImagePage">
 
     <Grid>
-        <Label Content="Image Converter!!!" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-
+        <ListView Name="ImageList" Drop="ImageList_Drop" AllowDrop="True">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding FileName}" Header="{x:Static loc:Resources.FileName}" Width="500"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding FileType}" Header="{x:Static loc:Resources.FileType}" />
+                    <GridViewColumn DisplayMemberBinding="{Binding FileSize}" Header="{x:Static loc:Resources.FileSize}" />
+                    <GridViewColumn Header="{x:Static loc:Resources.FileConverted}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <iconPacks:PackIconMaterial Kind="{Binding FileIcon}" Foreground="{Binding FileColor}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding FileLocation}" Header="{x:Static loc:Resources.FileLocation}" Width="500"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ComboBox Name="TypeSelector" Height="25" Width="120" Margin="0,0,97,10" HorizontalAlignment="Right" VerticalAlignment="Bottom" SelectedIndex="0">
+            <ComboBoxItem Content="WEBP"/>
+            <ComboBoxItem Content="PNG"/>
+            <ComboBoxItem Content="JPEG"/>
+        </ComboBox>
+        <Button Name="ConvertButton" Content="{x:Static loc:Resources.Convert}" ToolTip="{x:Static loc:Resources.ConvertTooltip}" Height="Auto" Margin="0,0,10,10" Click="ConvertButton_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
     </Grid>
 </Page>
