@@ -9,16 +9,17 @@
     That is my plan. To have a plugin system and stand alone versions of every converter/utility.
 
 ##### Simple Converters for Everyone :
+
 Free, simple, and beautiful to use converters for everyone! 
 The goal with this project isn't to create converters or utilities, it's to create beautiful converters and utilities.
 For far to long we've had to deal with ugly, no more!
 
 ##### Converters / Utilities:
-- [] Image Converter
-- [] Video Converter
-- [] Zip Program
-- [] Office Converter
-- [] Waifu2x Program
+- [ ] Image Converter
+- [ ] Video Converter
+- [ ] Zip Program
+- [ ] Office Converter
+- [ ] Waifu2x Program
 - To see!
 
 #### Images :
@@ -39,16 +40,10 @@ Look above!
     ImageConverter.Lib - GPLv3
     ImageConverter.Win - GPLv3
 
-#### Libraries Used :
-[Handy Controls](https://github.com/ghost1372/HandyControls)
-[Webp Lib for Animated WebP](https://developers.google.com/speed/webp)
-[Magick.NET](https://github.com/dlemstra/Magick.NET)
-[Squirrel Sizer](https://github.com/MrSquirrelyNet/Squirrel-Sizer)
 
-
-#### Libraries Planned :
-These libraries are planned to be used but I haven't gotten around to them
-[SevenZipSharp](https://github.com/squid-box/SevenZipSharp)
-[waifu2x ncnn Vulkan](https://github.com/nihui/waifu2x-ncnn-vulkan)
-[Humanizer](https://github.com/Humanizr/Humanizer)
-[avalonia](https://avaloniaui.net/)
+Libraries Used | Libraries Planned
+-------------- | -----------------
+[Handy Controls](https://github.com/ghost1372/HandyControls) | [SevenZipSharp](https://github.com/squid-box/SevenZipSharp)
+[Webp Lib for Animated WebP](https://developers.google.com/speed/webp) | [waifu2x ncnn Vulkan](https://github.com/nihui/waifu2x-ncnn-vulkan)
+[Magick.NET](https://github.com/dlemstra/Magick.NET) | [Humanizer](https://github.com/Humanizr/Humanizer)
+[Squirrel Sizer](https://github.com/MrSquirrelyNet/Squirrel-Sizer) | [avalonia](https://avaloniaui.net/)
