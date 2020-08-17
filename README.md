@@ -1,55 +1,54 @@
-# Squirrely Converters [![GitHub (pre-)release](https://img.shields.io/github/release/MrSquirrelyNet/SquirrelyConverter/all.svg?style=for-the-badge)](https://github.com/MrSquirrelyNet/SquirrelyConverter/releases) [![CodeFactor](https://www.codefactor.io/repository/github/mrsquirrelynet/squirrelyconverter/badge?longCache=true&style=for-the-badge)](https://www.codefactor.io/repository/github/mrsquirrelynet/squirrelyconverter?longCache=true&style=for-the-badge)
+# Squirrely Converters 
 
-### Follow my twitter for news on future updates [![Twitter Follow](https://img.shields.io/twitter/follow/TheMrSquirrely.svg?style=for-the-badge&label=Follow)](https://twitter.com/TheMrSquirrely)
+#### Update Augest 16th 2020
+    I have decided once again to recode this project. Though not without reason.
+    I try to do things that I haven't before, this project included one of these things.
+    With this project I was trying to create a plugin system. I wasn't sure how to do this at the time.
+    I tried my best but fell short. Recently I came back to this to resart what I wanted. 
+    With the time away I have learned quite a bit. So I am able to do a plugin system decently well.
+    That is my plan. To have a plugin system and stand alone versions of every converter/utility.
 
+##### Simple Converters for Everyone :
+Free, simple, and beautiful to use converters for everyone! 
+The goal with this project isn't to create converters or utilities, it's to create beautiful converters and utilities.
+For far to long we've had to deal with ugly, no more!
 
-##### Simple Converters for Everyone
-Free and simple to use converters. Currently supports images. videos, Audio, office, and zip support are coming soon.
+##### Converters / Utilities:
+- [] Image Converter
+- [] Video Converter
+- [] Zip Program
+- [] Office Converter
+- [] Waifu2x Program
+- To see!
 
-## Images
+#### Images :
 Coming Soon!
 
-## News
-After a long hiatus, I decided to re-code the entire project. I have learned quite a few more things, so this time I'm getting things done without not knowing why! I am currently working on the image converter with the video converter coming next!
+#### News :
+Look above!
 
-## Change Log
-- V 2019.1(Coming Soon!)
-	- Complete re-code
-	- Added image converter
+#### Change Log :
+- None yet! Coming real soon!
 
-## ToDo
-  - Bug squashing (so mean to those poor little things ;( )
-  - Localization!
-  - Add audio conversion
-  - Add office conversion
-    - Text
-    - Spreadsheet
+#### ToDo :
+- to see
 
-## Libraries Used (This isn't fully updated.)
- - [Dragablz](https://github.com/ButchersBoy/Dragablz)
- - [MahApps Metro](https://github.com/MahApps/MahApps.Metro)
- - [Material Design in XAML](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit)
- - [Material Design in XAML MahApps](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit)
- - [Magick.Net](https://github.com/dlemstra/Magick.NET)
- - [ToastNotifications](https://github.com/raflop/ToastNotifications)
- - [NLog](https://github.com/NLog/NLog)
-- [Wpf.Notifications](https://github.com/Enterwell/Wpf.Notifications)
-- [Markdig](https://github.com/lunet-io/markdig)
-- [Markdig.Wpf](https://github.com/Kryptos-FR/markdig.wpf)
-- [Windows API Code Pack](https://github.com/contre/Windows-API-Code-Pack-1.1)
-- [Octokit](https://github.com/octokit/octokit.net)
+#### License :
+    Converter.Lib - LGPLv3
+    Converter.Win - GPLv3
+    ImageConverter.Lib - GPLv3
+    ImageConverter.Win - GPLv3
 
-Mr. Squirrely's Converters || Simple Converters for Everyone
-Copyright (C) 2018  James Ferguson<MrSquirrely.net>
+#### Libraries Used :
+[Handy Controls](https://github.com/ghost1372/HandyControls)
+[Webp Lib for Animated WebP](https://developers.google.com/speed/webp)
+[Magick.NET](https://github.com/dlemstra/Magick.NET)
+[Squirrel Sizer](https://github.com/MrSquirrelyNet/Squirrel-Sizer)
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#### Libraries Planned :
+These libraries are planned to be used but I haven't gotten around to them
+[SevenZipSharp](https://github.com/squid-box/SevenZipSharp)
+[waifu2x ncnn Vulkan](https://github.com/nihui/waifu2x-ncnn-vulkan)
+[Humanizer](https://github.com/Humanizr/Humanizer)
+[avalonia](https://avaloniaui.net/)
