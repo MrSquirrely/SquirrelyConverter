@@ -18,6 +18,16 @@ namespace ImageConverter.Lib.Views {
     public partial class SettingsPage : Page {
         public SettingsPage() {
             InitializeComponent();
+            Property.SelectedObject = Reference.GetPropertiesModel;
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e) {
+            Reference.SettingsDrawer.IsOpen = false;
+            //Reset view code
+        }
+
+        private void SaveButton_OnClick(object sender, RoutedEventArgs e) {
+            Reference.SaveProperties((PropertiesModel)Property.SelectedObject);
         }
     }
 }

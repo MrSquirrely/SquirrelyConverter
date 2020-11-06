@@ -20,7 +20,7 @@ For far to long we've had to deal with ugly, no more!
 - [ ] Zip Program
 - [ ] Office Converter
 - [ ] Waifu2x Program
-- To see!
+- [ ] To see!
 
 #### Images :
 Coming Soon!

@@ -3,12 +3,42 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:ImageConverter.Lib.Views"
+      xmlns:hc="https://handyorg.github.io/handycontrol"
+      xmlns:lang="clr-namespace:ImageConverter.Lib.Lang"
+      xmlns:lib="clr-namespace:ImageConverter.Lib"
+      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="MainPage">
+      Title="MainPage" AllowDrop="True">
 
-    <Grid>
-        <Label Content="Image Converter Main Page" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-    </Grid>
+    <hc:SimplePanel>
+        <hc:DashedBorder BorderThickness="1" Margin="16,16,16,36" 
+                         BorderBrush="Black" BorderDashArray="3, 1" 
+                         CornerRadius="10,10,10,10" 
+                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+        <ListView Name="ImageListView" Margin="20,20,20,40" Drop="ImageListView_OnDrop" BorderThickness="0">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="500" Header="{x:Static lang:lang.HeaderName}" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Width="80" Header="{x:Static lang:lang.HeaderType}" DisplayMemberBinding="{Binding Type}"/>
+                    <GridViewColumn Width="80" Header="{x:Static lang:lang.HeaderSize}" DisplayMemberBinding="{Binding Size}"/>
+                    <GridViewColumn Width="80" Header="{x:Static lang:lang.HeaderConverted}" DisplayMemberBinding="{Binding Converted}"/>
+                    <GridViewColumn Width="300" Header="{x:Static lang:lang.HeaderLocation}" DisplayMemberBinding="{Binding Location}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <!--
+        M1639 1056q0 5-1 7-64 268-268 434.5t-478 166.5q-146 0-282.5-55t-243.5-157l-129 129q-19 19-45 19t-45-19-19-45v-448q0-26 19-45t45-19h448q26 0 45 19t19 45-19 45l-137 137q71 66 161 102t187 36q134 0 250-65t186-179q11-17 53-117 8-23 30-23h192q13 0 22.5 9.5t9.5 22.5zm25-800v448q0 26-19 45t-45 19h-448q-26 0-45-19t-19-45 19-45l138-138q-148-137-349-137-134 0-250 65t-186 179q-11 17-53 117-8 23-30 23h-199q-13 0-22.5-9.5t-9.5-22.5v-7q65-268 270-434.5t480-166.5q146 0 284 55.5t245 156.5l130-129q19-19 45-19t45 19 19 45z
+        
+        M12 .037C5.373.037 0 5.394 0 12c0 6.606 5.373 11.963 12 11.963 6.628 0 12-5.357 12-11.963C24 5.394 18.627.037 12 .037zm-.541 4.8c1.91-.13 3.876.395 5.432 1.934 1.426 1.437 2.51 3.44 2.488 5.317h2.133l-4.444 4.963-4.445-4.963h2.313c-.001-1.724-.427-2.742-1.78-4.076-1.325-1.336-2.667-2.11-4.978-2.303a9.245 9.245 0 013.281-.871zM6.934 6.95l4.445 4.963H9.066c0 1.724.426 2.742 1.778 4.076 1.326 1.336 2.667 2.112 4.978 2.305-2.684 1.268-6.22 1.398-8.71-1.064-1.427-1.437-2.512-3.44-2.489-5.317H2.488L6.934 6.95Z
+        -->
+        <Button Name="ConvertButton" Content="Convert" Margin="0,0,20,2" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                Style="{StaticResource ButtonDanger}" hc:BorderElement.CornerRadius="15" Click="ConvertButton_OnClick"
+                hc:IconElement.Geometry="M12 .037C5.373.037 0 5.394 0 12c0 6.606 5.373 11.963 12 11.963 6.628 0 12-5.357 12-11.963C24 5.394 18.627.037 12 .037zm-.541 4.8c1.91-.13 3.876.395 5.432 1.934 1.426 1.437 2.51 3.44 2.488 5.317h2.133l-4.444 4.963-4.445-4.963h2.313c-.001-1.724-.427-2.742-1.78-4.076-1.325-1.336-2.667-2.11-4.978-2.303a9.245 9.245 0 013.281-.871zM6.934 6.95l4.445 4.963H9.066c0 1.724.426 2.742 1.778 4.076 1.326 1.336 2.667 2.112 4.978 2.305-2.684 1.268-6.22 1.398-8.71-1.064-1.427-1.437-2.512-3.44-2.489-5.317H2.488L6.934 6.95Z" />
+
+        <hc:ComboBox x:Name="ImageTypeBox" ItemsSource="{Binding Source={hc:EnumBindingSource {x:Type lib:ImageTypes}}}" SelectedIndex="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,120,2"/>
+
+    </hc:SimplePanel>
 </Page>

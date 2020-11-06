@@ -1,0 +1,9 @@
+{
+  "DeleteImage": false,
+  "PlaySound": true,
+  "SoundToPlay": 2,
+  "WebPLosses": true,
+  "WebPRemoveAlpha": false,
+  "WebPEmulateJpeg": false,
+  "WebPQuality": 100
+}

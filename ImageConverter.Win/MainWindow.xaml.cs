@@ -17,10 +17,23 @@ namespace ImageConverter.Win {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window {
+    public partial class MainWindow {
         public MainWindow() {
             InitializeComponent();
-            Content = new Lib.Views.MainPage();
+            MainFrame.Content = Lib.Reference.GetMainPage;
+            AboutFrame.Content = Lib.Reference.GetAboutPage;
+            SettingsFrame.Content = Lib.Reference.GetSettingsPage;
+
+            Lib.Reference.SettingsDrawer = SettingsDrawer;
+            Lib.Reference.AboutDrawer = AboutDrawer;
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e) => Lib.Reference.OpenSettingsDrawer();
+
+        private void AboutButton_Click(object sender, RoutedEventArgs e) => Lib.Reference.OpenAboutDrawer();
+
+        private void BugButton_Click(object sender, RoutedEventArgs e) {
+            //Todo: implement
         }
     }
 }

@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Markdig;
+using Neo.Markdig.Xaml;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,6 +21,7 @@ namespace ImageConverter.Lib.Views {
     public partial class AboutPage : Page {
         public AboutPage() {
             InitializeComponent();
+            AboutViewer.Document = MarkdownXaml.ToFlowDocument(File.ReadAllText($"{Environment.CurrentDirectory}/about.md"), new MarkdownPipelineBuilder().UseXamlSupportedExtensions().Build());
         }
     }
 }

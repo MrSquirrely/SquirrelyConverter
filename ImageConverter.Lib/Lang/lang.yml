@@ -1,0 +1,24 @@
+en:
+  CancelButton: Cancel
+  DeleteImageDesc: "Wether or not to delete the original image"
+  DeleteImageTitle: "Delete Image"
+  HeaderConverted: Location
+  HeaderLocation: Converted
+  HeaderName: Name
+  HeaderSize: Size
+  HeaderType: Type
+  PlaySoundDesc: "Wether or not to play a sound when finished converting"
+  PlaySoundTite: "Play Sound"
+  ProgramTitle: "Image Converter"
+  ResetButton: Reset
+  Save: Save
+  SoundToPlayDesc: "The sound that plays at the end of the conversion"
+  SoundToPlayTite: Sound
+  WebPEmulateJpegDesc: "Whether or not to try and emulate Jpeg size"
+  WebPEmulateJpegTitle: "Emulate Jpeg Size"
+  WebPLossessDesc: "Whether or not to use lossless compression"
+  WebPLossessTitle: Lossless
+  WebPQualityDesc: "The quality of the compression"
+  WebPQualityTitle: Quality
+  WebPRemoveAlphaDesc: "Whether or not to remove the alpha channel/layer"
+  WebPRemoveAlphaTitle: "Remove Alpha"
